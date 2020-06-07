@@ -13,13 +13,12 @@ install:
   - yarn install
 script:
   - yarn docs:build
-before_deploy: # or anywhere before the secret ssh host is needed
-    # 要使用变量添加know_hosts，只能在before_install 或 before_deploy里自定义命令了，端口放前面
+before_deploy: 
+  # or anywhere before the secret ssh host is needed
+  # 要使用变量添加know_hosts，只能在before_install 或 before_deploy里自定义命令了，端口放前面
+  # 如果是明文的域名、IP+端口（或者默认使用22端口）可以使用 addons + ssh_know_hosts来添加know_hosts，但如果使用trvis-ci的变量则必须用下面的指令
   - ssh-keyscan -p $HOST_PORT -H $HOST_ADDR $HOST_IP 2>&1 | tee -a $HOME/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
-  - echo $HOST_PORT
-  - echo $HOST_ADDR
-  - echo $TRAVIS_SSH_KEY_TYPES
 deploy:
   provider: pages
   skip_cleanup: true
