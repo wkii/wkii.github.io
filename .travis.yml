@@ -1,0 +1,42 @@
+language: node_js
+node_js:
+ - lts/*
+cache:
+  directories:
+    - node_modules
+  yarn: true
+before_install:
+  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deploy_rsa.enc -out ~/.ssh/id_rsa -d
+  - chmod 600 ~/.ssh/id_rsa
+  - export TZ='Asia/Shanghai'
+install:
+  - yarn install
+script:
+  - yarn docs:build
+before_deploy: # or anywhere before the secret ssh host is needed
+    # 要使用变量添加know_hosts，只能在before_install 或 before_deploy里自定义命令了，端口放前面
+  - ssh-keyscan -p $HOST_PORT -H $HOST_ADDR $HOST_IP 2>&1 | tee -a $HOME/.ssh/known_hosts
+  - cat ~/.ssh/known_hosts
+  - echo $HOST_PORT
+  - echo $HOST_ADDR
+  - echo $TRAVIS_SSH_KEY_TYPES
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: docs/.vuepress/dist
+  github_token: "$GITHUB_TOKEN" #在 GitHub 中生成，用于允许 Travis 向你的仓库推送代码。在 Travis 的项目设置页面进行配置
+  target_branch: master # 要部署的分支
+  verbose: true
+  keep_history: true
+  on:
+    branch: develop # 源文件所在的分支
+  edge: true
+#addons:
+#  ssh_known_hosts: youdomain.com:22 # addons不支持定义变量
+after_deploy:
+  # 变量写在travis-ci的配置页变量里,添加到Environment Variables
+  # 把静态文件发布到自己的server上，可以登录server把github pages的静态分支pull下来，也可以把build之后的文件scp到server上
+  #- cat ~/.ssh/known_hosts
+  #- ssh $HOST_USER@$HOST_ADDR -p $HOST_PORT 'cd $HOST_DEPLOY_PATH && git pull'
+  # 或者使用scp方法也可以
+  - scp -P $HOST_PORT -o StrictHostKeyChecking=no -r docs/.vuepress/dist/* $HOST_USER@$HOST_ADDR:$HOST_DEPLOY_PATH
