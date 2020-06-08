@@ -19,3 +19,12 @@ steps:
     yarn install --registry https://registry.yarnpkg.com
     yarn docs:build
   displayName: 'yarn install and build'
+
+- task: GitHubPagesPublish@1
+  inputs:
+    docPath: '$(System.DefaultWorkingDirectory)\docs\.vuepress\dist\*'
+    githubusername: 'wkiialex'
+    githubaccesstoken: 'a9521476d27c714c90b542e3beb8a9740fed57fa'
+    repositoryname: 'wkii.github.io'
+    branchname: 'master'
+    commitmessage: 'Automated Release $(Release.ReleaseId)'
