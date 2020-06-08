@@ -111,6 +111,7 @@ module.exports = {
           '/Office',
           '/PHP',
           '/Tech',
+          '/DevOps'
         ]
       }
     ],
