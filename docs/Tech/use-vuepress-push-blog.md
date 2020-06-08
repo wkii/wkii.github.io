@@ -192,6 +192,14 @@ deploy:
 
 然后如何使用travis-ci，可参考vhxly写的[自动化部署](https://vxhly.github.io/views/nodejs/vuepress-blog-on-github.html#%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2)部分。
 
+
+
+### 使用README.md
+
+如果要使用README.md（例如放一些文字图片说明），则可以再写一个`index.md`用于存放之前给README.md的内容。
+
+index.md用于存放Front Matter，README.md 用于存放项目说明。
+
    
 
 
