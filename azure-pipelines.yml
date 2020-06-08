@@ -16,6 +16,6 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn install
+    yarn install --registry https://registry.yarnpkg.com
     yarn docs:build
   displayName: 'yarn install and build'
