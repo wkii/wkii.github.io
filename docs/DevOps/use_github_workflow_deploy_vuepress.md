@@ -8,7 +8,7 @@ tags:
 ---
 
 ## 前言
-目前Github workflow（也叫Actions）还不够成熟。表现为yml配置文件手动创建和修改再推送到仓库无效，需要在线创建、在线编辑。所以还是使用Travis-ci.com 或者是 Azure Pipelines吧。
+目前Github workflow（也叫Actions）还不够成熟。表现为yml配置文件手动创建和修改再推送到仓库无效，需要在线创建、在线编辑，没法像Travis-ci那样临时修改配置文件（不纳入版本控制）来调试。所以还是使用Travis-ci.com 或者是 Azure Pipelines吧。
 ## 操作步骤
 不过对应的发布vuepress到 Github Pages 的工具已经有了，并且在GitHub 的Marketplace里发布了。下面记录一下使用步骤：
 
@@ -21,6 +21,7 @@ tags:
 4. 点击 [View full Marketplace listing](https://github.com/marketplace/actions/vuepress-deploy) 查看更多针对这个工具的配置文件说明（是国人开发的工具，通过Docker来完成build）；
 5. 左侧写好配置文件，保存（Start Commit）；
 6. 看效果。如果有不对，再去修改这个workflow的配置文件（在线编辑）。
+7. ACCESS_TOKEN 参照工具的说明配置即可。就是常用的 [Personal access tokens](https://github.com/settings/tokens)。
 
 以下是我测试成功的配置文件，请注意注释部分的配置项：
 ```yaml
