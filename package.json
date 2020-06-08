@@ -1,0 +1,22 @@
+{
+  "name": "wkiiBlog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "bash deploy.sh"
+  },
+  "dependencies": {
+    "vuepress-theme-reco": "^1.4.5"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-google-analytics": "^1.5.0",
+    "@vuepress/theme-blog": "^2.2.0",
+    "moment": "^2.25.3",
+    "vuepress": "^1.5.0",
+    "vuepress-plugin-feed": "^0.1.8",
+    "vuepress-plugin-sitemap": "^2.3.1"
+  }
+}
