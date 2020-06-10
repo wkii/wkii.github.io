@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn &&  yarn docs:build
+    yarn &&  yarn docs:build --registry https://registry.yarnpkg.com --no-lockfile
   displayName: 'yarn install and build'
 
 - script: |
