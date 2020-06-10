@@ -21,42 +21,24 @@ steps:
   displayName: 'yarn install and build'
 
 - script: 
-    echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]this is the slice $(system.jobPositionInPhase) value"
+    echo "##vso[task.setvariable variable=sauce1]crushed tomatoes"
   name: setvarStep
-- script: echo $(setvarStep.myOutputVar)
+- script: 
+    echo my pipeline variable is $(sauce1)
   name: echovar
-
-# Create a variable
-- bash: |
-    echo "##vso[task.setvariable variable=sauce]crushed tomatoes"
-    BUBU='AFAFAFAFAF'
-    echo "BUBU" $BUBU
-
-# Use the variable
-# "$(sauce)" is replaced by the contents of the `sauce` variable by Azure Pipelines
-# before handing the body of the script to the shell.
-- bash: |
-    echo my pipeline variable is $(sauce)
-    echo "BUBU IS" $BUBU
 
 - bash: |
     # Get build dir
     if [[ -z "$BUILD_DIR" ]]; then
-      echo 'fffffffff'
       build_dir="$(pwd)"/docs/.vuepress/dist
     else
-      echo 'yyyyyyy'
       build_dir="$(pwd)"/"$BUILD_DIR"
     fi
-    echo "build_dir:"
-    echo $build_dir
+    echo "build_dir is: "$build_dir
     
     # set variable: deploy_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
     echo "##vso[task.setvariable variable=build_dir]$build_dir"
-    export
-    pwd
-    ls
   displayName: 'Enter build dir...'
 
 - bash: |
