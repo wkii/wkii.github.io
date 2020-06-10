@@ -16,8 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn install --registry https://registry.yarnpkg.com --no-lockfile
-    yarn docs:build
+    yarn &&  yarn docs:build
   displayName: 'yarn install and build'
 
 - script: |
@@ -44,7 +43,7 @@ steps:
   displayName: 'Generate a CNAME file'
 
 - script: |
-    
+    export
     DEPLOY_REPO="https://${ACCESS_TOKEN}@github.com/${REPOSITORY_NAME}.git"
     if [[ -z "$TARGET_BRANCH" ]]; then
       DEPLOY_BRANCH="gh-pages"
