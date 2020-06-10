@@ -27,6 +27,7 @@ steps:
     else
       DEPLOY_DIR="$(pwd)/$BUILD_DIR"
     fi
+    echo $DEPLOY_DIR
     cd $DEPLOY_DIR
     pwd
     ls
