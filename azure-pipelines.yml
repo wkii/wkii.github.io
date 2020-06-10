@@ -19,7 +19,7 @@ steps:
     yarn install
     yarn docs:build
     pwd
-    list
+    ls
   displayName: 'yarn install and build'
 
 - task: GitHubPagesPublish@1
