@@ -44,6 +44,8 @@ steps:
 
 - script: |
     export
+    echo $Build.SourceVersion
+    echo $(Release.ReleaseId)
     DEPLOY_REPO="https://${ACCESS_TOKEN}@github.com/${REPOSITORY_NAME}.git"
     if [[ -z "$TARGET_BRANCH" ]]; then
       DEPLOY_BRANCH="gh-pages"
