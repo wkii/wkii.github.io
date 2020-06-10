@@ -29,7 +29,7 @@ steps:
 # Create a variable
 - bash: |
     echo "##vso[task.setvariable variable=sauce]crushed tomatoes"
-    BUBU = 'AFAFAFAFAF'
+    BUBU='AFAFAFAFAF'
     echo "BUBU" $BUBU
 
 # Use the variable
