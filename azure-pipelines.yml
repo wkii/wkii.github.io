@@ -41,7 +41,7 @@ steps:
 
 - bash: |
     # Get build dir
-    if [[ -z "BUILD_DIR" ]]; then
+    if [[ -z "$BUILD_DIR" ]]; then
       echo 'fffffffff'
       build_dir="$(pwd)"/docs/.vuepress/dist
     else
@@ -67,6 +67,7 @@ steps:
       echo "Generating a CNAME file..."
       echo $CNAME > CNAME
     fi
+    pwd
   workingDirectory: $(build_dir)
   displayName: 'Generate a CNAME file'
 
