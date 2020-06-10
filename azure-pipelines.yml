@@ -16,17 +16,13 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn install
+    echo "yarn version:"
+    yarn --version
+    yarn install --registry https://registry.yarnpkg.com
     yarn docs:build
     pwd
     ls
+    echo "get version:"
+    git version
   displayName: 'yarn install and build'
 
-- task: GitHubPagesPublish@1
-  inputs:
-    docPath: '$(System.DefaultWorkingDirectory)/docs/.vuepress/dist/*'
-    githubusername: 'wkii'
-    githubaccesstoken: 'GITHUB_TOKEN'
-    repositoryname: 'wkii.github.io'
-    branchname: 'master'
-    commitmessage: 'Automated Release $(Release.ReleaseId)'
