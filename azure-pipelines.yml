@@ -23,9 +23,9 @@ steps:
 - script: |
     # Get build dir
     if [[ -z "BUILD_DIR" ]]; then
-      DEPLOY_DIR="$(pwd)/docs/.vuepress/dist"
+      export DEPLOY_DIR="$(pwd)/docs/.vuepress/dist"
     else
-      DEPLOY_DIR="$(pwd)/$BUILD_DIR"
+      export DEPLOY_DIR="$(pwd)/$BUILD_DIR"
     fi
     echo $DEPLOY_DIR
     cd $DEPLOY_DIR
