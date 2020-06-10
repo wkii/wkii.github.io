@@ -58,17 +58,14 @@ steps:
   displayName: 'Enter build dir...'
 
 - bash: |
-    echo build_dir="$(build_dir)"
+    echo build_dir is $(build_dir)
 
-- script: |
+- bash: |
     if [ "$CNAME" ]; then
       echo "Generating a CNAME file..."
       echo $CNAME > CNAME
     fi
-    pwd
-    ls
-    export
-  workingDirectory: $(deploy_dir)
+  workingDirectory: $(build_dir)
   displayName: 'Generate a CNAME file'
 
 - script: |
