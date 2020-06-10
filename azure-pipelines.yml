@@ -29,12 +29,15 @@ steps:
 # Create a variable
 - bash: |
     echo "##vso[task.setvariable variable=sauce]crushed tomatoes"
+    BUBU = 'AFAFAFAFAF'
+    echo "BUBU" $BUBU
 
 # Use the variable
 # "$(sauce)" is replaced by the contents of the `sauce` variable by Azure Pipelines
 # before handing the body of the script to the shell.
 - bash: |
     echo my pipeline variable is $(sauce)
+    echo "BUBU IS" $(BUBU)
 
 - script: |
     # Get build dir
