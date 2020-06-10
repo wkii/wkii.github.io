@@ -39,27 +39,26 @@ steps:
     echo my pipeline variable is $(sauce)
     echo "BUBU IS" $BUBU
 
-- script: |
+- bash: |
     # Get build dir
     if [[ -z "BUILD_DIR" ]]; then
-      build_dir = "$(pwd)/docs/.vuepress/dist"
+      build_dir="$(pwd)"/docs/.vuepress/dist
     else
-      build_dir="$(pwd)/$BUILD_DIR"
+      build_dir="$(pwd)"/"$BUILD_DIR"
     fi
     echo "build_dir:"
-    echo $(build_dir)
-    echo "---"
     echo $build_dir
+    
     # set variable: deploy_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
-    echo "##vso[task.setvariable variable=build.dir] $DEPLOY_DIR "
-    echo "build_dir:"
-    echo $(BUILD_DIR)
-    echo SAUCE
+    echo "##vso[task.setvariable variable=build_dir]$build_dir"
     export
     pwd
     ls
   displayName: 'Enter build dir...'
+
+- bash: |
+    echo build_dir="$(build_dir)"
 
 - script: |
     if [ "$CNAME" ]; then
