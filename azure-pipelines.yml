@@ -26,6 +26,10 @@ steps:
     else
       export DEPLOY_DIR="$(pwd)/$BUILD_DIR"
     fi
+    
+    echo "##vso[task.setvariable variable=deploy_dir] $(DEPLOY_DIR) "
+    echo "##vso[task.setvariable variable=secret.Sauce;issecret=true]crushed tomatoes with garlic"
+    echo $deploy_dir
     echo $DEPLOY_DIR
     export
     pwd
