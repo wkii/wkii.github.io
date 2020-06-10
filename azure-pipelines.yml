@@ -35,14 +35,11 @@ steps:
       build_dir="$(pwd)"/"$BUILD_DIR"
     fi
     echo "build_dir is: "$build_dir
-    
+
     # set variable: deploy_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
     echo "##vso[task.setvariable variable=build_dir]$build_dir"
   displayName: 'Enter build dir...'
-
-- bash: |
-    echo build_dir is $(build_dir)
 
 - bash: |
     if [ "$CNAME" ]; then
