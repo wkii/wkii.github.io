@@ -37,7 +37,7 @@ steps:
 # before handing the body of the script to the shell.
 - bash: |
     echo my pipeline variable is $(sauce)
-    echo "BUBU IS" $(BUBU)
+    echo "BUBU IS" $BUBU
 
 - script: |
     # Get build dir
