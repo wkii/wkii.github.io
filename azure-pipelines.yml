@@ -28,7 +28,7 @@ steps:
       export DEPLOY_DIR="$(pwd)/$BUILD_DIR"
     fi
     echo $DEPLOY_DIR
-    cd $DEPLOY_DIR
+    export
     pwd
     ls
   displayName: 'Enter build dir...'
@@ -41,7 +41,6 @@ steps:
     pwd
     ls
     export
-  workingDirectory: $DEPLOY_DIR
   displayName: 'Generate a CNAME file'
 
 - script: |
@@ -54,10 +53,10 @@ steps:
     fi
     pwd
     ls
-    git add --all;
+    #git add --all;
     git commit -m"Pipelines-Bot: Auto deploy via $(Build.SourceVersion)";
     #git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
-  workingDirectory: $DEPLOY_DIR
+    #workingDirectory: $DEPLOY_DIR
   displayName: '[Git] Commit and push to Github Pages branch'
 
 
