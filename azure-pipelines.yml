@@ -23,16 +23,17 @@ steps:
 - script: |
     # Get build dir
     if [[ -z "BUILD_DIR" ]]; then
-      export DEPLOY_DIR="$(pwd)/docs/.vuepress/dist"
+      build_dir = "$(pwd)/docs/.vuepress/dist"
     else
-      export DEPLOY_DIR="$(pwd)/$BUILD_DIR"
+      build_dir="$(pwd)/$BUILD_DIR"
     fi
-    cd $DEPLOY_DIR
+    echo "build_dir:"
+    echo $(build_dir)
     # set variable: deploy_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
-    echo "##vso[task.setvariable variable=deploy_dir] $DEPLOY_DIR "
-    echo "deploy_dir:"
-    echo $(deploy_dir)
+    echo "##vso[task.setvariable variable=build_dir] $DEPLOY_DIR "
+    echo "build_dir:"
+    echo $(build_dir)
     export
     pwd
     ls
