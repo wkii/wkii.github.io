@@ -26,9 +26,10 @@ steps:
     else
       export DEPLOY_DIR="$(pwd)/$BUILD_DIR"
     fi
-    
-    echo "##vso[task.setvariable variable=deploy_dir] $(DEPLOY_DIR) "
-    echo "##vso[task.setvariable variable=secret.Sauce;issecret=true]crushed tomatoes with garlic"
+    cd $DEPLOY_DIR
+    # set variable: deploy_dir 
+    # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
+    echo "##vso[task.setvariable variable=deploy_dir] $DEPLOY_DIR "
     echo $deploy_dir
     echo $DEPLOY_DIR
     export
@@ -44,6 +45,7 @@ steps:
     pwd
     ls
     export
+  workingDirectory: $(deploy_dir)
   displayName: 'Generate a CNAME file'
 
 - script: |
