@@ -16,13 +16,47 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    echo "yarn version:"
-    yarn --version
-    yarn install --registry https://registry.yarnpkg.com
+    yarn install
     yarn docs:build
+  displayName: 'yarn install and build'
+
+- script: |
+    # Get build dir
+    if [[ -z "BUILD_DIR" ]]; then
+      DEPLOY_DIR="$(pwd)/docs/.vuepress/dist"
+    else
+      DEPLOY_DIR="$(pwd)/$BUILD_DIR"
+    fi
+    cd $DEPLOY_DIR
     pwd
     ls
-    echo "get version:"
-    git version
-  displayName: 'yarn install and build'
+  displayName: 'Enter build dir...'
+
+- script: |
+    if [ "$CNAME" ]; then
+      echo "Generating a CNAME file..."
+      echo $CNAME > CNAME
+    fi
+    pwd
+    ls
+    export
+  workingDirectory: $DEPLOY_DIR
+  displayName: 'Generate a CNAME file'
+
+- script: |
+    
+    DEPLOY_REPO="https://${ACCESS_TOKEN}@github.com/${REPOSITORY_NAME}.git"
+    if [[ -z "$TARGET_BRANCH" ]]; then
+      DEPLOY_BRANCH="gh-pages"
+    else
+      DEPLOY_BRANCH="$TARGET_BRANCH"
+    fi
+    pwd
+    ls
+    git add --all;
+    git commit -m"Pipelines-Bot: Auto deploy via $(Build.SourceVersion)";
+    #git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
+  workingDirectory: $DEPLOY_DIR
+  displayName: '[Git] Commit and push to Github Pages branch'
+
 
