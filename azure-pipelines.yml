@@ -71,8 +71,8 @@ steps:
       echo "ERROR: github token is not valid"
     else
       echo "github token is valid"
-      echo $env:GITHUB_TOKEN
     fi
+    echo $env:GITHUB_TOKEN
 
     git init
     git config user.name "Azure pipelines"
