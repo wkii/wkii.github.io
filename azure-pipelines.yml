@@ -29,13 +29,15 @@ steps:
     # yarn install --registry https://registry.yarnpkg.com --no-lockfile
     mkdir -p /tmp/dist
     
-    if [[ -z "$(BUILD_SCRIPT)" ]]; then
+    if [[ -z "$BUILD_SCRIPT" ]]; then
       script="yarn docs:build -d /tmp/dist"
+      echo "ffffffff"
     else
-      script="$(BUILD_SCRIPT)" -d /tmp/dist
+      script="$BUILD_SCRIPT" -d /tmp/dist
+      echo "yyyyyyyyyy"
     fi
-    
-    script1=$(BUILD_SCRIPT)" -d /tmp/dist"
+
+    script1="$(BUILD_SCRIPT) -d /tmp/dist"
     script2=${BUILD_SCRIPT}" -d /tmp/dist"
     echo "script:"$script
     echo "script1:"$script1
