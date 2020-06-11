@@ -26,12 +26,6 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: echo $GITHUB_TOKEN
-  env:
-    GITHUB_TOKEN: $(GITHUB_TOKEN)
 
 - bash: |
     # yarn install --registry https://registry.yarnpkg.com --no-lockfile
