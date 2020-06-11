@@ -36,7 +36,7 @@ steps:
     fi
     echo "build_dir is: "$build_dir
 
-    if [[ -z "$VARIABLE-GITHUB_TOKEN"]]; then
+    if [[ -z "$VARIABLE-GITHUB_TOKEN" ]]; then
        echo "github token is null"
     fi
 
