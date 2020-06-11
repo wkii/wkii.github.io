@@ -57,9 +57,7 @@ steps:
   displayName: 'Generate a CNAME file'
 
 - script: |
-    export
-    
-   
+    # use $(Build.Repository.ID) or ${BUILD_REPOSITORY_ID}
     DEPLOY_REPO="https://${GITHUB_TOKEN}@github.com/${BUILD_REPOSITORY_ID}.git"
     echo $DEPLOY_REPO
     if [[ -z "$TARGET_BRANCH" ]]; then
@@ -67,12 +65,11 @@ steps:
     else
       DEPLOY_BRANCH="$TARGET_BRANCH"
     fi
-    pwd
-    ls
-    #git add --all;
-    #git commit -m"Pipelines-Bot: Auto deploy via $(Build.SourceVersion)";
-    #git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
-    #workingDirectory: $DEPLOY_DIR
+    
+    git add --all;
+    git commit -m"Pipelines-Bot: Auto deploy via $(Build.SourceVersion)";
+    git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
+    workingDirectory: $(build_path)
   displayName: '[Git] Commit and push to Github Pages branch'
 
 
