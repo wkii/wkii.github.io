@@ -36,11 +36,11 @@ steps:
     fi
     echo "build_dir is: "$build_dir
 
-    if [[ -z "$VARIABLE-GITHUB_TOKEN" ]]; then
+    if [[ -z "${VARIABLE-GITHUB_TOKEN}" ]]; then
        echo "github token is null"
     fi
 
-    echo $VARIABLE-GITHUB_TOKEN
+    echo ${VARIABLE-GITHUB_TOKEN}
 
     # set variable: deploy_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
