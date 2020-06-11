@@ -39,8 +39,11 @@ steps:
     if [[ -z "${VARIABLE-GITHUB_TOKEN}" ]]; then
        echo "github token is null"
     fi
+    echo "target_branch:"${TARGET_BRANCH}
+    echo "target_branch 1 :"$(TARGET_BRANCH)
+    echo "VARIABLE-GITHUB_TOKEN"${VARIABLE-GITHUB_TOKEN}
+    echo "GITHUB_TOKEN:"$GITHUB_TOKEN
 
-    echo ${VARIABLE-GITHUB_TOKEN}
 
     # set variable: deploy_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
