@@ -2,7 +2,10 @@
 # Build a Node.js project that uses Vue.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
+#
+# You can set Variables on pipelines web console.
+# @see https://docs.microsoft.com/zh-cn/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
+#
 # Variables list:
 # variables name      Required        Keep secret        Default value
 # GITHUB_TOKEN           yes              yes
