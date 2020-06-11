@@ -24,7 +24,7 @@ steps:
   displayName: 'Install Node.js'
 
 - bash: |
-    yarn install --registry https://registry.yarnpkg.com --no-lockfile
+    yarn install --registry https://registry.yarnpkg.com --no-lockfile"
     if [[ -z "$BUILD_SCRIPT" ]]; then
       script="yarn docs:build"
     else
@@ -52,7 +52,8 @@ steps:
     if [ "$CNAME" ]; then
       echo "Generating a CNAME file..."
       echo $CNAME > CNAME
-  workingDirectory: $(build_path)
+    fi
+  workingDirectory: $(build_dir)
   displayName: 'Generate a CNAME file'
 
 - script: |
