@@ -26,54 +26,22 @@ steps:
   displayName: 'Install Node.js'
 
 - bash: |
-    # yarn install --registry https://registry.yarnpkg.com --no-lockfile
+    yarn install --registry https://registry.yarnpkg.com --no-lockfile
     mkdir -p /tmp/dist
-    
-    if [[ -z "$BUILD_SCRIPT" ]]; then
+    # For not secret variables,use $variablesname or ${variablesname}
+    # For secret variables, use $(variablesname)
+
+    if [[ -z "${BUILD_SCRIPT}" ]]; then
       script="yarn docs:build -d /tmp/dist"
-      echo "ffffffff BUILD_SCRIPT"$BUILD_SCRIPT
     else
-      script="$BUILD_SCRIPT" -d /tmp/dist
-      echo "yyyyyyyyyy BUILD_SCRIPT"$BUILD_SCRIPT
+      script="${BUILD_SCRIPT} -d /tmp/dist"
     fi
-
-    if [[ -z "$(BUILD_SCRIPT)" ]]; then
-      echo "ffffffff BUILD_SCRIPT"$(BUILD_SCRIPT)
-    else
-      script="$BUILD_SCRIPT" -d /tmp/dist
-      echo "yyyyyyyyyy BUILD_SCRIPT"$(BUILD_SCRIPT)
-    fi
-
-    if [[ -z "$GITHUB_TOKEN" ]]; then
-      echo "ffffffff GITHUB_TOKEN"$GITHUB_TOKEN
-    else
-      echo "yyyyyyyyyy GITHUB_TOKEN"$GITHUB_TOKEN
-    fi
-
-    if [[ -z "$(GITHUB_TOKEN)" ]]; then
-      echo "ffffffff GITHUB_TOKEN"$(GITHUB_TOKEN)
-    else
-      echo "yyyyyyyyyy GITHUB_TOKEN"$(GITHUB_TOKEN)
-    fi
-
-    script1="$(BUILD_SCRIPT) -d /tmp/dist"
-    script2=${BUILD_SCRIPT}" -d /tmp/dist"
-    echo "script:"$script
-    echo "script1:"$script1
-    echo "script2:"$script2
-    #eval $script
-
-    # Get build dir
-    if [[ -z "$BUILD_DIR" ]]; then
-      build_path="$(pwd)"/docs/.vuepress/dist
-    else
-      build_dir="$(pwd)"/"$BUILD_DIR"
-    fi
-    echo "build_path is: "$build_path
+    echo "Start building:"$script
+    eval $script
 
     # set variable: build_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
-    echo "##vso[task.setvariable variable=build_path]$build_path"
+    echo "##vso[task.setvariable variable=build_path]/tmp/dist"
   displayName: 'yarn install and build'
 
 - bash: |
