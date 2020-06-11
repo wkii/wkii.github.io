@@ -59,7 +59,7 @@ steps:
 - script: |
     pwd
     # use $(Build.Repository.ID) or ${BUILD_REPOSITORY_ID}
-    DEPLOY_REPO="https://${GITHUB_TOKEN}@github.com/${BUILD_REPOSITORY_ID}.git"
+    DEPLOY_REPO="https://${env:GITHUB_TOKEN}@github.com/${BUILD_REPOSITORY_ID}.git"
     echo $DEPLOY_REPO
     if [[ -z "$TARGET_BRANCH" ]]; then
       DEPLOY_BRANCH="gh-pages"
@@ -67,7 +67,7 @@ steps:
       DEPLOY_BRANCH="$TARGET_BRANCH"
     fi
 
-    if [[ -z "$GITHUB_TOKEN" ]]; then
+    if [[ -z "$env:GITHUB_TOKEN" ]]; then
       echo "ERROR: github token is not valid"
     else
       echo "github token is valid"
