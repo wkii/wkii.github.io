@@ -26,27 +26,15 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-
 - bash: |
-    # yarn install --registry https://registry.yarnpkg.com --no-lockfile
+    yarn install --registry https://registry.yarnpkg.com --no-lockfile
     if [[ -z "$BUILD_SCRIPT" ]]; then
       script="yarn docs:build"
     else
       script="$BUILD_SCRIPT"
     fi
-
-    if [[ -z "${GITHUB_TOKEN}" ]]; then
-      echo "ERROR: github token is not valid"
-    else
-      echo "github token is valid"
-    fi
-    echo "ENV_GITHUB_TOKEN is:"
-    echo ${env:GITHUB_TOKEN}
-    echo "Github_Token is:"
-    echo $(GITHUB_TOKEN)
-
     
-    ##eval $script
+    eval $script
 
     # Get build dir
     if [[ -z "$BUILD_DIR" ]]; then
@@ -59,8 +47,6 @@ steps:
     # set variable: build_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
     echo "##vso[task.setvariable variable=build_path]$build_path"
-
-    export
   displayName: 'yarn install and build'
 
 - bash: |
@@ -74,7 +60,7 @@ steps:
 - script: |
     pwd
     # use $(Build.Repository.ID) or ${BUILD_REPOSITORY_ID}
-    DEPLOY_REPO="https://${env:GITHUB_TOKEN}@github.com/${BUILD_REPOSITORY_ID}.git"
+    DEPLOY_REPO="https://$(GITHUB_TOKEN)@github.com/$(Build.Repository.ID).git"
     echo $DEPLOY_REPO
     if [[ -z "$TARGET_BRANCH" ]]; then
       DEPLOY_BRANCH="gh-pages"
@@ -82,13 +68,12 @@ steps:
       DEPLOY_BRANCH="$TARGET_BRANCH"
     fi
 
-    if [[ -z "${env:GITHUB_TOKEN}" ]]; then
+    if [[ -z "$(GITHUB_TOKEN)" ]]; then
       echo "ERROR: github token is not valid"
     else
       echo "github token is valid"
     fi
-    echo "ENV_GITHUB_TOKEN"${env:GITHUB_TOKEN}
-    echo "GITHUB_TOKEN"$(GITHUB_TOKEN)
+
 
     git init
     git config user.name "Azure pipelines"
