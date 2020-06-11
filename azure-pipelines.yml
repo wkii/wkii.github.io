@@ -1,0 +1,79 @@
+# Node.js with Vue
+# Build a Node.js project that uses Vue.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+#
+# You can set Variables on pipelines web console.
+# @see https://docs.microsoft.com/zh-cn/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
+#
+# Variables list:
+# variables name      Required        Keep secret        Default value         Example
+# GITHUB_TOKEN           yes              yes
+# BUILD_SCRIPT           no               no             yarn docs:build
+# CNAME                  no               no                                   www.youdomain.com
+# TARGET_BRANCH          no               no             gh-pages              master
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- bash: |
+    yarn install --registry https://registry.yarnpkg.com --no-lockfile
+    mkdir -p /tmp/dist
+    # For not secret variables,use $variablesname or ${variablesname}
+    # For secret variables, use $(variablesname)
+
+    if [[ -z "${BUILD_SCRIPT}" ]]; then
+      script="yarn docs:build -d /tmp/dist"
+    else
+      script="${BUILD_SCRIPT} -d /tmp/dist"
+    fi
+    echo "Start building:"$script
+    eval $script
+
+    # set variable: build_dir 
+    # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
+    echo "##vso[task.setvariable variable=build_path]/tmp/dist"
+  displayName: 'yarn install and build'
+
+- bash: |
+    if [ "$CNAME" ]; then
+      echo "Generating a CNAME file..."
+      echo $CNAME > CNAME
+    fi
+  workingDirectory: $(build_path)
+  displayName: 'Generate a CNAME file'
+
+- script: |
+    # use $(Build.Repository.ID) or ${BUILD_REPOSITORY_ID}
+    DEPLOY_REPO="https://$(GITHUB_TOKEN)@github.com/$(Build.Repository.ID).git"
+    
+    if [[ -z "$TARGET_BRANCH" ]]; then
+      DEPLOY_BRANCH="gh-pages"
+    else
+      DEPLOY_BRANCH="$TARGET_BRANCH"
+    fi
+
+    if [[ -z "$(GITHUB_TOKEN)" ]]; then
+      echo "ERROR: github token is not valid"
+      exit 0
+    else
+      echo "github token is valid"
+    fi
+
+    git init
+    git config user.name "Azure pipelines"
+    git config user.email "pipelines@users.noreply.github.com"
+    git add --all;
+    git commit -m"Pipelines-Bot: Auto deploy via $(Build.SourceVersion)";
+    git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
+  workingDirectory: $(build_path)
+  displayName: '[Git] Commit and push to Github Pages branch'
