@@ -48,7 +48,6 @@ steps:
     fi
 
     echo "ENV_GITHUB_TOKEN is "${env:GITHUB_TOKEN}
-    echo "GITHUB_TOKEN is "$(GITHUB_TOKEN)
     
     ##eval $script
 
