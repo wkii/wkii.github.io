@@ -6,7 +6,6 @@ tags:
   - vuepress
   - azure
 ---
-
 ## 发布原理
 无论使用什么CI工具发布vuepress到Github Pages，一共就三步：
 * yarn install
@@ -17,25 +16,36 @@ tags:
 
 发布的CI工具常见的有以下几个：
 
-* `Travis-ci`：它一共有两个服务，分别是Travis-ci.org 和 Travis-ci.com，其中org只支持开源仓库，.com可以支持私有仓库。并且Travis-ci在规划将所有的服务并到travis-com中。 所以如果使用Travis-ci，那就直接使用Travis-ci.com这个服务吧。而且用com的服务还能授权部分仓库，也不必配置Webhooks，强迫症福音。
-  * 优点：
-    * 方案成熟，满大街都有教程
-  * 缺点：
-    * 如果要再发布到自己的服务器上，无法通过变量添加know_hosts 以避免交互输入，可参见我的[Travis-ci配置](https://github.com/wkii/wkii.github.io/blob/develop/.travis.yml)。
-    * 电信网络访问慢，甚至 Status badge 图标都加载不出来（当然不能怪人家）
-* `Github workflow Actions`：目前不推荐，还不够成熟。应用市场里只有三方应用功能全一点，例如`GitHub Pages action`和`vuepress-deploy`。
-  * 缺点：创建任务只能在线修改和编辑yml文件，本地编辑完了推送不生效。还好本地删除再推送还好用，否则想删都删不了。
-  * 优点：Status badge 图标好看
-* `Microsoft Azure pipelines`：本文主角
-  * 优点：
-    * 可以高度自定义，可参见我后面的配置文件
-    * 安全，完全自主控制，不依赖任何三方应用
-    * Status badge 图标好看（又颜控了）
-    * 网络连通性较好，放上个`Install B` 的 `Status badge` 图标能显示出来
-    * 支持Windows环境构建（虽然我用不到）
-  * 缺点：
-    * 触发器trigger不支持变量（You cannot use [variables](https://docs.microsoft.com/zh-cn/azure/devops/pipelines/process/variables?view=azure-devops) in paths, as variables are evaluated at runtime (after the trigger has fired).
-    * 官方task缺乏，唯一一个叫"Publish to Github Pages"的Task，还只支持windows 😂😂😂
+#### Travis-ci
+
+它一共有两个服务，分别是Travis-ci.org 和 Travis-ci.com，其中org只支持开源仓库，.com可以支持私有仓库。并且Travis-ci在规划将所有的服务并到travis-com中。 所以如果使用Travis-ci，那就直接使用Travis-ci.com这个服务吧。而且用com的服务还能授权部分仓库，也不必配置Webhooks，强迫症福音。
+
+* 优点：
+  * 方案成熟，满大街都有教程
+* 缺点：
+  * 如果要再发布到自己的服务器上，无法通过变量添加know_hosts 以避免交互输入，可参见我的[Travis-ci配置](https://github.com/wkii/wkii.github.io/blob/develop/.travis.yml)。
+  * 电信网络访问慢，甚至 Status badge 图标都加载不出来（当然不能怪人家）
+
+#### Github workflow Actions
+
+目前不推荐，还不够成熟。应用市场里只有三方应用功能全一点，例如`GitHub Pages action`和`vuepress-deploy`。
+
+* 缺点：创建任务只能在线修改和编辑yml文件，本地编辑完了推送不生效。还好本地删除再推送还好用，否则想删都删不了。
+* 优点：Status badge 图标好看
+
+#### Microsoft Azure pipelines
+
+本文主角
+
+* 优点：
+  * 可以高度自定义，可参见我后面的配置文件
+  * 安全，完全自主控制，不依赖任何三方应用
+  * Status badge 图标好看（又颜控了）
+  * 网络连通性较好，放上个`Install B` 的 `Status badge` 图标能显示出来
+  * 支持Windows环境构建（虽然我用不到）
+* 缺点：
+  * 触发器trigger不支持变量（You cannot use [variables](https://docs.microsoft.com/zh-cn/azure/devops/pipelines/process/variables?view=azure-devops) in paths, as variables are evaluated at runtime (after the trigger has fired).
+  * 官方task缺乏，唯一一个叫"Publish to Github Pages"的Task，还只支持windows 😂😂😂
 
 当然，除了发布到github pages(github.io)，你还可以发布到 Azure Static Web Apps。参考：[Tutorial: Publish a VuePress site to Azure Static Web Apps Preview](https://docs.microsoft.com/en-us/azure/static-web-apps/publish-vuepress)，当然，这是另一个话题，不再展开。
 
@@ -59,15 +69,20 @@ tags:
 
 当然，也可以从[Azure](https://azure.microsoft.com/en-us/services/devops/?nav=min) 开始，选择[Start free with GitHub ](https://go.microsoft.com/fwlink/?LinkId=2014676&provider=github.com) 或者用你的微软帐户登录Azure，选择Pipelines，然后创建组织，创建项目，关联Github. 入口多种多样。
 
-> 配置说明：
+### 配置文件
+
+> 配置文件说明：
 >
-> 配置项的几个变量，要去Azure Pipelines的编辑界面，点右侧的Variables铵钮设置，然后要点保存
+> 文件名和路径：放在项目根目录下，命名为`azure-pipelines.yml`
+>
+> 配置项的几个变量，要去**Azure Pipelines的编辑界面**，点右侧的Variables铵钮设置添加，然后要点保存。
+>
 > **GITHUB_TOKEN**： 是必须的，并且一定要选加密，谁也不希望自己Github的密钥泄漏出去吧。
 > **BUILD_SCRIPT**：默认是`yarn docs:build`，如果你的package.json中还配置了其它的，可以设置它
 > **CNAME**：用于你配置了Github Pages的独立域名时，在根目录生成一个写着域名的CNAME文件，当然你把它放在`.vuepress/public`目录下效果也是一样的。
 > **TARGET_BRANCH**：要发布的分支，如果是 username.github.io，要选`master`分支，如果是https://<USERNAME>.github.io/<REPO>，则是`gh-pages`分支，默认是`gh-pages`分支
 >
-> 代码不用动，只需要配置1到2个变量就行了。
+> 代码不用动，只需要配置1到2个变量就行了。然后再次提交你的主分支，就会触发Azure Pipelines 的 build和deploy。
 >
 > **GITHUB_TOKEN一定要选加密！**
 > **GITHUB_TOKEN一定要选加密！**
