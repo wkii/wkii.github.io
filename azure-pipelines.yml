@@ -66,8 +66,8 @@ steps:
       DEPLOY_BRANCH="$TARGET_BRANCH"
     fi
     git init
-    git config -user.name "Azure pipelines"
-    git config -user.email "pipelines@users.noreply.github.com"
+    git config user.name "Azure pipelines"
+    git config user.email "pipelines@users.noreply.github.com"
     git add --all;
     git commit -m"Pipelines-Bot: Auto deploy via $(Build.SourceVersion)";
     git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
