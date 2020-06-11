@@ -34,7 +34,7 @@ steps:
     GITHUB_TOKEN: $(GITHUB_TOKEN)
 
 - bash: |
-    yarn install --registry https://registry.yarnpkg.com --no-lockfile
+    # yarn install --registry https://registry.yarnpkg.com --no-lockfile
     if [[ -z "$BUILD_SCRIPT" ]]; then
       script="yarn docs:build"
     else
@@ -48,7 +48,8 @@ steps:
     fi
     echo "ENV_GITHUB_TOKEN is:"
     echo ${env:GITHUB_TOKEN}
-
+    echo "Github_Token is:"
+    echo $(GITHUB_TOKEN)
 
     
     ##eval $script
