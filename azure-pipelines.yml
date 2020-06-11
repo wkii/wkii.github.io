@@ -70,12 +70,12 @@ steps:
       DEPLOY_BRANCH="$TARGET_BRANCH"
     fi
 
-    if [[ -z "$env:GITHUB_TOKEN" ]]; then
+    if [[ -z "${env:GITHUB_TOKEN}" ]]; then
       echo "ERROR: github token is not valid"
     else
       echo "github token is valid"
     fi
-    echo $env:GITHUB_TOKEN
+    echo ${env:GITHUB_TOKEN}
 
     git init
     git config user.name "Azure pipelines"
