@@ -9,7 +9,6 @@
 # Variables list:
 # variables name      Required        Keep secret        Default value
 # GITHUB_TOKEN           yes              yes
-# BUILD_DIR              no               no             docs/.vuepress/dist
 # BUILD_SCRIPT           no               no             yarn docs:build
 # CNAME                  no               no
 # TARGET_BRANCH          no               no             gh-pages
@@ -27,14 +26,21 @@ steps:
   displayName: 'Install Node.js'
 
 - bash: |
-    yarn install --registry https://registry.yarnpkg.com --no-lockfile
-    if [[ -z "$BUILD_SCRIPT" ]]; then
-      script="yarn docs:build"
+    # yarn install --registry https://registry.yarnpkg.com --no-lockfile
+    mkdir -p /tmp/dist
+    
+    if [[ -z "$(BUILD_SCRIPT)" ]]; then
+      script="yarn docs:build -d /tmp/dist"
     else
-      script="$BUILD_SCRIPT"
+      script="$(BUILD_SCRIPT)" -d /tmp/dist
     fi
     
-    eval $script
+    script1=$(BUILD_SCRIPT)" -d /tmp/dist"
+    script2=${BUILD_SCRIPT}" -d /tmp/dist"
+    echo "script:"$script
+    echo "script1:"$script1
+    echo "script2:"$script2
+    #eval $script
 
     # Get build dir
     if [[ -z "$BUILD_DIR" ]]; then
@@ -58,10 +64,9 @@ steps:
   displayName: 'Generate a CNAME file'
 
 - script: |
-    pwd
     # use $(Build.Repository.ID) or ${BUILD_REPOSITORY_ID}
     DEPLOY_REPO="https://$(GITHUB_TOKEN)@github.com/$(Build.Repository.ID).git"
-    echo $DEPLOY_REPO
+    
     if [[ -z "$TARGET_BRANCH" ]]; then
       DEPLOY_BRANCH="gh-pages"
     else
@@ -70,10 +75,10 @@ steps:
 
     if [[ -z "$(GITHUB_TOKEN)" ]]; then
       echo "ERROR: github token is not valid"
+      exit 0
     else
       echo "github token is valid"
     fi
-
 
     git init
     git config user.name "Azure pipelines"
