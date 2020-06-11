@@ -82,7 +82,7 @@ tags:
 > **CNAME**：用于你配置了Github Pages的独立域名时，在根目录生成一个写着域名的CNAME文件，当然你把它放在`.vuepress/public`目录下效果也是一样的。
 > **TARGET_BRANCH**：要发布的分支，如果是 username.github.io，要选`master`分支，如果是https://<USERNAME>.github.io/<REPO>，则是`gh-pages`分支，默认是`gh-pages`分支
 >
-> 代码不用动，只需要配置1到2个变量就行了。然后再次提交你的主分支，就会触发Azure Pipelines 的 build和deploy。
+> 代码不用动，只需要配置1到2个变量就行了。然后再次提交并推送你的主分支，就会触发Azure Pipelines 的 build和deploy。
 >
 > **GITHUB_TOKEN一定要选加密！**
 > **GITHUB_TOKEN一定要选加密！**
