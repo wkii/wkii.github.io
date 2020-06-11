@@ -26,12 +26,25 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: echo $GITHUB_TOKEN
+  env:
+    GITHUB_TOKEN: $(GITHUB_TOKEN)
+
 - bash: |
     yarn install --registry https://registry.yarnpkg.com --no-lockfile
     if [[ -z "$BUILD_SCRIPT" ]]; then
       script="yarn docs:build"
     else
       script="$BUILD_SCRIPT"
+    fi
+
+    if [[ -z "${GITHUB_TOKEN}" ]]; then
+      echo "ERROR: github token is not valid"
+    else
+      echo "github token is valid"
     fi
 
     echo "ENV_GITHUB_TOKEN"${env:GITHUB_TOKEN}
