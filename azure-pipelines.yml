@@ -36,10 +36,25 @@ steps:
     fi
     echo "build_dir is: "$build_dir
 
+    if [[ -z "$VARIABLE-GITHUB_TOKEN"]]; then
+       echo "github token is null"
+    fi
+
+    echo $VARIABLE-GITHUB_TOKEN
+
     # set variable: deploy_dir 
     # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
     echo "##vso[task.setvariable variable=build_dir]$build_dir"
   displayName: 'Enter build dir...'
+
+- script: |
+    if [ "$CNAME" ]; then
+      echo "Generating a CNAME file..."
+      echo $CNAME > CNAME
+    fi
+    pwd
+  workingDirectory: $(build_dir)
+  displayName: 'Generate a CNAME file'
 
 - bash: |
     if [ "$CNAME" ]; then
