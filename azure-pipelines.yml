@@ -53,7 +53,7 @@ steps:
       echo "Generating a CNAME file..."
       echo $CNAME > CNAME
     fi
-  workingDirectory: $(build_dir)
+  workingDirectory: $(build_path)
   displayName: 'Generate a CNAME file'
 
 - script: |
