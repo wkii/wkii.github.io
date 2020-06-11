@@ -56,7 +56,7 @@ steps:
   workingDirectory: $(build_path)
   displayName: 'Generate a CNAME file'
 
-- bash: |
+- script: |
     pwd
     # use $(Build.Repository.ID) or ${BUILD_REPOSITORY_ID}
     DEPLOY_REPO="https://${GITHUB_TOKEN}@github.com/${BUILD_REPOSITORY_ID}.git"
@@ -66,6 +66,13 @@ steps:
     else
       DEPLOY_BRANCH="$TARGET_BRANCH"
     fi
+
+    if [[ -z "$GITHUB_TOKEN" ]]; then
+      echo "ERROR: github token is not valid"
+    else
+      echo "github token is valid"
+    fi
+
     git init
     git config user.name "Azure pipelines"
     git config user.email "pipelines@users.noreply.github.com"
