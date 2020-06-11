@@ -1,2 +1,5 @@
 ## Wkii blog
-[![Build Status](https://travis-ci.com/wkii/wkii.github.io.svg?branch=develop)](https://travis-ci.com/wkii/wkii.github.io)
+<p align="center">
+<img src="https://dev.azure.com/wkii/blog/_apis/build/status/wkii.wkii.github.io?branchName=develop">
+</p>
+
