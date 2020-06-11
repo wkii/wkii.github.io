@@ -56,7 +56,7 @@ steps:
   workingDirectory: $(build_path)
   displayName: 'Generate a CNAME file'
 
-- script: |
+- bash: |
     pwd
     # use $(Build.Repository.ID) or ${BUILD_REPOSITORY_ID}
     DEPLOY_REPO="https://${GITHUB_TOKEN}@github.com/${BUILD_REPOSITORY_ID}.git"
