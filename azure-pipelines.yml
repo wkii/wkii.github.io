@@ -24,7 +24,7 @@ steps:
   displayName: 'Install Node.js'
 
 - bash: |
-    yarn install --registry https://registry.yarnpkg.com --no-lockfile"
+    yarn install --registry https://registry.yarnpkg.com --no-lockfile
     if [[ -z "$BUILD_SCRIPT" ]]; then
       script="yarn docs:build"
     else
