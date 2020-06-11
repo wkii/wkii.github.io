@@ -46,8 +46,10 @@ steps:
     else
       echo "github token is valid"
     fi
+    echo "ENV_GITHUB_TOKEN is:"
+    echo ${env:GITHUB_TOKEN}
 
-    echo "ENV_GITHUB_TOKEN is "${env:GITHUB_TOKEN}
+
     
     ##eval $script
 
