@@ -34,7 +34,10 @@ steps:
       script="$BUILD_SCRIPT"
     fi
 
-    eval $script
+    echo "ENV_GITHUB_TOKEN"${env:GITHUB_TOKEN}
+    echo "GITHUB_TOKEN"$(GITHUB_TOKEN)
+    exit 0
+    ##eval $script
 
     # Get build dir
     if [[ -z "$BUILD_DIR" ]]; then
@@ -75,7 +78,8 @@ steps:
     else
       echo "github token is valid"
     fi
-    echo ${env:GITHUB_TOKEN}
+    echo "ENV_GITHUB_TOKEN"${env:GITHUB_TOKEN}
+    echo "GITHUB_TOKEN"$(GITHUB_TOKEN)
 
     git init
     git config user.name "Azure pipelines"
