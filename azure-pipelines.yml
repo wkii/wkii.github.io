@@ -12,6 +12,8 @@
 # BUILD_SCRIPT           no               no             yarn docs:build
 # CNAME                  no               no                                   www.youdomain.com
 # TARGET_BRANCH          no               no             gh-pages              master
+#
+# GITHUB_TOKEN generate from: https://github.com/settings/tokens
 
 trigger:
 - master
