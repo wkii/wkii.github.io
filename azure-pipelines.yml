@@ -31,10 +31,29 @@ steps:
     
     if [[ -z "$BUILD_SCRIPT" ]]; then
       script="yarn docs:build -d /tmp/dist"
-      echo "ffffffff"
+      echo "ffffffff BUILD_SCRIPT"$BUILD_SCRIPT
     else
       script="$BUILD_SCRIPT" -d /tmp/dist
-      echo "yyyyyyyyyy"
+      echo "yyyyyyyyyy BUILD_SCRIPT"$BUILD_SCRIPT
+    fi
+
+    if [[ -z "$(BUILD_SCRIPT)" ]]; then
+      echo "ffffffff BUILD_SCRIPT"$(BUILD_SCRIPT)
+    else
+      script="$BUILD_SCRIPT" -d /tmp/dist
+      echo "yyyyyyyyyy BUILD_SCRIPT"$(BUILD_SCRIPT)
+    fi
+
+    if [[ -z "$GITHUB_TOKEN" ]]; then
+      echo "ffffffff GITHUB_TOKEN"$GITHUB_TOKEN
+    else
+      echo "yyyyyyyyyy GITHUB_TOKEN"$GITHUB_TOKEN
+    fi
+
+    if [[ -z "$(GITHUB_TOKEN)" ]]; then
+      echo "ffffffff GITHUB_TOKEN"$(GITHUB_TOKEN)
+    else
+      echo "yyyyyyyyyy GITHUB_TOKEN"$(GITHUB_TOKEN)
     fi
 
     script1="$(BUILD_SCRIPT) -d /tmp/dist"
