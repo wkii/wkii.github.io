@@ -16,7 +16,7 @@
 # GITHUB_TOKEN generate from: https://github.com/settings/tokens
 
 trigger:
-- master
+- develop
 
 pool:
   vmImage: 'ubuntu-latest'
