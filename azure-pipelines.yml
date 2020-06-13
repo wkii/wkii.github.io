@@ -37,6 +37,9 @@ steps:
     sshKeySecureFile: 'deploy_rsa'
 
 - bash: |
-    
+    echo "node version:"
+    node --version
+    echo "yarn version:"
+    yarn --version
     scp -P $(HOST_PORT) -o StrictHostKeyChecking=no -r docs/* $(HOST_USER)@$(HOST_ADDR):/data/docker/wwwroot/test/
   displayName: 'Push to Hosts server.'
