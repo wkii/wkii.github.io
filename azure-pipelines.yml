@@ -83,3 +83,11 @@ steps:
     git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
   workingDirectory: $(build_path)
   displayName: '[Git] Commit and push to Github Pages branch'
+
+- task: InstallSSHKey@0
+  inputs:
+    knownHostsEntry: '$(HOST_ADDR)'
+    sshKeySecureFile: 'deploy_rsa'
+
+- bash: |
+      - scp -P $(HOST_PORT) -o StrictHostKeyChecking=no -r $(build_path)/* $(HOST_USER)@$(HOST_ADDR):$(HOST_DEPLOY_PATH)
