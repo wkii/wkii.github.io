@@ -28,11 +28,13 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    # 注意设置版本号，选12.x，默认是10.x，非常坑
+    versionSpec: '12.x'
+    checkLatest: true
   displayName: 'Install Node.js'
 
 - bash: |
-    yarn install --registry https://registry.yarnpkg.com --no-lockfile
+    yarn install
     mkdir -p /tmp/dist
     # For not secret variables,use $variablesname or ${variablesname}
     # For secret variables, use $(variablesname)
@@ -83,3 +85,17 @@ steps:
     git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
   workingDirectory: $(build_path)
   displayName: '[Git] Commit and push to Github Pages branch'
+
+- task: InstallSSHKey@0
+  inputs:
+    # Set "HOST_ADDR" Viriables on pipelines edit web interface
+    knownHostsEntry: '$(HOST_ADDR)'
+    # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/library/secure-files?view=azure-devops
+    # upload your ssh private key on pipelines "Labrary"
+    sshKeySecureFile: 'deploy_rsa'
+  displayName: 'install ssh key.'
+
+- bash: |
+    # Set HOST_PORT,HOST_USER,HOST_ADDR and HOST_DEPLOY_PATH Viriables on the pipelines edit web interface
+    scp -P $(HOST_PORT) -o StrictHostKeyChecking=no -r $(build_path)/* $(HOST_USER)@$(HOST_ADDR):$(HOST_DEPLOY_PATH)
+  displayName: 'Push to Hosts server.'

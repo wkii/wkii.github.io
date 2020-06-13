@@ -122,7 +122,8 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    # 注意设置版本号，选12.x，默认是10.x，非常坑
+    versionSpec: '12.x'
   displayName: 'Install Node.js'
 
 - bash: |
@@ -182,6 +183,47 @@ steps:
 ### 查看任务过程和结果
 
 点击项目左侧的Pipelines菜单，右侧的 Recently run pipelines 是Pipelines配置文件维度。再点进去才是历次的执行结果。看每一步的执行情况，多点几次就进去了。
+
+### 发布到自己的服务器
+
+如果要发布到自己的服务器，可以使用rsync、ssh scp等几种方式。我这里偷懒不配rsync，就简单使用scp了。
+
+#### 上传私钥
+
+需要将ssh的rsa私钥上传到Pipelines管理界面的Library里，参考 [这里](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/secure-files?view=azure-devops)。所以最好给发布站点单独建一套用户和公私钥，不要用root的私钥。
+
+> 1. In **Azure Pipelines**, select the **Library** tab.
+> 2. Select the **Secure files** tab at the top.
+> 3. Select the secure file you want to authorize.
+> 4. In the details view under **Properties**, select **Authorize for use in all pipelines**, and then select **Save**.
+
+####  增加配置
+
+然后增加azure-pipelines.yml配置如下：
+
+```yaml
+# 安装私钥任务
+- task: InstallSSHKey@0
+  inputs:
+    # Set "HOST_ADDR" Viriables on pipelines edit web interface
+    knownHostsEntry: '$(HOST_ADDR)'
+    # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/library/secure-files?view=azure-devops
+    # upload your ssh private key on pipelines "Labrary"
+    sshKeySecureFile: 'deploy_rsa' # 上传的文件名
+  displayName: 'install ssh key.'
+
+# 发布站点脚本
+- bash: |
+    # Set HOST_PORT,HOST_USER,HOST_ADDR and HOST_DEPLOY_PATH Viriables on the pipelines edit web interface
+    scp -P $(HOST_PORT) -o StrictHostKeyChecking=no -r $(build_path)/* $(HOST_USER)@$(HOST_ADDR):$(HOST_DEPLOY_PATH)
+  displayName: 'Push to Hosts server.'
+```
+
+#### 授予权限
+
+在Pipelines的Recent 标签页中，进入Runs列表，点击查看状态会有授权的提示，授权Pipelines访问你的**Secure files**。
+
+
 
 ## 调试工具
 参考azure-cli工具的 az [pipelines](https://docs.microsoft.com/zh-cn/cli/azure/pipelines?view=azure-cli-latest) 先挖个坑，还没用明白，对于没有使用付费服务的来说，看样子用处不大。
