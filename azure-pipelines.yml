@@ -32,15 +32,68 @@ steps:
     checkLatest: true
   displayName: 'Install Node.js'
 
-- task: InstallSSHKey@0
-  inputs:
-    knownHostsEntry: '$(HOST_ADDR)'
-    sshKeySecureFile: 'deploy_rsa'
+- bash: |
+    yarn install
+    mkdir -p /tmp/dist
+    # For not secret variables,use $variablesname or ${variablesname}
+    # For secret variables, use $(variablesname)
+
+    if [[ -z "${BUILD_SCRIPT}" ]]; then
+      script="yarn docs:build -d /tmp/dist"
+    else
+      script="${BUILD_SCRIPT} -d /tmp/dist"
+    fi
+    echo "Start building:"$script
+    eval $script
+
+    # set variable: build_dir 
+    # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops
+    echo "##vso[task.setvariable variable=build_path]/tmp/dist"
+  displayName: 'yarn install and build'
 
 - bash: |
-    echo "node version:"
-    node --version
-    echo "yarn version:"
-    yarn --version
-    scp -P $(HOST_PORT) -o StrictHostKeyChecking=no -r docs/* $(HOST_USER)@$(HOST_ADDR):/data/docker/wwwroot/test/
+    if [ "$CNAME" ]; then
+      echo "Generating a CNAME file..."
+      echo $CNAME > CNAME
+    fi
+  workingDirectory: $(build_path)
+  displayName: 'Generate a CNAME file'
+
+- script: |
+    # use $(Build.Repository.ID) or ${BUILD_REPOSITORY_ID}
+    DEPLOY_REPO="https://$(GITHUB_TOKEN)@github.com/$(Build.Repository.ID).git"
+    
+    if [[ -z "$TARGET_BRANCH" ]]; then
+      DEPLOY_BRANCH="gh-pages"
+    else
+      DEPLOY_BRANCH="$TARGET_BRANCH"
+    fi
+
+    if [[ -z "$(GITHUB_TOKEN)" ]]; then
+      echo "ERROR: github token is not valid"
+      exit 0
+    else
+      echo "github token is valid"
+    fi
+
+    git init
+    git config user.name "Azure pipelines"
+    git config user.email "pipelines@users.noreply.github.com"
+    git add --all;
+    git commit -m"Pipelines-Bot: Auto deploy via $(Build.SourceVersion)";
+    git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
+  workingDirectory: $(build_path)
+  displayName: '[Git] Commit and push to Github Pages branch'
+
+- task: InstallSSHKey@0
+  inputs:
+    # Set "HOST_ADDR" Viriables on pipelines edit web interface
+    knownHostsEntry: '$(HOST_ADDR)'
+    # @see https://docs.microsoft.com/en-us/azure/devops/pipelines/library/secure-files?view=azure-devops
+    # upload your ssh private key on pipelines "Labrary"
+    sshKeySecureFile: 'deploy_rsa'
+  displayName: 'install ssh key.'
+
+- bash: |
+    scp -P $(HOST_PORT) -o StrictHostKeyChecking=no -r $(build_path)/* $(HOST_USER)@$(HOST_ADDR):/data/docker/wwwroot/test/
   displayName: 'Push to Hosts server.'
