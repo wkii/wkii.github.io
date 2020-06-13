@@ -90,4 +90,5 @@ steps:
     sshKeySecureFile: 'deploy_rsa'
 
 - bash: |
-      - scp -P $(HOST_PORT) -o StrictHostKeyChecking=no -r $(build_path)/* $(HOST_USER)@$(HOST_ADDR):$(HOST_DEPLOY_PATH)
+      - scp -P $(HOST_PORT) -o StrictHostKeyChecking=no -r $(build_path)/* $(HOST_USER)@$(HOST_ADDR):/data/docker/wwwroot/test/
+  displayName: 'Push to Hosts server.'
