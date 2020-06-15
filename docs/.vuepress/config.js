@@ -12,7 +12,7 @@ module.exports = {
     '/': {
       lang: 'zh-CN', // 将会被设置为 <html> 的 lang 属性
       title: 'Wkii Blog',
-      description: 'Happiness is Grasp now!',
+      description: 'Happiness is Grasp now!'
     }
   },
   head: [
@@ -48,8 +48,6 @@ module.exports = {
       }
     ],
     displayAllHeaders: false, // 默认值：false
-    // 文档更新时间：每个文件git最后提交的时间
-    lastUpdated: 'Last Updated',
 
     // ################### theme-reco 模板配置 ########################
     type: 'blog',
@@ -64,12 +62,30 @@ module.exports = {
       }
     },
 
+    // Optional options for generating "Edit this page" link
+
+    repo: 'wkii/wkii.github.io',
+    // if your docs are in a different repo from your main project:
+    //docsRepo: '',
+    // if your docs are not at the root of the repo:
+    docsDir: 'docs',
+    // if your docs are in a specific branch (defaults to 'master'):
+    docsBranch: 'develop',
+    // defaults to false, set to true to enable
+    editLinks: true,
+    // custom text for edit link. Defaults to "Edit this page"
+    // editLinkText: 'Help us improve this page!'
+    // 文档更新时间：每个文件git最后提交的时间
+    lastUpdated: '最后列新',
+    editLinkText: '在 GitHub 上编辑此页',
+
     huawei: false,
     startYear: '2012',
     noFoundPageByTencent: false,
     author: 'Wkii',
     mode: 'light', // 默认 auto，auto 跟随系统，dark 暗色模式，light 亮色模式
     modePicker: false // 默认 true，false 不显示模式调节按钮，true 则显示
+
   },
   plugins: [
     // code-copy 插件安装后，每段代码行都看起来像多了一行，不好看。而且有较宽的行触发左右滑动时，复制按钮也跟着滑动，滑稽

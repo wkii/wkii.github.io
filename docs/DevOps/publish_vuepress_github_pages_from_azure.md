@@ -7,7 +7,9 @@ tags:
   - Azure Pipelines
 ---
 ## 发布原理
+
 无论使用什么CI工具发布vuepress到Github Pages，一共就三步：
+
 * yarn install
 * build
 * deploy
@@ -71,27 +73,22 @@ tags:
 
 ### 配置文件
 
-> 配置文件说明：
->
-> 文件名和路径：放在项目根目录下，命名为`azure-pipelines.yml`
->
-> 配置项的几个变量，要去**Azure Pipelines的编辑界面**，点右侧的Variables铵钮设置添加，然后要点保存。
->
->
-> **GITHUB_TOKEN**： 是必须的，并且一定要选加密，谁也不希望自己Github的密钥泄漏出去吧。
-> **BUILD_SCRIPT**：默认是`yarn docs:build`，如果你的package.json中还配置了其它的，可以设置它
-> **CNAME**：用于你配置了Github Pages的独立域名时，在根目录生成一个写着域名的CNAME文件，当然你把它放在`.vuepress/public`目录下效果也是一样的。
-> **TARGET_BRANCH**：要发布的分支，如果是 username.github.io，要选`master`分支，如果是https://<USERNAME>.github.io/<REPO>，则是`gh-pages`分支，默认是`gh-pages`分支
->
-> 代码不用动，只需要配置1到2个变量就行了。然后再次提交并推送你的主分支，就会触发Azure Pipelines 的 build和deploy。
->
-> **GITHUB_TOKEN一定要选加密！**
->
-> **GITHUB_TOKEN一定要选加密！**
->
-> **GITHUB_TOKEN一定要选加密！**
+配置文件说明：
 
-```bash
+文件名和路径：放在项目根目录下，命名为`azure-pipelines.yml`
+
+配置项的几个变量，要去**Azure Pipelines的编辑界面**，点右侧的Variables铵钮设置添加，然后要点保存。
+
+**GITHUB_TOKEN**： 是必须的，并且一定要选加密，谁也不希望自己Github的密钥泄漏出去吧。
+**BUILD_SCRIPT**：默认是`yarn docs:build`，如果你的package.json中还配置了其它的，可以设置它
+**CNAME**：用于你配置了Github Pages的独立域名时，在根目录生成一个写着域名的CNAME文件，当然你把它放在`.vuepress/public`目录下效果也是一样的。
+**TARGET_BRANCH**：要发布的分支，如果是 username.github.io，要选`master`分支，如果是`https://<USERNAME>.github.io/<REPO>`，则是`gh-pages`分支，默认是`gh-pages`分支
+
+代码不用动，只需要配置1到2个变量就行了。然后再次提交并推送你的主分支，就会触发Azure Pipelines 的 build和deploy。
+
+**GITHUB_TOKEN一定要选加密！** **GITHUB_TOKEN一定要选加密！** **GITHUB_TOKEN一定要选加密！**
+
+```yaml
 # Node.js with Vue
 # Build a Node.js project that uses Vue.
 # Add steps that analyze code, save build artifacts, deploy, and more:
@@ -221,10 +218,8 @@ steps:
 
 #### 授予权限
 
-在Pipelines的Recent 标签页中，进入Runs列表，点击查看状态会有授权的提示，授权Pipelines访问你的**Secure files**。
-
-
+在Pipelines的Recent 标签页中，进入Runs列表，点击查看状态会有授权的提示，授权Pipelines访问你的 **Secure files**。
 
 ## 调试工具
-参考azure-cli工具的 az [pipelines](https://docs.microsoft.com/zh-cn/cli/azure/pipelines?view=azure-cli-latest) 先挖个坑，还没用明白，对于没有使用付费服务的来说，看样子用处不大。
 
+参考azure-cli工具的 az [pipelines](https://docs.microsoft.com/zh-cn/cli/azure/pipelines?view=azure-cli-latest) 先挖个坑，还没用明白，对于没有使用付费服务的来说，看样子用处不大。
