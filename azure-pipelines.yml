@@ -80,8 +80,10 @@ steps:
     git init
     git config user.name "Azure pipelines"
     git config user.email "pipelines@users.noreply.github.com"
+    pwd
+    ls
     git add --all;
-    git commit -m"Pipelines-Bot: Auto deploy via $(Build.SourceVersion)";
+    git commit -m"Pipelines-Bot: Auto deploy";
     git push --force $DEPLOY_REPO master:$DEPLOY_BRANCH
   workingDirectory: $(build_path)
   displayName: '[Git] Commit and push to Github Pages branch'
