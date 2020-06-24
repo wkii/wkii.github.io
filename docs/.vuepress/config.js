@@ -33,6 +33,10 @@ module.exports = {
   markdown: {
     lineNumbers: true, // 代码块显示行号
   },
+  extendMarkdown: md => {
+    md.set({ breaks: true })
+    md.use(require('markdown-it-plantuml'))
+  },
   //permalink: "/:year:month:day-:slug.html",
   theme: 'reco',
   // 主题配置
@@ -141,7 +145,8 @@ module.exports = {
           '/Office',
           '/PHP',
           '/Tech',
-          '/DevOps'
+          '/DevOps',
+          '/TradeTech'
         ]
       }
     ],
