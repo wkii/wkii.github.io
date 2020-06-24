@@ -34,7 +34,7 @@ steps:
   displayName: 'Install Node.js'
 
 - bash: |
-    yarn install
+    yarn install --no-lockfile
     mkdir -p /tmp/dist
     # For not secret variables,use $variablesname or ${variablesname}
     # For secret variables, use $(variablesname)
