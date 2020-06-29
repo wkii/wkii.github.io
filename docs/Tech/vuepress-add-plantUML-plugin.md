@@ -1,7 +1,7 @@
 ---
-title: Vuepress 增加 PlantUML 支持
+title: 'Vuepress 增加 PlantUML 支持'
 categories: Tech
-date: 2020-06-24 19:24:01
+date: 2020-06-24 19:24:00
 tags: 
  - vuepress
  - PlantUML

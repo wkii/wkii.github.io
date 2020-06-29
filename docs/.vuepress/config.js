@@ -136,18 +136,9 @@ module.exports = {
           atom1: { enable: false },
           json1: { enable: false },
         },
+        count: 60,
         posts_directories: [
-          '/Docker',
-          '/Git',
-          '/Java',
-          '/Kubernetes',
-          '/Life',
-          '/Nginx',
-          '/Office',
-          '/PHP',
-          '/Tech',
-          '/DevOps',
-          '/TradeTech'
+          '/'
         ]
       }
     ],
