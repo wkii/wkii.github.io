@@ -27,7 +27,14 @@ module.exports = {
     ['meta', { name: 'msapplication-TileColor', content: "#000000" }],
     
     // 移动端优化
-    ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }]
+    ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
+    // google 统计
+    ['script', { src: "https://www.googletagmanager.com/gtag/js?id=UA-286583-7",async: true}],
+    ['script', {},
+                " window.dataLayer = window.dataLayer || [];\
+                function gtag(){dataLayer.push(arguments);}\
+                gtag('js', new Date());\
+                gtag('config', 'UA-286583-7');"],
 
   ],
   markdown: {
@@ -108,12 +115,6 @@ module.exports = {
       updatePopup: true
     }],
     ['@vuepress/medium-zoom', true],
-    [
-      '@vuepress/google-analytics',
-      {
-        'ga': 'UA-286583-7' // UA-286583-7
-      }
-    ],
     [
       '@vuepress/last-updated', 
       {
