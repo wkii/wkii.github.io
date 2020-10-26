@@ -2,6 +2,7 @@
 title: 常见支付通道条码付和扫码付异步通知策略
 categories: TradeTech
 date: 2020-06-24 20:21:01
+id: 784
 tags: 
  - 支付宝
  - 微信
