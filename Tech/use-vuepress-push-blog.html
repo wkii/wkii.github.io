@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用vuepress发布博客，附踩坑记录 | Wkii Blog</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/img/favicon.ico">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#3eaf7c">
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-286583-7" async="true"></script>
+    <script> window.dataLayer = window.dataLayer || [];                function gtag(){dataLayer.push(arguments);}                gtag('js', new Date());                gtag('config', 'UA-286583-7');</script>
+    <link rel="alternate" type="application/rss+xml" href="https://www.wkii.net/rss.xml" title=" RSS Feed">
+    <meta name="description" content="Happiness is Grasp now!">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="/img/favicon.ico">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/assets/css/0.styles.088e3af7.css" as="style"><link rel="preload" href="/assets/js/app.81e86ef2.js" as="script"><link rel="preload" href="/assets/js/4.6a71e049.js" as="script"><link rel="preload" href="/assets/js/1.dc04b7c3.js" as="script"><link rel="preload" href="/assets/js/32.adc4e234.js" as="script"><link rel="preload" href="/assets/js/9.8e0892b7.js" as="script"><link rel="prefetch" href="/assets/js/10.ddd85ddb.js"><link rel="prefetch" href="/assets/js/11.518a6d23.js"><link rel="prefetch" href="/assets/js/12.9f32da97.js"><link rel="prefetch" href="/assets/js/13.a69efe89.js"><link rel="prefetch" href="/assets/js/14.0d001f9b.js"><link rel="prefetch" href="/assets/js/15.917433af.js"><link rel="prefetch" href="/assets/js/16.bf3e82fd.js"><link rel="prefetch" href="/assets/js/17.a2f6d710.js"><link rel="prefetch" href="/assets/js/18.40082837.js"><link rel="prefetch" href="/assets/js/19.500a329a.js"><link rel="prefetch" href="/assets/js/20.162196bf.js"><link rel="prefetch" href="/assets/js/21.01f86a8a.js"><link rel="prefetch" href="/assets/js/22.3589819b.js"><link rel="prefetch" href="/assets/js/23.5bf40906.js"><link rel="prefetch" href="/assets/js/24.28527370.js"><link rel="prefetch" href="/assets/js/25.5531beac.js"><link rel="prefetch" href="/assets/js/26.24a16d56.js"><link rel="prefetch" href="/assets/js/27.467551df.js"><link rel="prefetch" href="/assets/js/28.87fed0d7.js"><link rel="prefetch" href="/assets/js/29.86a40521.js"><link rel="prefetch" href="/assets/js/30.90b9a200.js"><link rel="prefetch" href="/assets/js/31.19479d1b.js"><link rel="prefetch" href="/assets/js/33.545bef03.js"><link rel="prefetch" href="/assets/js/34.290b2d9b.js"><link rel="prefetch" href="/assets/js/35.3a302717.js"><link rel="prefetch" href="/assets/js/36.2c991d2c.js"><link rel="prefetch" href="/assets/js/37.48670b76.js"><link rel="prefetch" href="/assets/js/5.152c9a31.js"><link rel="prefetch" href="/assets/js/6.eef6540c.js"><link rel="prefetch" href="/assets/js/7.c0f601f7.js"><link rel="prefetch" href="/assets/js/8.a3df2c3f.js"><link rel="prefetch" href="/assets/js/vendors~notification.b309a0eb.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.088e3af7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-1156296a><div data-v-1156296a><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-1156296a data-v-1156296a><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-4e82dffc data-v-1156296a data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>Wkii Blog</h3> <p class="description" data-v-4e82dffc data-v-4e82dffc>Happiness is Grasp now!</p> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><span data-v-4e82dffc>Wkii</span>
+            
+          <span data-v-4e82dffc>2012 - </span>
+          2021
+        </a></span></div></div> <div class="hide" data-v-1156296a><header class="navbar" data-v-1156296a><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Wkii Blog</span></a> <div class="links"><!----> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/DevOps/" class="nav-link"><i class="undefined"></i>
+  DevOps
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Docker/" class="nav-link"><i class="undefined"></i>
+  Docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Git/" class="nav-link"><i class="undefined"></i>
+  Git
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Java/" class="nav-link"><i class="undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Kubernetes/" class="nav-link"><i class="undefined"></i>
+  Kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Life/" class="nav-link"><i class="undefined"></i>
+  Life
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Nginx/" class="nav-link"><i class="undefined"></i>
+  Nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Office/" class="nav-link"><i class="undefined"></i>
+  Office
+</a></li><li class="dropdown-item"><!----> <a href="/categories/PHP/" class="nav-link"><i class="undefined"></i>
+  PHP
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Tech/" class="nav-link"><i class="undefined"></i>
+  Tech
+</a></li><li class="dropdown-item"><!----> <a href="/categories/TradeTech/" class="nav-link"><i class="undefined"></i>
+  TradeTech
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><a href="https://www.wkii.net/rss.xml" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-rss"></i>
+  RSS
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/wkii" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      Mirrors
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.wkii.net" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-home"></i>
+  wkii.net
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://wkii.github.io" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  github.io
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <a href="https://github.com/wkii/wkii.github.io" target="_blank" rel="noopener noreferrer" class="repo-link"><i class="iconfont reco-github"></i>
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask" data-v-1156296a></div> <aside class="sidebar" data-v-1156296a><div class="personal-info-wrapper" data-v-828910c6 data-v-1156296a><!----> <h3 class="name" data-v-828910c6>
+    Wkii
+  </h3> <div class="num" data-v-828910c6><div data-v-828910c6><h3 data-v-828910c6>24</h3> <h6 data-v-828910c6>文章</h6></div> <div data-v-828910c6><h3 data-v-828910c6>39</h3> <h6 data-v-828910c6>标签</h6></div></div> <ul class="social-links" data-v-828910c6></ul> <hr data-v-828910c6></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/DevOps/" class="nav-link"><i class="undefined"></i>
+  DevOps
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Docker/" class="nav-link"><i class="undefined"></i>
+  Docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Git/" class="nav-link"><i class="undefined"></i>
+  Git
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Java/" class="nav-link"><i class="undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Kubernetes/" class="nav-link"><i class="undefined"></i>
+  Kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Life/" class="nav-link"><i class="undefined"></i>
+  Life
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Nginx/" class="nav-link"><i class="undefined"></i>
+  Nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Office/" class="nav-link"><i class="undefined"></i>
+  Office
+</a></li><li class="dropdown-item"><!----> <a href="/categories/PHP/" class="nav-link"><i class="undefined"></i>
+  PHP
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Tech/" class="nav-link"><i class="undefined"></i>
+  Tech
+</a></li><li class="dropdown-item"><!----> <a href="/categories/TradeTech/" class="nav-link"><i class="undefined"></i>
+  TradeTech
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><a href="https://www.wkii.net/rss.xml" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-rss"></i>
+  RSS
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/wkii" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      Mirrors
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.wkii.net" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-home"></i>
+  wkii.net
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://wkii.github.io" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  github.io
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <a href="https://github.com/wkii/wkii.github.io" target="_blank" rel="noopener noreferrer" class="repo-link"><i class="iconfont reco-github"></i>
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-4e82dffc data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>使用vuepress发布博客，附踩坑记录</h3> <!----> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><span data-v-4e82dffc>Wkii</span>
+            
+          <span data-v-4e82dffc>2012 - </span>
+          2021
+        </a></span></div></div> <div data-v-1156296a><main class="page"><section><div class="page-title"><h1 class="title">使用vuepress发布博客，附踩坑记录</h1> <div data-v-1ff7123e><i class="iconfont reco-account" data-v-1ff7123e><span data-v-1ff7123e>Wkii</span></i> <i class="iconfont reco-date" data-v-1ff7123e><span data-v-1ff7123e>5/16/2020</span></i> <!----> <i class="tags iconfont reco-tag" data-v-1ff7123e><span class="tag-item" data-v-1ff7123e>vuepress</span><span class="tag-item" data-v-1ff7123e>blog</span></i></div></div> <div class="theme-reco-content content__default"><h2 id="初入门庭"><a href="#初入门庭" class="header-anchor">#</a> 初入门庭</h2> <p>安装 <code>vuepress</code>是非常简单的事儿。建议全局安装vuepress，然后再本地安装其它部分。官方文档就写的很清楚了，不再赘述。</p> <p>但是安装完了之后，惊叹一下，这是什么鬼。整个官方文档都在写怎么安装，根本没写怎么写，对编写的markdown有什么要求？对于用过hexo的人来说，我知道应该差不多，但是就愣没人写该怎么玩儿，我也是醉了。</p> <p>好吧，看了诸多资料以后，可以确定，如果要用vuepress来发布静态博客，需要安装对应的blog主题，比如官方的blog主题 <a href="https://vuepress.vuejs.org/zh/theme/blog-theme.html" target="_blank" rel="noopener noreferrer">@vuepress/theme-blog<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，或者另一个较为完善的主题 <a href="https://vuepress-theme-reco.recoluan.com/" target="_blank" rel="noopener noreferrer">vuepress-theme-reco<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</p> <p>使用<code>vuepress-theme-reco</code>后，跟使用<code>hexo</code>的习惯就差不多了。每个markdown前面要放一个<code>toc</code>头来标记 标题、分类、tag、日期时间。然后目录结构呢，可以在<code>docs</code>下随便放，建多级目录也可以，会根据markdown中的分类来更新nav菜单。</p> <blockquote><p>你看，关于blog 的 <a href="https://vuepress-theme-blog.ulivz.com/config/front-matter" target="_blank" rel="noopener noreferrer">frontmatter<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 这么点事儿非要写在主题文档中。说明vuepress的初衷只是软件文档，并非blog。</p> <p>另外，官方也并没有 cli 工具可以 new post 来帮你快速创建一个文件模板。差评。有人写了一个 <a href="https://github.com/vxhly/vuepress-article-cli" target="_blank" rel="noopener noreferrer">vuepress-article-cli<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，感兴趣的同学可以用一下。</p></blockquote> <h2 id="踩坑记录"><a href="#踩坑记录" class="header-anchor">#</a> 踩坑记录</h2> <h3 id="时间格式问题"><a href="#时间格式问题" class="header-anchor">#</a> 时间格式问题：</h3> <p>vuepress没有时区设置，用到时间的地方都是拿一个时间对象在转来转去。当同时使用 <code>@vuepress/last-updated</code>  和  <code>vuepress-plugin-sitemap</code> 一起使用时会在build时报错：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code> SITEMAP  Generating sitemap...
+error vuepress-plugin-sitemap apply generated failed.
+RangeError: Invalid time value
+    at Date.toISOString (&lt;anonymous&gt;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>因为如果按照官方文档的示例，把<code>@vuepress/last-updated</code>配置成下面这个样子的话：</p> <div class="language-json line-numbers-mode"><pre class="language-json"><code>    <span class="token punctuation">[</span>
+      <span class="token string">&quot;@vuepress/last-updated&quot;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        transformer<span class="token operator">:</span> (timestamp<span class="token punctuation">,</span> lang) =&gt; <span class="token punctuation">{</span>
+          <span class="token comment">// 不要忘了安装 moment</span>
+          const moment = require(<span class="token string">&quot;moment&quot;</span>)
+          moment.locale(lang)
+          return moment(timestamp).fromNow()
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>那么显示的最后修改时间就会显示成诸如”2天前“，”2小时前“这样。但是，问题就来了，<code>vuepress-plugin-sitemap</code>就解析不了这种时间格式了，所以，有两个方案，一个是修改<code>config.js</code>，将<code>vuepress-plugin-sitemap</code>的时间属性<code>dateFormatter</code>定义成当前时间，代码如下：</p> <div class="language-json line-numbers-mode"><pre class="language-json"><code>    <span class="token punctuation">[</span>
+      'sitemap'<span class="token punctuation">,</span> 
+      <span class="token punctuation">{</span>
+        hostname<span class="token operator">:</span> 'https<span class="token operator">:</span><span class="token comment">//www.wkii.org',</span>
+        dateFormatter<span class="token operator">:</span> val =&gt; <span class="token punctuation">{</span>
+          return new Date().toISOString()
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>但这个方法带来的问题是sitemap中，每个文章的更新时间都成了最后你发布的时间。显然有点假，这不是我想要的，还有另一种办法，把<code>@vuepress/last-updated</code>的时间格式修改成能被js的date(time).toISOString方法识别的格式，且视觉上也能接受的格式，如<code>Sat May 16 2020 23:21:50 GMT+0800</code>这样的格式，即可解决last-updated和sitemap里时间的格式问题，build也能正常了，配置代码如下：</p> <div class="language-json line-numbers-mode"><pre class="language-json"><code>    <span class="token punctuation">[</span>
+      '@vuepress/last-updated'<span class="token punctuation">,</span> 
+      <span class="token punctuation">{</span>
+        transformer<span class="token operator">:</span> (timestamp<span class="token punctuation">,</span> lang) =&gt; <span class="token punctuation">{</span>
+          <span class="token comment">//return (new Date(timestamp)).toUTCString() 或者用下面这段</span>
+          <span class="token comment">// 不要忘了安装 moment</span>
+          const moment = require('moment')
+          moment.locale(lang)
+          return moment(timestamp).toString()
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><h3 id="nav菜单设置rss的bug"><a href="#nav菜单设置rss的bug" class="header-anchor">#</a> nav菜单设置RSS的bug</h3> <p>现象：设置菜单</p> <div class="language-json line-numbers-mode"><pre class="language-json"><code><span class="token punctuation">{</span> text<span class="token operator">:</span> 'RSS'<span class="token punctuation">,</span> link<span class="token operator">:</span> 'rss.xml'<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>解析出来的菜单会变成 <code>rss.xml.html</code>，画蛇添足的加上一个<code>.html</code>后缀。<br>
+这个目前已经有人提了issues，等着修复吧。</p> <h3 id="部署到github-pages和持续集成"><a href="#部署到github-pages和持续集成" class="header-anchor">#</a> 部署到Github Pages和持续集成</h3> <p>这里需要一点背景知识，Github Pages有两种类型：</p> <ul><li>个人或组织站点，访问地址为 <code>https://&lt;name&gt;.github.io</code></li> <li>项目站点，访问地址为 <code>https://&lt;name&gt;.giothub.io/&lt;repo&gt;</code></li></ul> <p>如果是个人站点，发布html的分支必须是 <code>master</code> ，而项目站点则没有这个要求。原文是</p> <blockquote><p>User pages must be built from the <code>master</code> branch.</p></blockquote> <p>而根据以往经验，项目站点的发布分支可以是 <code>gh_pages</code> 分支（最早的约定）， 可以是<code>master</code>分支，也可以是 <code>master</code> 分支下的 <code>docs</code> 文件夹。</p> <p>站点类型这个站点类型决定了部署时的一些设置，影响范围有以下文件：</p> <ul><li><code>docs/vuepress/.config.js</code></li> <li><code>deploy.sh</code></li> <li><code>.travis.yml</code></li></ul> <p>看具体配置：</p> <ol><li>在 <code>docs/vuepress/.config.js</code> 中配置 <code>base</code> 时请按照以下规则：</li></ol> <div class="language-markdown line-numbers-mode"><pre class="language-markdown"><code><span class="token list punctuation">1.</span> 如果使用github 个人站点或组织站点，访问域名为 https://<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>username</span><span class="token punctuation">&gt;</span></span>.github.io 或 https://<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>organization</span><span class="token punctuation">&gt;</span></span>.github.io 时，base 设置为: /
+<span class="token list punctuation">2.</span> 如果使用github 项目站点，访问域名为 https://<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>username</span><span class="token punctuation">&gt;</span></span>.github.io/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>repo</span><span class="token punctuation">&gt;</span></span>/ 时，base 设置为项目仓库名，如: blog_page
+<span class="token list punctuation">3.</span> 如果使用github 项目站点，但是绑定了域名时， base 设置为: /
+参考：https://help.github.com/cn/github/working-with-github-pages/creating-a-github-pages-site
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ol start="2"><li><code>deploy.sh</code> 手动部署脚本</li></ol> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token shebang important">#!/usr/bin/env sh</span>
+
+<span class="token comment"># 确保脚本抛出遇到的错误</span>
+<span class="token builtin class-name">set</span> -e
+
+<span class="token comment"># 生成静态文件</span>
+<span class="token function">npm</span> run docs:build
+
+<span class="token comment"># 进入生成的文件夹</span>
+<span class="token builtin class-name">cd</span> docs/.vuepress/dist
+
+<span class="token comment"># 如果是发布到自定义域名</span>
+<span class="token comment"># echo 'www.example.com' &gt; CNAME</span>
+
+<span class="token function">git</span> init
+<span class="token function">git</span> <span class="token function">add</span> -A
+<span class="token function">git</span> commit -m <span class="token string">'deploy'</span>
+
+<span class="token comment"># 如果发布到 https://&lt;USERNAME&gt;.github.io  (这是个人或组织类站点)</span>
+<span class="token comment"># git push -f git@github.com:&lt;USERNAME&gt;/&lt;USERNAME&gt;.github.io.git master</span>
+
+<span class="token comment"># 如果发布到 https://&lt;USERNAME&gt;.github.io/&lt;REPO&gt;  （这是项目类站点）</span>
+<span class="token comment"># git push -f git@github.com:&lt;USERNAME&gt;/&lt;REPO&gt;.git master:gh-pages</span>
+<span class="token function">git</span> push -f git@github.com:wkii/blog_page.git master:gh-pages
+
+<span class="token builtin class-name">cd</span> -
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><ol start="3"><li><p>使用Travis-ci 自动化部署配置，配置文件需要在项目根目录创建一个文件<code>.travis.yml</code></p> <p>有没有人跟我一样，比对了半天文件名，却没注意前面缺了个点，试了半天都不好使😂</p></li></ol> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token key atrule">language</span><span class="token punctuation">:</span> node_js
+<span class="token key atrule">node_js</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> lts/*
+<span class="token key atrule">cache</span><span class="token punctuation">:</span>
+  <span class="token key atrule">directories</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> node_modules
+  <span class="token key atrule">yarn</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span class="token key atrule">before_install</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> export TZ='Asia/Shanghai' <span class="token comment"># 设置时区</span>
+<span class="token key atrule">install</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> yarn install
+<span class="token key atrule">script</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> yarn docs<span class="token punctuation">:</span>build
+<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">provider</span><span class="token punctuation">:</span> pages
+  <span class="token key atrule">skip-cleanup</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">local_dir</span><span class="token punctuation">:</span> docs/.vuepress/dist
+  <span class="token key atrule">github-token</span><span class="token punctuation">:</span> $GITHUB_TOKEN <span class="token comment"># 在 GitHub 中生成，用于允许 Travis 向你的仓库推送代码。在 Travis 的项目设置页面进行配置，设置为 secure variable</span>
+  <span class="token key atrule">target-branch</span><span class="token punctuation">:</span> gh<span class="token punctuation">-</span>pages <span class="token comment"># 要部署的分支</span>
+  <span class="token key atrule">verbose</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">keep-history</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> wkii
+  <span class="token key atrule">email</span><span class="token punctuation">:</span> digihero@gmail.com
+  <span class="token key atrule">on</span><span class="token punctuation">:</span>
+    <span class="token key atrule">branch</span><span class="token punctuation">:</span> master <span class="token comment"># 源文件所在的分支</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><p>然后如何使用travis-ci，可参考vhxly写的<a href="https://vxhly.github.io/views/nodejs/vuepress-blog-on-github.html#%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2" target="_blank" rel="noopener noreferrer">自动化部署<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>部分。</p> <h3 id="使用readme-md"><a href="#使用readme-md" class="header-anchor">#</a> 使用README.md</h3> <p>如果要使用README.md（例如放一些文字图片说明），则可以再写一个<code>index.md</code>用于存放之前给README.md的内容。</p> <p>index.md用于存放Front Matter，README.md 用于存放项目说明。</p> <h2 id="下一步计划"><a href="#下一步计划" class="header-anchor">#</a> 下一步计划</h2> <ul><li>[x] 使用Travis CI 持续集成部署</li> <li>[x] 把主题色系换成蓝色。我还是喜欢ant.design的蓝色系。</li></ul></div></section> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/wkii/wkii.github.io/edit/develop/docs/Tech/use-vuepress-push-blog.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">最后列新: </span> <span class="time">Mon Jun 08 2020 17:31:23 GMT+0000</span></div></footer> <!----> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-70334359><li class="level-2" data-v-70334359><a href="/Tech/use-vuepress-push-blog.html#初入门庭" class="sidebar-link reco-side-初入门庭" data-v-70334359>初入门庭</a></li><li class="level-2" data-v-70334359><a href="/Tech/use-vuepress-push-blog.html#踩坑记录" class="sidebar-link reco-side-踩坑记录" data-v-70334359>踩坑记录</a></li><li class="level-3" data-v-70334359><a href="/Tech/use-vuepress-push-blog.html#时间格式问题" class="sidebar-link reco-side-时间格式问题" data-v-70334359>时间格式问题：</a></li><li class="level-3" data-v-70334359><a href="/Tech/use-vuepress-push-blog.html#nav菜单设置rss的bug" class="sidebar-link reco-side-nav菜单设置rss的bug" data-v-70334359>nav菜单设置RSS的bug</a></li><li class="level-3" data-v-70334359><a href="/Tech/use-vuepress-push-blog.html#部署到github-pages和持续集成" class="sidebar-link reco-side-部署到github-pages和持续集成" data-v-70334359>部署到Github Pages和持续集成</a></li><li class="level-3" data-v-70334359><a href="/Tech/use-vuepress-push-blog.html#使用readme-md" class="sidebar-link reco-side-使用readme-md" data-v-70334359>使用README.md</a></li><li class="level-2" data-v-70334359><a href="/Tech/use-vuepress-push-blog.html#下一步计划" class="sidebar-link reco-side-下一步计划" data-v-70334359>下一步计划</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><!----></div></div>
+    <script src="/assets/js/app.81e86ef2.js" defer></script><script src="/assets/js/4.6a71e049.js" defer></script><script src="/assets/js/1.dc04b7c3.js" defer></script><script src="/assets/js/32.adc4e234.js" defer></script><script src="/assets/js/9.8e0892b7.js" defer></script>
+  </body>
+</html>
