@@ -42,7 +42,7 @@ brew install minikube
 minikube start
 ```
 
-会发现它会自动选择一个驱动。虽然我docker-desktop已安装并且运行，virtualbox和VMware都安装了，但是它仍然自动选择了`hyperkit`。然后自己下载`hyperkit`的驱动了。
+会发现它会自动选择一个驱动。虽然我docker-desktop已安装并且运行，virtualbox和VMware都安装了，但是它仍然自动选择了`hyperkit`。然后自己下载`hyperkit`的驱动了。试验发现，当安装了docker-desktop或者使用brew安装了hyperkit后，如是不指定驱动，它会默认使用 hyperkit 驱动。更多的驱动，可以看官方文档：[Drivers](https://minikube.sigs.k8s.io/docs/drivers/)
 
 ```
 $ minikube start
