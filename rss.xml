@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title></title>
+        <link>https://www.wkii.net</link>
+        <description></description>
+        <lastBuildDate>Tue, 06 Dec 2022 07:01:45 GMT</lastBuildDate>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
+        <item>
+            <title><![CDATA[使用 Github workflow 部署 Vuepress到Github Pages]]></title>
+            <link>https://www.wkii.net/DevOps/use_github_workflow_deploy_vuepress.html</link>
+            <guid>https://www.wkii.net/DevOps/use_github_workflow_deploy_vuepress.html</guid>
+            <pubDate>Tue, 09 Jun 2020 01:06:11 GMT</pubDate>
+            <description><![CDATA[不过对应的发布vuepress到 Github Pages 的工具已经有了，并且在GitHub 的Marketplace里发布了。下面记录一下使用步骤：]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Docker常用命令]]></title>
+            <link>https://www.wkii.net/Docker/Docker-command.html</link>
+            <guid>https://www.wkii.net/Docker/Docker-command.html</guid>
+            <pubDate>Mon, 03 Dec 2018 00:00:00 GMT</pubDate>
+            <description><![CDATA[`]]></description>
+        </item>
+        <item>
+            <title><![CDATA[git删除本地和远程tags]]></title>
+            <link>https://www.wkii.net/Git/git-delete-local-and-remote-tags.html</link>
+            <guid>https://www.wkii.net/Git/git-delete-local-and-remote-tags.html</guid>
+            <pubDate>Tue, 15 May 2012 10:41:46 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[git简明操作教程]]></title>
+            <link>https://www.wkii.net/Git/git-concise-operating-tutorial.html</link>
+            <guid>https://www.wkii.net/Git/git-concise-operating-tutorial.html</guid>
+            <pubDate>Thu, 22 Mar 2012 12:38:42 GMT</pubDate>
+            <description><![CDATA[我发现很多人依然对git无所适从。那我就写个简明操作教程来供还在学习路上的同学参考。]]></description>
+        </item>
+        <item>
+            <title><![CDATA[使用 Microsoft azure 部署 Vuepress到Github Pages]]></title>
+            <link>https://www.wkii.net/DevOps/publish_vuepress_github_pages_from_azure.html</link>
+            <guid>https://www.wkii.net/DevOps/publish_vuepress_github_pages_from_azure.html</guid>
+            <pubDate>Fri, 12 Jun 2020 00:15:12 GMT</pubDate>
+            <description><![CDATA[yarn install
+build
+deploy]]></description>
+        </item>
+        <item>
+            <title><![CDATA[springboot profiles 多环境配置打包和 IDEA 启动环境设定]]></title>
+            <link>https://www.wkii.net/Java/springboot-profiles-multiple-env-IDEA-setting.html</link>
+            <guid>https://www.wkii.net/Java/springboot-profiles-multiple-env-IDEA-setting.html</guid>
+            <pubDate>Wed, 12 Feb 2020 18:26:19 GMT</pubDate>
+            <description><![CDATA[以上就是我们的即想要，又想要，还想要的一系列需求。]]></description>
+        </item>
+        <item>
+            <title><![CDATA[k8s系列之一 Macos安装kubernetes和docker]]></title>
+            <link>https://www.wkii.net/Kubernetes/k8s-series-Macos-setup-kubernetes-and-docker.html</link>
+            <guid>https://www.wkii.net/Kubernetes/k8s-series-Macos-setup-kubernetes-and-docker.html</guid>
+            <pubDate>Fri, 08 May 2020 00:17:40 GMT</pubDate>
+            <description><![CDATA[另外，部分资源的下载，如果不翻墙的话可能会非常慢甚至下载不下来。]]></description>
+        </item>
+        <item>
+            <title><![CDATA[观奇葩说“给做好事的人发红包，你支持吗”有感]]></title>
+            <link>https://www.wkii.net/Life/qipashuo-fahongbao.html</link>
+            <guid>https://www.wkii.net/Life/qipashuo-fahongbao.html</guid>
+            <pubDate>Wed, 27 Nov 2019 22:38:53 GMT</pubDate>
+            <description><![CDATA[为什么举这个例子呢？正方三辨是一个创业者，他必然精通这些逻辑，如果让他现场分析这件事如何设定规则如何执行，他会当场傻眼。一件无法执行的事，本身就是不成立的。那还用辨吗？]]></description>
+        </item>
+        <item>
+            <title><![CDATA[nginx access_log 设置]]></title>
+            <link>https://www.wkii.net/Nginx/nginx-access-log-develop-settings.html</link>
+            <guid>https://www.wkii.net/Nginx/nginx-access-log-develop-settings.html</guid>
+            <pubDate>Wed, 06 Jun 2012 11:37:59 GMT</pubDate>
+            <description><![CDATA['"$httprange" "$senthttpcontentrange"';]]></description>
+        </item>
+        <item>
+            <title><![CDATA[NGINX多层转发或使用CDN之后如何获取用户真实IP]]></title>
+            <link>https://www.wkii.net/Nginx/nginx-cdn-get-user-real-ip.html</link>
+            <guid>https://www.wkii.net/Nginx/nginx-cdn-get-user-real-ip.html</guid>
+            <pubDate>Thu, 02 Jun 2016 17:38:30 GMT</pubDate>
+            <description><![CDATA[X-Real-IP 这又是一个自定义头部字段，通常被 HTTP 代理用来表示与它产生 TCP 连接的设备 IP，这个设备可能是其他代理，也可能是真正的请求端，这个要看经过代理的层级次数或是是否始终将真实IP一路传下来。（注意：如果未经严格处理，可以被伪造）]]></description>
+        </item>
+        <item>
+            <title><![CDATA[如何搞定BOSS五大要素]]></title>
+            <link>https://www.wkii.net/Office/How-to-Defeat-a-BOSS.html</link>
+            <guid>https://www.wkii.net/Office/How-to-Defeat-a-BOSS.html</guid>
+            <pubDate>Mon, 12 Aug 2019 22:07:36 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[技术分享注意事项]]></title>
+            <link>https://www.wkii.net/Office/Technical-sharing-notes.html</link>
+            <guid>https://www.wkii.net/Office/Technical-sharing-notes.html</guid>
+            <pubDate>Fri, 14 Dec 2018 11:51:04 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Php Aes加密类]]></title>
+            <link>https://www.wkii.net/PHP/php-aes-encrypt-for-yii.html</link>
+            <guid>https://www.wkii.net/PHP/php-aes-encrypt-for-yii.html</guid>
+            <pubDate>Mon, 16 Sep 2013 23:11:52 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[php的error_log设置]]></title>
+            <link>https://www.wkii.net/PHP/php-error-log.html</link>
+            <guid>https://www.wkii.net/PHP/php-error-log.html</guid>
+            <pubDate>Wed, 06 Jun 2012 11:25:51 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[php生成excel列名，超过26列大于Z的方法]]></title>
+            <link>https://www.wkii.net/PHP/php-excel-create-column-name-by-php.html</link>
+            <guid>https://www.wkii.net/PHP/php-excel-create-column-name-by-php.html</guid>
+            <pubDate>Wed, 07 Aug 2013 16:47:08 GMT</pubDate>
+            <description><![CDATA[这是phpExcel类中的方法。今天查到了，记录一下备忘。]]></description>
+        </item>
+        <item>
+            <title><![CDATA[php查询MongoDB遇到长整型的问题]]></title>
+            <link>https://www.wkii.net/PHP/php-mongodb-long-int-mongoint64.html</link>
+            <guid>https://www.wkii.net/PHP/php-mongodb-long-int-mongoint64.html</guid>
+            <pubDate>Mon, 24 Sep 2012 22:12:29 GMT</pubDate>
+            <description><![CDATA[// 生成java时间戳
+$time = (string)$time.'000';
+$time = (int)$time;
+但是查询结果根本没有数据。把框架的Mongo用Debug打印出查询语句，没有问题。把查询语句直接在shell里查也没问题。但就是没数据。 后来打开Mongo的日志，调整级别为5，这样会记录查询语句。参照这里。 发现我所查询的时间都变成了负数：“{ $gt: -154503944 }” 然后万能的google找到了答案。php的长整型需要使用MongoInt64这个类来转换一下。虽然你在php中输出结果是一样的，但查询起来就不一样了。那么在上面的语句后面再加上一句就对了。]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Yii deleteByAttributs 用法，慎用Dao的delete]]></title>
+            <link>https://www.wkii.net/PHP/yii-deletebyattributs-use-and-dao-delete.html</link>
+            <guid>https://www.wkii.net/PHP/yii-deletebyattributs-use-and-dao-delete.html</guid>
+            <pubDate>Thu, 30 May 2013 22:35:38 GMT</pubDate>
+            <description><![CDATA[再来一个带in条件的]]></description>
+        </item>
+        <item>
+            <title><![CDATA[iPhone 开通中国联通 4G VoLTE方法]]></title>
+            <link>https://www.wkii.net/Tech/china-unicom-volte-iPhone.html</link>
+            <guid>https://www.wkii.net/Tech/china-unicom-volte-iPhone.html</guid>
+            <pubDate>Mon, 23 Dec 2019 17:14:45 GMT</pubDate>
+            <description><![CDATA[2019年6月联通试商用4G VoLTE。直到IOS13.3更新后，也就是2019年12月，这项功能终于可正常使用了。]]></description>
+        </item>
+        <item>
+            <title><![CDATA[禁用chrome firefox 的 WebRTC功能防止真实IP泄漏]]></title>
+            <link>https://www.wkii.net/Tech/disabled-chrome-firefox-webrtc.html</link>
+            <guid>https://www.wkii.net/Tech/disabled-chrome-firefox-webrtc.html</guid>
+            <pubDate>Sun, 01 Feb 2015 16:06:04 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[关于存储用户密码的思考，bcrypt 和 PBKDF2算法]]></title>
+            <link>https://www.wkii.net/Tech/save-user-password-use-bcrypt-or-pbkdf2.html</link>
+            <guid>https://www.wkii.net/Tech/save-user-password-use-bcrypt-or-pbkdf2.html</guid>
+            <pubDate>Tue, 10 Apr 2012 18:38:37 GMT</pubDate>
+            <description><![CDATA[首先，像国内一些网站，比如sina这样的网站，zf要求要掌握用户密码，虽然也是加密的，但是是可逆加密。只要有需要，反解你的密码只是点一下鼠标的事儿。所以建议你的密码分级，对sina这种网站，不要使用高等级的密码。 但如果我们为了对用户负责，用户密码采用不可逆算法的时候，我们就要考虑一下如何对用户密码进行加密。那么仅仅是使用不可逆算法就行了吗？还不是，在硬件飞速发展的今天，尤其是GPU运算能力超CPU 10-20倍甚至更多，使得暴力破解的时间大大缩短。那么为了使得暴力破解变得几乎不可能，我们就要使用一些不支持GPU加速破解的算法。这里所说的算法，实际上也是各种加密的hash方式。 目前常见的不可逆加密算法有以下几种：]]></description>
+        </item>
+        <item>
+            <title><![CDATA[使用vuepress发布博客，附踩坑记录]]></title>
+            <link>https://www.wkii.net/Tech/use-vuepress-push-blog.html</link>
+            <guid>https://www.wkii.net/Tech/use-vuepress-push-blog.html</guid>
+            <pubDate>Sat, 16 May 2020 18:38:00 GMT</pubDate>
+            <description><![CDATA[使用vuepress-theme-reco后，跟使用hexo的习惯就差不多了。每个markdown前面要放一个toc头来标记 标题、分类、tag、日期时间。然后目录结构呢，可以在docs下随便放，建多级目录也可以，会根据markdown中的分类来更新nav菜单。]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Vuepress 增加 PlantUML 支持]]></title>
+            <link>https://www.wkii.net/Tech/vuepress-add-plantUML-plugin.html</link>
+            <guid>https://www.wkii.net/Tech/vuepress-add-plantUML-plugin.html</guid>
+            <pubDate>Wed, 24 Jun 2020 19:24:00 GMT</pubDate>
+            <description><![CDATA[写一段代码：]]></description>
+        </item>
+        <item>
+            <title><![CDATA[zsh 隐藏命令提示符前面的用户名和主机名]]></title>
+            <link>https://www.wkii.net/Tech/zsh-hidden-username-and-hostname.html</link>
+            <guid>https://www.wkii.net/Tech/zsh-hidden-username-and-hostname.html</guid>
+            <pubDate>Mon, 26 Oct 2020 18:14:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[常见支付通道条码付和扫码付异步通知策略]]></title>
+            <link>https://www.wkii.net/TradeTech/jsapi-authcode-pay-notify-rule.html</link>
+            <guid>https://www.wkii.net/TradeTech/jsapi-authcode-pay-notify-rule.html</guid>
+            <pubDate>Wed, 24 Jun 2020 20:21:01 GMT</pubDate>
+            <description><![CDATA[今天在整理各个通道异步通知逻辑的时候，有一些记的不太清楚了，所以顺便再确认一轮儿，记录下来。]]></description>
+        </item>
+    </channel>
+</rss>

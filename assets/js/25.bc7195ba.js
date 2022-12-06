@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[25],{438:function(t,n,s){"use strict";s.r(n);var o=s(3),r=Object(o.a)({},(function(){var t=this._self._c;return t("ContentSlotsDistributor",{attrs:{"slot-key":this.$parent.slotKey}},[t("p",[this._v("php的error_log可以设置输出到一个文件或输出到系统日志。 备忘一下输出文件，必须使用绝对地址。并且该目录php有写入权限。")])])}),[],!1,null,null,null);n.default=r.exports}}]);
