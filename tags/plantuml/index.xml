@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PlantUML on Wkii Blog</title><link>https://www.wkii.net/tags/plantuml/</link><description>Recent content in PlantUML on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 05 Dec 2024 19:31:11 +0800</lastBuildDate><atom:link href="https://www.wkii.net/tags/plantuml/index.xml" rel="self" type="application/rss+xml"/><item><title>Vuepress 增加 PlantUML 支持</title><link>https://www.wkii.net/posts/tech/vuepress-add-plantuml-plugin/</link><pubDate>Wed, 24 Jun 2020 19:24:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/vuepress-add-plantuml-plugin/</guid><description>&lt;h2 id="plantuml">PlantUML
+&lt;/h2>&lt;p>最近一直在使用 PlantUML 画时序图，简直是太方便了。并且语雀也已经支持 PlantUML。
+官方中文教程：https://plantuml.com/zh/sequence-diagram
+IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration" target="_blank" rel="noopener"
+>PlantUML integration&lt;/a> 这个插件，来编写 puml 文件。支持即时预览。&lt;/p>
+&lt;h2 id="插件安装">插件安装
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">yarn add -D markdown-it-plantuml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后编辑 Vuepress 的配置文件&lt;code>.config.js&lt;/code>，增加插件的配置：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-js" data-lang="js">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">module&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">exports&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">extendMarkdown&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">md&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">md&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">set&lt;/span>&lt;span class="p">({&lt;/span> &lt;span class="nx">breaks&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">md&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">use&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;markdown-it-plantuml&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>参考资料：Vuepress 的&lt;a class="link" href="https://v1.vuepress.vuejs.org/zh/plugin/option-api.html#extendmarkdown" target="_blank" rel="noopener"
+>文档&lt;/a>&lt;/p>
+&lt;h2 id="测试">测试
+&lt;/h2>&lt;p>写一段代码：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">@startuml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">用户 -&amp;gt; 认证中心: 登录操作
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">认证中心 -&amp;gt; 缓存: 存放(key=token+ip,value=token)token
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">用户 &amp;lt;- 认证中心 : 认证成功返回token
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">用户 -&amp;gt; 认证中心: 下次访问头部携带token认证
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">认证中心 &amp;lt;- 缓存: key=token+ip获取token
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">其他服务 &amp;lt;- 认证中心: 存在且校验成功则跳转到用户请求的其他服务
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">其他服务 -&amp;gt; 用户: 信息
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">@enduml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>效果如下：&lt;/p>
+&lt;blockquote>
+&lt;p>更新：目前使用 hugo，所以暂时没效果了&lt;/p>
+&lt;/blockquote>
+&lt;p>@startuml
+用户 -&amp;gt; 认证中心: 登录操作
+认证中心 -&amp;gt; 缓存: 存放(key=token+ip,value=token)token
+用户 &amp;lt;- 认证中心 : 认证成功返回 token
+用户 -&amp;gt; 认证中心: 下次访问头部携带 token 认证
+认证中心 &amp;lt;- 缓存: key=token+ip 获取 token&lt;/p>
+&lt;p>其他服务 &amp;lt;- 认证中心: 存在且校验成功则跳转到用户请求的其他服务
+其他服务 -&amp;gt; 用户: 信息
+@enduml&lt;/p></description></item></channel></rss>

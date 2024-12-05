@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tech on Wkii Blog</title><link>https://www.wkii.net/categories/tech/</link><description>Recent content in Tech on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 05 Dec 2024 19:31:11 +0800</lastBuildDate><atom:link href="https://www.wkii.net/categories/tech/index.xml" rel="self" type="application/rss+xml"/><item><title>zsh 隐藏命令提示符前面的用户名和主机名</title><link>https://www.wkii.net/posts/tech/zsh-hidden-username-and-hostname/</link><pubDate>Mon, 26 Oct 2020 18:14:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/zsh-hidden-username-and-hostname/</guid><description>&lt;p>要隐藏用户名和主机名，需要在&lt;code>~/.zshrc&lt;/code> 配置文件中，增加一行：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">prompt_context&lt;span class="o">()&lt;/span> &lt;span class="o">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果要保留用户名，隐藏主机名，则使用&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">prompt_context&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$USER&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> !&lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$DEFAULT_USER&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">||&lt;/span> -n &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$SSH_CLIENT&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> prompt_segment black default &lt;span class="s2">&amp;#34;%(!.%{%F{yellow}%}.)&lt;/span>&lt;span class="nv">$USER&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果要保留主机名，隐藏用户名，则使用&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">prompt_context&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$USER&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> !&lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$DEFAULT_USER&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">||&lt;/span> -n &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$SSH_CLIENT&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> prompt_segment black default &lt;span class="s2">&amp;#34;%(!.%{%F{yellow}%}.)&lt;/span>&lt;span class="nv">$HOST&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后别忘了使用以下命令或重启命令行应用让配置生效&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">source&lt;/span> ~/.zshrc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Vuepress 增加 PlantUML 支持</title><link>https://www.wkii.net/posts/tech/vuepress-add-plantuml-plugin/</link><pubDate>Wed, 24 Jun 2020 19:24:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/vuepress-add-plantuml-plugin/</guid><description>&lt;h2 id="plantuml">PlantUML
+&lt;/h2>&lt;p>最近一直在使用 PlantUML 画时序图，简直是太方便了。并且语雀也已经支持 PlantUML。
+官方中文教程：https://plantuml.com/zh/sequence-diagram
+IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration" target="_blank" rel="noopener"
+>PlantUML integration&lt;/a> 这个插件，来编写 puml 文件。支持即时预览。&lt;/p>
+&lt;h2 id="插件安装">插件安装
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">yarn add -D markdown-it-plantuml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后编辑 Vuepress 的配置文件&lt;code>.config.js&lt;/code>，增加插件的配置：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-js" data-lang="js">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">module&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">exports&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">extendMarkdown&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">md&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">md&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">set&lt;/span>&lt;span class="p">({&lt;/span> &lt;span class="nx">breaks&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">md&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">use&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;markdown-it-plantuml&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>参考资料：Vuepress 的&lt;a class="link" href="https://v1.vuepress.vuejs.org/zh/plugin/option-api.html#extendmarkdown" target="_blank" rel="noopener"
+>文档&lt;/a>&lt;/p>
+&lt;h2 id="测试">测试
+&lt;/h2>&lt;p>写一段代码：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">@startuml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">用户 -&amp;gt; 认证中心: 登录操作
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">认证中心 -&amp;gt; 缓存: 存放(key=token+ip,value=token)token
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">用户 &amp;lt;- 认证中心 : 认证成功返回token
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">用户 -&amp;gt; 认证中心: 下次访问头部携带token认证
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">认证中心 &amp;lt;- 缓存: key=token+ip获取token
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">其他服务 &amp;lt;- 认证中心: 存在且校验成功则跳转到用户请求的其他服务
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">其他服务 -&amp;gt; 用户: 信息
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">@enduml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>效果如下：&lt;/p>
+&lt;blockquote>
+&lt;p>更新：目前使用 hugo，所以暂时没效果了&lt;/p>
+&lt;/blockquote>
+&lt;p>@startuml
+用户 -&amp;gt; 认证中心: 登录操作
+认证中心 -&amp;gt; 缓存: 存放(key=token+ip,value=token)token
+用户 &amp;lt;- 认证中心 : 认证成功返回 token
+用户 -&amp;gt; 认证中心: 下次访问头部携带 token 认证
+认证中心 &amp;lt;- 缓存: key=token+ip 获取 token&lt;/p>
+&lt;p>其他服务 &amp;lt;- 认证中心: 存在且校验成功则跳转到用户请求的其他服务
+其他服务 -&amp;gt; 用户: 信息
+@enduml&lt;/p></description></item><item><title>使用vuepress发布博客，附踩坑记录</title><link>https://www.wkii.net/posts/tech/use-vuepress-push-blog/</link><pubDate>Sat, 16 May 2020 18:38:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/use-vuepress-push-blog/</guid><description>&lt;h2 id="初入门庭">初入门庭
+&lt;/h2>&lt;p>安装 &lt;code>vuepress&lt;/code>是非常简单的事儿。建议全局安装vuepress，然后再本地安装其它部分。官方文档就写的很清楚了，不再赘述。&lt;/p>
+&lt;p>但是安装完了之后，惊叹一下，这是什么鬼。整个官方文档都在写怎么安装，根本没写怎么写，对编写的markdown有什么要求？对于用过hexo的人来说，我知道应该差不多，但是就愣没人写该怎么玩儿，我也是醉了。&lt;/p>
+&lt;p>好吧，看了诸多资料以后，可以确定，如果要用vuepress来发布静态博客，需要安装对应的blog主题，比如官方的blog主题 &lt;a class="link" href="https://vuepress.vuejs.org/zh/theme/blog-theme.html" target="_blank" rel="noopener"
+>@vuepress/theme-blog&lt;/a>，或者另一个较为完善的主题 &lt;a class="link" href="https://vuepress-theme-reco.recoluan.com/" target="_blank" rel="noopener"
+>vuepress-theme-reco&lt;/a>。&lt;/p>
+&lt;p>使用&lt;code>vuepress-theme-reco&lt;/code>后，跟使用&lt;code>hexo&lt;/code>的习惯就差不多了。每个markdown前面要放一个&lt;code>toc&lt;/code>头来标记 标题、分类、tag、日期时间。然后目录结构呢，可以在&lt;code>docs&lt;/code>下随便放，建多级目录也可以，会根据markdown中的分类来更新nav菜单。&lt;/p>
+&lt;blockquote>
+&lt;p>你看，关于blog 的 &lt;a class="link" href="https://vuepress-theme-blog.ulivz.com/config/front-matter" target="_blank" rel="noopener"
+>frontmatter&lt;/a> 这么点事儿非要写在主题文档中。说明vuepress的初衷只是软件文档，并非blog。&lt;/p>
+&lt;p>另外，官方也并没有 cli 工具可以 new post 来帮你快速创建一个文件模板。差评。有人写了一个 &lt;a class="link" href="https://github.com/vxhly/vuepress-article-cli" target="_blank" rel="noopener"
+>vuepress-article-cli&lt;/a>，感兴趣的同学可以用一下。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="踩坑记录">踩坑记录
+&lt;/h2>&lt;h3 id="时间格式问题">时间格式问题：
+&lt;/h3>&lt;p>vuepress没有时区设置，用到时间的地方都是拿一个时间对象在转来转去。当同时使用 &lt;code>@vuepress/last-updated&lt;/code> 和 &lt;code>vuepress-plugin-sitemap&lt;/code> 一起使用时会在build时报错：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> SITEMAP Generating sitemap...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error vuepress-plugin-sitemap apply generated failed.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">RangeError: Invalid time value
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> at Date.toISOString (&amp;lt;anonymous&amp;gt;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>因为如果按照官方文档的示例，把&lt;code>@vuepress/last-updated&lt;/code>配置成下面这个样子的话：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;@vuepress/last-updated&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">transformer:&lt;/span> &lt;span class="err">(timestamp,&lt;/span> &lt;span class="err">lang)&lt;/span> &lt;span class="err">=&amp;gt;&lt;/span> &lt;span class="err">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 不要忘了安装 moment
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="err">const&lt;/span> &lt;span class="err">moment&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">require(&lt;/span>&lt;span class="nt">&amp;#34;moment&amp;#34;&lt;/span>&lt;span class="err">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">moment.locale(lang)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">return&lt;/span> &lt;span class="err">moment(timestamp).fromNow()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>那么显示的最后修改时间就会显示成诸如”2天前“，”2小时前“这样。但是，问题就来了，&lt;code>vuepress-plugin-sitemap&lt;/code>就解析不了这种时间格式了，所以，有两个方案，一个是修改&lt;code>config.js&lt;/code>，将&lt;code>vuepress-plugin-sitemap&lt;/code>的时间属性&lt;code>dateFormatter&lt;/code>定义成当前时间，代码如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">&amp;#39;sitemap&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">hostname:&lt;/span> &lt;span class="err">&amp;#39;https:&lt;/span>&lt;span class="c1">//www.wkii.org&amp;#39;,
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="err">dateFormatter:&lt;/span> &lt;span class="err">val&lt;/span> &lt;span class="err">=&amp;gt;&lt;/span> &lt;span class="err">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">return&lt;/span> &lt;span class="err">new&lt;/span> &lt;span class="err">Date().toISOString()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>&lt;span class="err">,&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>但这个方法带来的问题是sitemap中，每个文章的更新时间都成了最后你发布的时间。显然有点假，这不是我想要的，还有另一种办法，把&lt;code>@vuepress/last-updated&lt;/code>的时间格式修改成能被js的date(time).toISOString方法识别的格式，且视觉上也能接受的格式，如&lt;code>Sat May 16 2020 23:21:50 GMT+0800&lt;/code>这样的格式，即可解决last-updated和sitemap里时间的格式问题，build也能正常了，配置代码如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">&amp;#39;@vuepress/last-updated&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">transformer:&lt;/span> &lt;span class="err">(timestamp,&lt;/span> &lt;span class="err">lang)&lt;/span> &lt;span class="err">=&amp;gt;&lt;/span> &lt;span class="err">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//return (new Date(timestamp)).toUTCString() 或者用下面这段
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// 不要忘了安装 moment
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="err">const&lt;/span> &lt;span class="err">moment&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">require(&amp;#39;moment&amp;#39;)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">moment.locale(lang)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">return&lt;/span> &lt;span class="err">moment(timestamp).toString()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>&lt;span class="err">,&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="nav菜单设置rss的bug">nav菜单设置RSS的bug
+&lt;/h3>&lt;p>现象：设置菜单&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span> &lt;span class="nt">&amp;#34;text&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;RSS&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nt">&amp;#34;link&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;rss.xml&amp;#34;&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>解析出来的菜单会变成 &lt;code>rss.xml.html&lt;/code>，画蛇添足的加上一个&lt;code>.html&lt;/code>后缀。
+这个目前已经有人提了issues，等着修复吧。&lt;/p>
+&lt;h3 id="部署到github-pages和持续集成">部署到Github Pages和持续集成
+&lt;/h3>&lt;p>这里需要一点背景知识，Github Pages有两种类型：&lt;/p>
+&lt;ul>
+&lt;li>个人或组织站点，访问地址为 &lt;code>https://&amp;lt;name&amp;gt;.github.io&lt;/code>&lt;/li>
+&lt;li>项目站点，访问地址为 &lt;code>https://&amp;lt;name&amp;gt;.giothub.io/&amp;lt;repo&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>如果是个人站点，发布html的分支必须是 &lt;code>master&lt;/code> ，而项目站点则没有这个要求。原文是&lt;/p>
+&lt;blockquote>
+&lt;p>User pages must be built from the &lt;code>master&lt;/code> branch.&lt;/p>
+&lt;/blockquote>
+&lt;p>而根据以往经验，项目站点的发布分支可以是 &lt;code>gh_pages&lt;/code> 分支（最早的约定）， 可以是&lt;code>master&lt;/code>分支，也可以是 &lt;code>master&lt;/code> 分支下的 &lt;code>docs&lt;/code> 文件夹。&lt;/p>
+&lt;p>站点类型这个站点类型决定了部署时的一些设置，影响范围有以下文件：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>docs/vuepress/.config.js&lt;/code>&lt;/li>
+&lt;li>&lt;code>deploy.sh&lt;/code>&lt;/li>
+&lt;li>&lt;code>.travis.yml&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>看具体配置：&lt;/p>
+&lt;ol>
+&lt;li>在 &lt;code>docs/vuepress/.config.js&lt;/code> 中配置 &lt;code>base&lt;/code> 时请按照以下规则：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-markdown" data-lang="markdown">&lt;span class="line">&lt;span class="cl">&lt;span class="k">1.&lt;/span> 如果使用github 个人站点或组织站点，访问域名为 https://&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">username&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>.github.io 或 https://&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">organization&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>.github.io 时，base 设置为: /
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">2.&lt;/span> 如果使用github 项目站点，访问域名为 https://&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">username&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>.github.io/&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">repo&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>/ 时，base 设置为项目仓库名，如: blog_page
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">3.&lt;/span> 如果使用github 项目站点，但是绑定了域名时， base 设置为: /
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 参考：https://help.github.com/cn/github/working-with-github-pages/creating-a-github-pages-site
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>&lt;code>deploy.sh&lt;/code> 手动部署脚本&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 确保脚本抛出遇到的错误&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span> -e
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 生成静态文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">npm run docs:build
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 进入生成的文件夹&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> docs/.vuepress/dist
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如果是发布到自定义域名&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># echo &amp;#39;www.example.com&amp;#39; &amp;gt; CNAME&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git init
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git add -A
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s1">&amp;#39;deploy&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如果发布到 https://&amp;lt;USERNAME&amp;gt;.github.io (这是个人或组织类站点)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># git push -f git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USERNAME&amp;gt;.github.io.git master&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如果发布到 https://&amp;lt;USERNAME&amp;gt;.github.io/&amp;lt;REPO&amp;gt; （这是项目类站点）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># git push -f git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;REPO&amp;gt;.git master:gh-pages&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git push -f git@github.com:wkii/blog_page.git master:gh-pages
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> -
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>
+&lt;p>使用Travis-ci 自动化部署配置，配置文件需要在项目根目录创建一个文件&lt;code>.travis.yml&lt;/code>&lt;/p>
+&lt;p>有没有人跟我一样，比对了半天文件名，却没注意前面缺了个点，试了半天都不好使😂&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">language&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">node_js&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">node_js&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">lts/*&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">cache&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">directories&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">node_modules&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">yarn&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">before_install&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">export TZ=&amp;#39;Asia/Shanghai&amp;#39;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 设置时区&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">install&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">yarn install&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">yarn docs:build&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">deploy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">provider&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">pages&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">skip-cleanup&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">local_dir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">docs/.vuepress/dist&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">github-token&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">$GITHUB_TOKEN&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 在 GitHub 中生成，用于允许 Travis 向你的仓库推送代码。在 Travis 的项目设置页面进行配置，设置为 secure variable&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">target-branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">gh-pages&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 要部署的分支&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">verbose&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">keep-history&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">wkii&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">email&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">digihero@gmail.com&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">master&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 源文件所在的分支&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后如何使用travis-ci，可参考vhxly写的&lt;a class="link" href="https://vxhly.github.io/views/nodejs/vuepress-blog-on-github.html#%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2" target="_blank" rel="noopener"
+>自动化部署&lt;/a>部分。&lt;/p>
+&lt;h3 id="使用readmemd">使用README.md
+&lt;/h3>&lt;p>如果要使用README.md（例如放一些文字图片说明），则可以再写一个&lt;code>index.md&lt;/code>用于存放之前给README.md的内容。&lt;/p>
+&lt;p>index.md用于存放Front Matter，README.md 用于存放项目说明。&lt;/p>
+&lt;h2 id="下一步计划">下一步计划
+&lt;/h2>&lt;ul>
+&lt;li>&lt;input checked="" disabled="" type="checkbox"> 使用Travis CI 持续集成部署&lt;/li>
+&lt;li>&lt;input checked="" disabled="" type="checkbox"> 把主题色系换成蓝色。我还是喜欢ant.design的蓝色系。&lt;/li>
+&lt;/ul></description></item><item><title>iPhone 开通中国联通 4G VoLTE方法</title><link>https://www.wkii.net/posts/tech/china-unicom-volte-iphone/</link><pubDate>Mon, 23 Dec 2019 17:14:45 +0800</pubDate><guid>https://www.wkii.net/posts/tech/china-unicom-volte-iphone/</guid><description>&lt;p>2019年6月联通试商用4G VoLTE。直到IOS13.3更新后，也就是2019年12月，这项功能终于可正常使用了。&lt;/p>
+&lt;p>只要是北京、天津、上海、郑州、武汉、长沙、广州、济南、杭州、南京、重庆这11个城市的联通用户，均可以按以下方法来开通&lt;/p>
+&lt;ol>
+&lt;li>先发短信给 10010 ，内容为：DGVOLTE&lt;/li>
+&lt;li>收到短信回复后，再回短信内容：Y 来确认开通。&lt;/li>
+&lt;li>进入设置，通用，关于本机 会有提示运营商设置更新。 更新。&lt;/li>
+&lt;li>进入设置，蜂窝网络，蜂窝数据选项，语音与数据，选择 4G，打开VoLTE。&lt;/li>
+&lt;/ol>
+&lt;p>然后打电话给10010，如果发现右上角4G不会变为3G，就开通成功了。&lt;/p></description></item><item><title>禁用chrome firefox 的 WebRTC功能防止真实IP泄漏</title><link>https://www.wkii.net/posts/tech/disabled-chrome-firefox-webrtc/</link><pubDate>Sun, 01 Feb 2015 16:06:04 +0800</pubDate><guid>https://www.wkii.net/posts/tech/disabled-chrome-firefox-webrtc/</guid><description>&lt;p>无论是使用VPN还是其它代理方式，很多时候我们不希望暴露自己的真实IP，且一直以来我们认为VPN是安全的，所有流量都会走VPN。 但最近暴露出一个WebRTC特性，会暴露我们的真实IP。适用浏览器：chrome,firefox. safari则没有问题。 只需要一段js代码就可以获取我们的真实IP。一旦被想时时监控别人的人知道并使用此方法钓鱼，便可直接获得原始IP。这简直太恐怖了。 看来以后如果重装系统，第一件事儿把cnnic证书删除后，第二件事儿就是禁用WebRTC. 有一个插件可以方便的禁用WebRTC, &lt;a class="link" href="https://chrome.google.com/webstore/detail/webrtc-block/nphkkbaidamjmhfanlpblblcadhfbkdm" target="_blank" rel="noopener"
+>插件下载&lt;/a> Firefox可在浏览器上输入：about:config。之后搜索：media.peerconnection.enabled。找到它后双击，将其改成 false 即可。 原理可以参考一下这里：&lt;a class="link" href="https://github.com/diafygi/webrtc-ips" target="_blank" rel="noopener"
+>https://github.com/diafygi/webrtc-ips&lt;/a>&lt;/p></description></item><item><title>关于存储用户密码的思考，bcrypt 和 PBKDF2算法</title><link>https://www.wkii.net/posts/tech/save-user-password-use-bcrypt-or-pbkdf2/</link><pubDate>Tue, 10 Apr 2012 18:38:37 +0800</pubDate><guid>https://www.wkii.net/posts/tech/save-user-password-use-bcrypt-or-pbkdf2/</guid><description>&lt;p>首先，像国内一些网站，比如sina这样的网站，zf要求要掌握用户密码，虽然也是加密的，但是是可逆加密。只要有需要，反解你的密码只是点一下鼠标的事儿。所以建议你的密码分级，对sina这种网站，不要使用高等级的密码。 但如果我们为了对用户负责，用户密码采用不可逆算法的时候，我们就要考虑一下如何对用户密码进行加密。那么仅仅是使用不可逆算法就行了吗？还不是，在硬件飞速发展的今天，尤其是GPU运算能力超CPU 10-20倍甚至更多，使得暴力破解的时间大大缩短。那么为了使得暴力破解变得几乎不可能，我们就要使用一些不支持GPU加速破解的算法。这里所说的算法，实际上也是各种加密的hash方式。 目前常见的&lt;strong>不可逆加密算法&lt;/strong>有以下几种：&lt;/p>
+&lt;ul>
+&lt;li>一次MD5（使用率很高）&lt;/li>
+&lt;li>将密码与一个随机串进行一次MD5&lt;/li>
+&lt;li>两次MD5，使用一个随机字符串与密码的md5值再进行一次md5，使用很广泛&lt;/li>
+&lt;li>&lt;a class="link" href="http://en.wikipedia.org/wiki/PBKDF2" target="_blank" rel="noopener"
+>PBKDF2&lt;/a>算法&lt;/li>
+&lt;li>&lt;a class="link" href="http://en.wikipedia.org/wiki/Bcrypt" target="_blank" rel="noopener"
+>bcrypt&lt;/a>&lt;/li>
+&lt;li>其它加密算法&lt;/li>
+&lt;/ul>
+&lt;p>现在，通常推荐使用 bcrypt 或 PBKDF2 这两种算法来对密码进行加密。下面对以上几种加密算法进行一下简单的分析。 第一种就不解释了，我们看下第二种加密算法（php代码）$salt是一个随机字符串，每个用户都不一样，并且要存储下来用于验证&lt;/p>
+&lt;p>md5($password.$salt)&lt;/p>
+&lt;p>第三种算法（php代码）&lt;/p>
+&lt;p>md5(md5($password).$salt)&lt;/p>
+&lt;p>第一种和第二种都是一次md5，尤其是第一种，假设原始字符串很短，当然，我们的密码通常都不会很长，所以暴力破解还是不会耗时太久的。尤其是采用GPU运算。 下面这个网址中，作者针对cpu、gup和各种单一的加密算法破解进行了一些描述，有兴趣的可以看看： &lt;a class="link" href="http://www.codinghorror.com/blog/2012/04/speed-hashing.html" target="_blank" rel="noopener"
+>http://www.codinghorror.com/blog/2012/04/speed-hashing.html&lt;/a> 下面的网址还介绍了我国山东大学的王晓云和余洪波关于md5碰撞的文章，可以生成两个一样的md5值的文件。http://www.mscs.dal.ca/~selinger/md5collision/ 上面链接的内容同样证明了一次MD5并不可靠。那么第二种和第三种是否可靠呢？第二种，要看你随机字符串有多长了，再加上原始密码，字符串越长，暴力破解的时间就越长，第三种就要暴力破解32位字符串的MD5，耗时嘛，以目前的硬件来看，估计单台机器普通人是等不到它破解出来了。不过如果涉及到国防级别，像美国使用超级计算机集群来破解的话，或许，用不了多长时间。 下面介绍第四种，是django 1.4默认采用的密码加密算法。点击上面PBKDF2的链接，在维基百科上已经有很详细的介绍，它使得暴力破解的希望更加渺茫。这也是django1.4安全性提升的一个亮点，在此之前它使用sha1来加密。PBKDF2实际上默认采用并推荐sha256，然后再配合10000次运算得出的结果。 参考标准：&lt;a class="link" href="https://www.ietf.org/rfc/rfc6070.txt" target="_blank" rel="noopener"
+>rfc6070&lt;/a>，&lt;a class="link" href="https://www.ietf.org/rfc/rfc2898.txt" target="_blank" rel="noopener"
+>rfc2898&lt;/a> 。
+所以这里就不多介绍bcrypt了。字符串的长度，影响它生成hash值的时间。当然，这似乎在任何一种hash算法上都是成正比的。 实际上，无论是bcrypt还是PBKDF2都有各自的忠实拥护者。另外bcrypt不支持超过55个字符的密码短语。到底那一个好，没有标准答案，取决于你问那一方的粉丝。我个人偏向于使用PBKDF2，下面的参考资料中，或许也会给你答案。 其它参考资料： &lt;a class="link" href="http://stackoverflow.com/questions/4433216/password-encryption-pbkdf2-using-sha512-x-1000-vs-bcrypt" target="_blank" rel="noopener"
+>password-encryption-pbkdf2-using-sha512-x-1000-vs-bcrypt&lt;/a> &lt;a class="link" href="http://stackoverflow.com/questions/1561174/sha512-vs-blowfish-and-bcrypt" target="_blank" rel="noopener"
+>sha512-vs-blowfish-and-bcrypt&lt;/a>&lt;/p></description></item></channel></rss>

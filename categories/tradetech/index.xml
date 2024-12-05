@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TradeTech on Wkii Blog</title><link>https://www.wkii.net/categories/tradetech/</link><description>Recent content in TradeTech on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Wed, 24 Jun 2020 20:21:01 +0800</lastBuildDate><atom:link href="https://www.wkii.net/categories/tradetech/index.xml" rel="self" type="application/rss+xml"/><item><title>常见支付通道条码付和扫码付异步通知策略</title><link>https://www.wkii.net/posts/tradetech/jsapi-authcode-pay-notify-rule/</link><pubDate>Wed, 24 Jun 2020 20:21:01 +0800</pubDate><guid>https://www.wkii.net/posts/tradetech/jsapi-authcode-pay-notify-rule/</guid><description>&lt;h2 id="背景">背景
+&lt;/h2>&lt;p>今天在整理各个通道异步通知逻辑的时候，有一些记的不太清楚了，所以顺便再确认一轮儿，记录下来。&lt;/p>
+&lt;h2 id="什么是条码付和扫码付">什么是条码付和扫码付
+&lt;/h2>&lt;ul>
+&lt;li>条码付：即用户被扫，商家使用扫码设备扫描用户的二维码发起的付款。&lt;/li>
+&lt;li>扫码付：即用户主扫，由用户扫描商户的二维码发起的付款。&lt;/li>
+&lt;/ul>
+&lt;h2 id="常见支付通道异步通知逻辑">常见支付通道异步通知逻辑
+&lt;/h2>&lt;h3 id="1-支付宝">1. 支付宝
+&lt;/h3>&lt;ul>
+&lt;li>扫码付会有异步通知，触发条件：支付成功。&lt;/li>
+&lt;li>条码付没有异步通知，如果是支付中，如果主动轮询去查（跟技术支持确认过逻辑）&lt;/li>
+&lt;/ul>
+&lt;p>文档地址：&lt;a class="link" href="https://opendocs.alipay.com/open/194/103296" target="_blank" rel="noopener"
+>https://opendocs.alipay.com/open/194/103296&lt;/a>&lt;/p>
+&lt;h3 id="2-微信">2. 微信
+&lt;/h3>&lt;ul>
+&lt;li>扫码付有异步通知。&lt;/li>
+&lt;li>条码付没有异步通知。&lt;/li>
+&lt;/ul>
+&lt;p>针对条码付的支付中状态，文档描述：“**验密支付流程：**场景交互与免密模式相同，不同的是在商户调用【&lt;a class="link" href="https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&amp;amp;index=1" target="_blank" rel="noopener"
+>付款码支付API&lt;/a>】发起支付请求之后，微信支付后台提示用户输入密码确认支付，接口同步返回USERPAYING状态，商户系统再轮询调用查询订单接口来确认当前用户是否已经支付成功。”&lt;/p>
+&lt;p>微信文档地址：&lt;a class="link" href="https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=5_4" target="_blank" rel="noopener"
+>https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=5_4&lt;/a>&lt;/p>
+&lt;h3 id="3-乐刷">3. 乐刷
+&lt;/h3>&lt;ul>
+&lt;li>条码付和扫码付都有异步通知，在成功后通知，触发条件：支付成功。&lt;/li>
+&lt;/ul>
+&lt;p>文档地址：&lt;a class="link" href="https://www.yuque.com/leshuazf/doc/zhifujiaoyi#93D6z" target="_blank" rel="noopener"
+>https://www.yuque.com/leshuazf/doc/zhifujiaoyi#93D6z&lt;/a>&lt;/p>
+&lt;h2 id="推荐操作">推荐操作
+&lt;/h2>&lt;p>建议不管是条码付还是扫码付，都应该增加主动轮询逻辑，以防止异步通知延迟而带来的不必要麻烦。&lt;/p>
+&lt;p>另外注意一点：&lt;strong>有时候异步通知甚至比同步返回还要先到达，需做好逻辑处理。&lt;/strong>&lt;/p></description></item></channel></rss>

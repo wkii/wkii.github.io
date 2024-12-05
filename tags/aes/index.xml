@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AES on Wkii Blog</title><link>https://www.wkii.net/tags/aes/</link><description>Recent content in AES on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 16 Sep 2013 23:11:52 +0800</lastBuildDate><atom:link href="https://www.wkii.net/tags/aes/index.xml" rel="self" type="application/rss+xml"/><item><title>Php Aes加密类</title><link>https://www.wkii.net/posts/php/php-aes-encrypt-for-yii/</link><pubDate>Mon, 16 Sep 2013 23:11:52 +0800</pubDate><guid>https://www.wkii.net/posts/php/php-aes-encrypt-for-yii/</guid><description>&lt;p>今天写了一个php的AES加密类。适用于Yii的扩展。 如果不用在Yii框架中，把代码中&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Yii::app()-&amp;gt;params\[&amp;#39;encryptKey&amp;#39;\]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>换成你对应的默认key就可以了。
+代码见github: &lt;a class="link" href="https://github.com/wkii/utils/blob/master/Yii/extensions/PhpAes.php" title="Php Aes"
+target="_blank" rel="noopener"
+>https://github.com/wkii/utils/blob/master/Yii/extensions/PhpAes.php&lt;/a>&lt;/p></description></item></channel></rss>

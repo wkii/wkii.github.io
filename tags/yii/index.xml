@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yii on Wkii Blog</title><link>https://www.wkii.net/tags/yii/</link><description>Recent content in Yii on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 30 May 2013 22:35:38 +0800</lastBuildDate><atom:link href="https://www.wkii.net/tags/yii/index.xml" rel="self" type="application/rss+xml"/><item><title>Yii deleteByAttributs 用法，慎用Dao的delete</title><link>https://www.wkii.net/posts/php/yii-deletebyattributs-use-and-dao-delete/</link><pubDate>Thu, 30 May 2013 22:35:38 +0800</pubDate><guid>https://www.wkii.net/posts/php/yii-deletebyattributs-use-and-dao-delete/</guid><description>&lt;p>Yii框架一定要慎用Dao的delete，一不小心它生不成条件的话，就变成了整表删除。 可以用ActiveRecord的deleteByAttributes或deleteAll方法相对不容易写错。 deleteByAttributes用法如下：&lt;/p>
+&lt;pre>&lt;code>MyClass::model()-&amp;gt;deleteAllByAttributes(array(
+'phone_number'=&amp;gt;$phoneNumber,
+));
+&lt;/code>&lt;/pre>
+&lt;p>或者第一个参数为空，使用第二个条件参数&lt;/p>
+&lt;pre>&lt;code>MyClass::model()-&amp;gt;deleteAllByAttributes(array(),'`phone_number` = :phone_number',array(
+':phone_number'=&amp;gt;$phoneNumber,
+));
+&lt;/code>&lt;/pre>
+&lt;p>或者使用&lt;code>deleteAll()&lt;/code>:&lt;/p>
+&lt;pre>&lt;code>MyClass::model()-&amp;gt;deleteAll('`phone_number` = :phone_number',array(
+':phone_number'=&amp;gt;$phoneNumber,
+));
+&lt;/code>&lt;/pre>
+&lt;p>再来一个带in条件的&lt;/p>
+&lt;pre>&lt;code>$condition = new CDbCriteria();
+$condition-&amp;gt;addCondition('status=:status');
+$condition-&amp;gt;params = array(':status'=&amp;gt;1);
+$condition-&amp;gt;addInCondition('user_id',array(100111,100221,100221));
+User::model()-&amp;gt;deleteAll($condition);
+&lt;/code>&lt;/pre>
+&lt;p>Dao带in条件的示例&lt;/p>
+&lt;pre>&lt;code>Yii::app()-&amp;gt;db-&amp;gt;createCommand()
+-&amp;gt;delete('mw_user', array('and', 'user_id=:user_id', array('in', 'position_id', array(1,2,3))),array(':user_id'=&amp;gt;121111));
+&lt;/code>&lt;/pre>
+&lt;p>但是请慎用DAO的delete，当你的条件写错一点，它将无法生成where条件，同时sql语句中也没有了where，但还不一定报错，结果就成了没有where的delete，结果会是整表被删除了。&lt;/p></description></item></channel></rss>
