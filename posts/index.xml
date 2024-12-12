@@ -1,4 +1,276 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Wkii Blog</title><link>https://www.wkii.net/posts/</link><description>Recent content in Posts on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 05 Dec 2024 20:18:55 +0800</lastBuildDate><atom:link href="https://www.wkii.net/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Acme.sh 自动保存证书文件到其它目录</title><link>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</link><pubDate>Thu, 05 Dec 2024 20:18:55 +0800</pubDate><guid>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</guid><description>&lt;h1 id="acme-sh-auto-save-cert-files">Acme Sh Auto Save Cert Files
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Wkii Blog</title><link>https://www.wkii.net/posts/</link><description>Recent content in Posts on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 12 Dec 2024 17:06:00 +0800</lastBuildDate><atom:link href="https://www.wkii.net/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>ROS 开启限速，并对指定设备限速</title><link>https://www.wkii.net/posts/tech/ros-queue-settings/</link><pubDate>Thu, 12 Dec 2024 17:06:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/ros-queue-settings/</guid><description>&lt;h2 id="背景">背景
+&lt;/h2>&lt;p>现在很多电视版的 APP 都会占用家庭带宽的上传，用家庭带宽当成p2p节点。 我的小水管儿经不住他们薅，所以决定给电视限制上传速度，一劳永逸&lt;/p>
+&lt;h2 id="操作步骤">操作步骤
+&lt;/h2>&lt;ol>
+&lt;li>给特定设备分配静态IP&lt;/li>
+&lt;li>标记特定设备的上传流量&lt;/li>
+&lt;li>为已标记流量和非标记流量分别创建一个队列&lt;/li>
+&lt;li>给标记流量队列队速，给未标记流量不限速&lt;/li>
+&lt;/ol>
+&lt;h2 id="具体-queue-trees-限速配置">具体 Queue Trees 限速配置
+&lt;/h2>&lt;p>给设备分配静态IP之后，比如我这里电视的IP是 &lt;code>192.168.1.28&lt;/code>，我的电脑是 &lt;code>192.168.1.26&lt;/code>，同时把电脑加上是电脑可以方便的用测速工具来进行测试。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 标记tv的上传流量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip firewall mangle add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>prerouting src-address&lt;span class="o">=&lt;/span>192.168.1.28 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>mark-packet new-packet-mark&lt;span class="o">=&lt;/span>upload-limit-tv &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;TV upload limit&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 标记测试设备的上传流量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip firewall mangle add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>prerouting src-address&lt;span class="o">=&lt;/span>192.168.1.26 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>mark-packet new-packet-mark&lt;span class="o">=&lt;/span>upload-limit-tv &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Test upload limit&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 为标记流量创建父队列&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/queue tree add &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;parent-queue-marked&amp;#34;&lt;/span> &lt;span class="nv">parent&lt;/span>&lt;span class="o">=&lt;/span>global max-limit&lt;span class="o">=&lt;/span>5M &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;default marked upload limit 5M&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 为未标记流量创建父队列&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/queue tree add &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;parent-queue-unmarked&amp;#34;&lt;/span> &lt;span class="nv">parent&lt;/span>&lt;span class="o">=&lt;/span>global max-limit&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span> &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;default unmarked upload unlimit&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建子队列，限制tv的上传速度&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/queue tree add &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;upload-limit-tv&amp;#34;&lt;/span> &lt;span class="nv">parent&lt;/span>&lt;span class="o">=&lt;/span>parent-queue-marked packet-mark&lt;span class="o">=&lt;/span>upload-limit-tv max-limit&lt;span class="o">=&lt;/span>1M &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;tv traffic limit 1M&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 为未标记流量创建子队列&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/queue tree add &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;unmarked-traffic&amp;#34;&lt;/span> &lt;span class="nv">parent&lt;/span>&lt;span class="o">=&lt;/span>parent-queue-unmarked max-limit&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span> &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;unmarked traffic unlimit&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果还有IPV6流量的话&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">/ipv6 firewall mangle add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>prerouting src-address&lt;span class="o">=&lt;/span>2001:db8::240 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>mark-packet new-packet-mark&lt;span class="o">=&lt;/span>upload-limit-tv
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 标记测试设备的IPv6上传流量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ipv6 firewall mangle add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>prerouting src-address&lt;span class="o">=&lt;/span>2001:db8::107 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>mark-packet new-packet-mark&lt;span class="o">=&lt;/span>upload-limit-test
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>关键的设置就是&lt;code>max-limit=1M&lt;/code>，给打了标记的这部分流量设置一个上限。&lt;/p>
+&lt;p>这里分为父队列和子队列。其实可以方便的配置多种策略。如果有多台设备，也可以通过策略组合来实现父队列限制多少，某一个或几个设备限制多少。&lt;/p>
+&lt;p>然后用测试网站测试成功以后，就可以把自己的电脑的子队列删除了。大功告成。&lt;/p></description></item><item><title>软路由使用 ROS 做为主路由，基本设置以及开启IPV6</title><link>https://www.wkii.net/posts/tech/ros-setup-setting-ipv6/</link><pubDate>Thu, 12 Dec 2024 16:56:55 +0800</pubDate><guid>https://www.wkii.net/posts/tech/ros-setup-setting-ipv6/</guid><description>&lt;h2 id="前言">前言
+&lt;/h2>&lt;p>我的环境是：畅网的4网口路由器安装PVE：&lt;/p>
+&lt;ul>
+&lt;li>eth0 做为ROS 的wan，直通&lt;/li>
+&lt;li>eth1 做为ROS 的lan，桥接&lt;/li>
+&lt;li>eth2 备用&lt;/li>
+&lt;li>eth3 最后一个网口，pve的管理口&lt;/li>
+&lt;/ul>
+&lt;h2 id="基本设置">基本设置
+&lt;/h2>&lt;p>通过 quick set 来设置
+Configuration 选 router，接上网线会自动获取上游下发的IP
+Local Network：&lt;/p>
+&lt;ul>
+&lt;li>IP：192.168.10.1&lt;/li>
+&lt;li>NetMask 255.255.255.0(/24)&lt;/li>
+&lt;li>brigde all lan ports 选中&lt;/li>
+&lt;li>dhcp Server 选中&lt;/li>
+&lt;li>dhcp server range 192.168.10.31-192.168.10.250&lt;/li>
+&lt;li>Nat 选中&lt;/li>
+&lt;/ul>
+&lt;p>如果不能上网的话， dns settings中选中 allow remote requests。&lt;/p>
+&lt;p>用脚本的话是这样：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置 WAN 接口（假设为 ether2） CHR版本在pve里，第一个网卡是直通，第二个网卡是桥接，它识别ether1为lan, 可以改一下名，把 wan 改成 ether1 &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip dhcp-client add &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>ether1 add-default-route&lt;span class="o">=&lt;/span>yes use-peer-dns&lt;span class="o">=&lt;/span>yes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置 LAN 接口（假设为 bridge1）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/interface bridge add &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>bridge1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/interface bridge port add &lt;span class="nv">bridge&lt;/span>&lt;span class="o">=&lt;/span>bridge1 &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>ether2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如果有多个按设备号添加，&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#/interface bridge port add bridge=bridge1 interface=ether3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置 LAN IP 地址&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip address add &lt;span class="nv">address&lt;/span>&lt;span class="o">=&lt;/span>192.168.10.1/24 &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>bridge1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置 DHCP 服务器&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip pool add &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>dhcp_pool &lt;span class="nv">ranges&lt;/span>&lt;span class="o">=&lt;/span>192.168.10.31-192.168.10.250
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip dhcp-server add &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>dhcp1 &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>bridge1 address-pool&lt;span class="o">=&lt;/span>dhcp_pool lease-time&lt;span class="o">=&lt;/span>10m
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip dhcp-server network add &lt;span class="nv">address&lt;/span>&lt;span class="o">=&lt;/span>192.168.10.0/24 &lt;span class="nv">gateway&lt;/span>&lt;span class="o">=&lt;/span>192.168.10.1 dns-server&lt;span class="o">=&lt;/span>192.168.10.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 使用路由器本身作为 DNS 服务器，甚至可以设置 doH server&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip dns &lt;span class="nb">set&lt;/span> allow-remote-requests&lt;span class="o">=&lt;/span>yes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 定义Wan 和 LAN 的网卡列表。方便后续写防火墙规则，至少有一个nat规则。如果要省事儿，不写列表就写死 out-interface=ether1 也可以&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/interface list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">add &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>defconf &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>WAN
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">add &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>defconf &lt;span class="nv">name&lt;/span>&lt;span class="o">=&lt;/span>LAN
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/interface list member
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">add &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>bridge1 &lt;span class="nv">list&lt;/span>&lt;span class="o">=&lt;/span>LAN
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">add &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>ether1 &lt;span class="nv">list&lt;/span>&lt;span class="o">=&lt;/span>WAN
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 启用 NAT，或者参考后面的防火墙规则，注意，这条规则是已经配置了 interface-list 的情况&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip firewall nat add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>srcnat &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>masquerade out-interface-list&lt;span class="o">=&lt;/span>WAN &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;defconf: masquerade&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 使用doh server&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip dns &lt;span class="nb">set&lt;/span> use-doh-server&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;https://1.12.12.12/dns-query&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 防火墙规则:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 默认拒绝所有流量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 丢弃无效连接&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 允许本地网络访问路由器&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 允许已建立和相关的连接&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 允许本地网络访问互联网&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 允许来自内部网络的 ICMP 流量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 阻止 外部访问路由器的Telnet、FTP、SSH、HTTP、HTTPS&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 允许本地网络的 DNS 查询&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 允许 DHCP 请求&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置地址伪装，也叫开启 NAT&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ip firewall filter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop all input by default&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>forward &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop all forward by default&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input connection-state&lt;span class="o">=&lt;/span>invalid &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop invalid connections&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>forward connection-state&lt;span class="o">=&lt;/span>invalid &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop invalid connections&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>accept in-interface&lt;span class="o">=&lt;/span>bridge1 &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Allow LAN access to router&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>accept connection-state&lt;span class="o">=&lt;/span>established,related &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Allow established and related connections&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>forward &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>accept connection-state&lt;span class="o">=&lt;/span>established,related &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Allow established and related connections&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>forward &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>accept in-interface&lt;span class="o">=&lt;/span>bridge1 out-interface&lt;span class="o">=&lt;/span>ether1 &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Allow LAN to WAN&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>icmp in-interface&lt;span class="o">=&lt;/span>bridge1 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>accept &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Allow ICMP from LAN&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>tcp dst-port&lt;span class="o">=&lt;/span>&lt;span class="m">23&lt;/span> &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop Telnet&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>tcp dst-port&lt;span class="o">=&lt;/span>&lt;span class="m">21&lt;/span> &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop FTP&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>tcp dst-port&lt;span class="o">=&lt;/span>&lt;span class="m">22&lt;/span> &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop SSH from WAN&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>tcp dst-port&lt;span class="o">=&lt;/span>&lt;span class="m">80&lt;/span> &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop HTTP from WAN&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>drop &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>tcp dst-port&lt;span class="o">=&lt;/span>&lt;span class="m">443&lt;/span> &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Drop HTTPS from WAN&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>udp &lt;span class="nv">port&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">53&lt;/span> in-interface&lt;span class="o">=&lt;/span>bridge1 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>accept &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Allow DNS queries from LAN&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>tcp &lt;span class="nv">port&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">53&lt;/span> in-interface&lt;span class="o">=&lt;/span>bridge1 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>accept &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Allow DNS queries from LAN&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>input &lt;span class="nv">protocol&lt;/span>&lt;span class="o">=&lt;/span>udp &lt;span class="nv">port&lt;/span>&lt;span class="o">=&lt;/span>67-68 in-interface&lt;span class="o">=&lt;/span>bridge1 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>accept &lt;span class="nv">comment&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Allow DHCP requests from LAN&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>/ip firewall nat add &lt;span class="nv">chain&lt;/span>&lt;span class="o">=&lt;/span>srcnat out-interface&lt;span class="o">=&lt;/span>ether1 &lt;span class="nv">action&lt;/span>&lt;span class="o">=&lt;/span>masquerade
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后进入 IP-&amp;gt;DNS，把 转发 选中（记忆中是这样） 就可以上网了。&lt;/p>
+&lt;h2 id="开启ipv6">开启IPV6
+&lt;/h2>&lt;p>我的 CHR 版本，默认已经自带了ipv6，不需要从package中开启ipv6。
+RouterOS DHCPv6 服务器只能委托 IPv6 前缀，而不是地址。 所以当使用SLAAC能分配并正常使用的时候，就没必要开启DHCPV6 server了。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置 RouterOS 设备以接受来自上游路由器的 IPv6 路由器广告消息，默认值是：yes if forwarding disabled&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 接受上游路由器广告，目前看没啥用，不启用了&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /ipv6 settings set accept-router-advertisements=yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置 DHCPv6 客户端，使用从上游 DHCP 服务器获取的 IPv6 地址和前缀&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ipv6 dhcp-client add &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>ether1 pool-name&lt;span class="o">=&lt;/span>dhcpv6-pool pool-prefix-length&lt;span class="o">=&lt;/span>&lt;span class="m">60&lt;/span> add-default-route&lt;span class="o">=&lt;/span>yes use-peer-dns&lt;span class="o">=&lt;/span>no &lt;span class="nv">request&lt;/span>&lt;span class="o">=&lt;/span>address,prefix
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置 SLAAC 和邻居发现协议，并指定 DNS 服务器地址&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ipv6 nd add &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>bridge1 other-configuration&lt;span class="o">=&lt;/span>yes advertise-dns&lt;span class="o">=&lt;/span>yes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ipv6 nd prefix add &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>bridge1 preferred-lifetime&lt;span class="o">=&lt;/span>1h valid-lifetime&lt;span class="o">=&lt;/span>2h
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ipv6 nd &lt;span class="nb">set&lt;/span> &lt;span class="o">[&lt;/span>find &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>bridge1&lt;span class="o">]&lt;/span> &lt;span class="nv">dns&lt;/span>&lt;span class="o">=&lt;/span>2001:db8::240,2001:4860:4860::8844
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 添加ipv6 address 地址并指定地址池&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ipv6 address add &lt;span class="nv">address&lt;/span>&lt;span class="o">=&lt;/span>::1 from-pool&lt;span class="o">=&lt;/span>dhcpv6-pool &lt;span class="nv">interface&lt;/span>&lt;span class="o">=&lt;/span>bridge1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置 DHCPv6 服务器（可选）都已经可以获取IP并且正常使用了。&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /ipv6 pool add name=dhcpv6-pool prefix=2408:8210:1803:dbf2::/64&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /ipv6 dhcp-server add name=dhcpv6-server interface=bridge1 address-pool=dhcpv6-pool&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Acme.sh 自动保存证书文件到其它目录</title><link>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</link><pubDate>Thu, 05 Dec 2024 20:18:55 +0800</pubDate><guid>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</guid><description>&lt;h1 id="acme-sh-auto-save-cert-files">Acme Sh Auto Save Cert Files
 &lt;/h1>&lt;p>使用 acme.sh 申请的证书，默认是放在 &lt;code>/acme.sh/&lt;/code> 目录下，而这个目录下文件有点多，其实不适合与 nginx 共享。所以我们通常指定一个共享目录来把证书文件再存一下。 而 acme.sh 是可以自动完成这个证书申请后“另存”或者说“安装”的工作的。并且在证书续期之后，也会再次执行。命令如下：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1298,78 +1570,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;li>进入设置，通用，关于本机 会有提示运营商设置更新。 更新。&lt;/li>
 &lt;li>进入设置，蜂窝网络，蜂窝数据选项，语音与数据，选择 4G，打开VoLTE。&lt;/li>
 &lt;/ol>
-&lt;p>然后打电话给10010，如果发现右上角4G不会变为3G，就开通成功了。&lt;/p></description></item><item><title>观奇葩说“给做好事的人发红包，你支持吗”有感</title><link>https://www.wkii.net/posts/life/qipashuo-fahongbao/</link><pubDate>Wed, 27 Nov 2019 22:38:53 +0800</pubDate><guid>https://www.wkii.net/posts/life/qipashuo-fahongbao/</guid><description>&lt;h2 id="一辨题">一、辨题：
-&lt;/h2>&lt;p>辩题“奇葩星球新规定：给做好事的人发红包，你支持吗？”&lt;/p>
-&lt;h2 id="二关于辨论">二、关于辨论
-&lt;/h2>&lt;p>本人非专业辨手，只是看了这期节目，觉得很多人聊的都不在点子上，一时兴起，写篇博客吧。&lt;/p>
-&lt;p>对于这个辨题，我觉得非常同情正方辨手。因为这本应该是被反方碾压的辨题，虽然很努力也曾经一度领先，但最终还是功败垂成，也正常。&lt;/p>
-&lt;p>反方辨手我觉得詹青云和肖骁说的都不错。但他们有一个特点（我这非专业人士评论仅代表个人观点），都是在纠结这个问题本身的正确与否，用讲故事、抓某一个点，甚至是煽情来鼓劲观众投票，而忽略了最重要的一点：这件命题的逻辑。同时做为反方三辨也没有抓住对方的弱点来进行反驳。&lt;/p>
-&lt;h2 id="三辨论推演">三、辨论推演
-&lt;/h2>&lt;p>如果是我来做三辨的情况下，我会从以下几个方面来讲：&lt;/p>
-&lt;h3 id="1-逻辑可行性">1. 逻辑可行性
-&lt;/h3>&lt;p>为什么要讲逻辑可行性呢？举个例子，如果辨题是：”我们要不要发家致富奔小康？“，那我想没人会做反方。但如何去发家致富奔小康呢？就需要讨论具体做什么事，怎么做了，那就有什么事能做，什么事不能做，能做的事要怎么做这个过程了。&lt;/p>
-&lt;p>所以一件事通常分几个阶段：&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>idear阶段，想做一件什么样的事&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>可行性分析阶段：&lt;/p>
-&lt;p>该需要对如何做这件事，怎么做，有没有别人做过，做过的人是怎么做的，做成了什么样，使用什么方案等调研，如果这件事前无古人后无来者，更需要有完整的做事方法，各种情况的应对来达成初步理论。罗胖也提到了一个现实的例子，如果可规定可不规定，就尽量不要去规定。只要有规定，一定会一套一套的出各种子孙规定，拿论题来说，不具备实操性，也就没有可行性。&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>实验操作阶段（都到不了这个阶段了，后两个阶段就更不用提了）&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>发现问题，解决问题阶段&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>稳定运行、扩大规模阶段&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;p>为什么举这个例子呢？正方三辨是一个创业者，他必然精通这些逻辑，如果让他现场分析这件事如何设定规则如何执行，他会当场傻眼。一件无法执行的事，本身就是不成立的。那还用辨吗？&lt;/p>
-&lt;h3 id="2-社会影响">2. 社会影响
-&lt;/h3>&lt;p>如果以论题来说：“要给做好事的人发红包”，就算是你给每个人头顶都装一个摄相机，用最先进的人工智能来判断谁做了好事，谁没做好事，仍然有很多解决不了的问题。&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>做为和不做为判断：&lt;/p>
-&lt;p>如肖骁所说，任何做好事都有做为和不做为。做为的好判断，不做为的好事，该怎么判断呢？可能是因为我懒，可能是因为我没看见，所以没做为，那也算是做好事？&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>道德绑架&lt;/p>
-&lt;p>当做好事这件事儿被量化然后发红包，自然就会有各种后遗症，比如攀比 、炫耀，对那些没有做好事的或是“抢红包”手速慢的，或是因不做为而做了好事即无法判断的人，形成一种道德绑架，一杆子全打死。那这件事儿本身是好事还是坏事呢？&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>被利用规则，如何保证公平公正？大家为什么要支持？&lt;/p>
-&lt;p>詹青云虽然提到了规则被利用，但深度不够。其它人甚至拿工作来当做好事，比如早点摊起早摆摊是做好事？如果一旦做好事可以获得红包，并且有利可图（正方一辨二辨一直鼓吹的），一定会出现一个特殊的群体，利用这个规则来成立各种各样的团队来组团打副本。而如果给的特别少，也构不成正方一、二辨所谓的社会经济效益，也起不到什么“促进大家做好事”的效果，那为什么劳民伤财干这事儿呢？&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;h3 id="3-关于反驳">3. 关于反驳
-&lt;/h3>&lt;p>对方有以下几点值得反驳并且可以一巴掌拍死的点：&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>可行性分析，如果正方不能证明这件事的可行性，反方坐享其成就行了。正方二辨是学经济学的，一度想以经济学的理论来证明，但仍然不能说明这件事有可行性。可行性不仅考虑能否制定完整的规则来执行，还要考虑投入产出、社会影响等，这两点每一天都能让正方解释不了。&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>道德绑架 or 销售套路&lt;/p>
-&lt;p>正方二辨举各种我国社会发展的例子想证明经济发展和做好事的必然关系。首先，这是一种道德绑架，它表现出的形式是如果你不同意或是你唱反调，你就成了那个反面被批判的人。就像你敢说你不爱国或是你不太爱国，你马上就会成为被批判的对象，甚至你连沉默都不行，这就是道德绑架。&lt;/p>
-&lt;p>销售套路，说不好听点叫传销套路。用一连串的发问，还都得让你回答“Yes”来鼓动观众，举个例子，比如开个会叫上上千人，台上人发问：&lt;/p>
-&lt;ul>
-&lt;li>你是不是觉得工作忙陪老人的时间不够？&lt;/li>
-&lt;li>你是不是觉得老人的身体健康非常重要？&lt;/li>
-&lt;li>你是不是觉得老人的健康甚至比自己的健康还重要？&lt;/li>
-&lt;li>你是不是觉得花个几百块钱能让老人有个健康的身体非常值？&lt;/li>
-&lt;li>&amp;hellip;&amp;hellip;&lt;/li>
-&lt;/ul>
-&lt;p>每一条你都得回答是（当然我只是看过一个老师讲这个理论，这些问题记的不清，大概这意思），最后卖你个洗脚盆。如果你回答“不是”，你在别人眼里就是个另类，是个应该被讨伐的人。这也是道德绑架。&lt;/p>
-&lt;p>所以反方并没有人能提出“道德绑架”这个观点，真的是非常遗憾。&lt;/p>
-&lt;p>再说一句，经济里面最重要的是什么？资本，而资本都是属“秃鹫”的，赤裸裸的血泪，跟鼓励人做好事的温情、温暖，八杆子打不着。所以想拿经济来说这事儿，本身就是自己撞铁板。&lt;/p>
-&lt;h2 id="4-总结">4. 总结
-&lt;/h2>&lt;p>做好事的初衷是什么？我们做好事都是不求回报的，而求回报的则叫交易，如秦教授所说的“黄牛”。我们的初衷是一种不加思索的，来自我们心底的善意。但是做完好事以后，会给我们自己带来一种心理上的幸福感，如詹青云所说，我们每个人都有个英雄梦。持续做好事，可以让我们有持续的这种幸福感。但这些都不是目的，做好事没有目的，所以它不是工作，做好事不求结果，就像白爷爷那样，就是因为我们心里的那个暖暖的善意，我相信，它一直在我们每一个人的心中，永远都在。&lt;/p>
-&lt;p>所以，首先论题可以被证是个伪命题，其次，正方观点可以被直接拍死。送分儿题都差点输，关键在于没有找到最痛的点。希望选手们可以发挥的更好。&lt;/p>
-&lt;p>当然，如果有人说这是为了节目效果安排好的，那，一切都是娱乐，大家也就看看、乐乐、洗洗睡吧。&lt;/p>
-&lt;/li>
-&lt;/ol></description></item><item><title>如何搞定BOSS五大要素</title><link>https://www.wkii.net/posts/office/how-to-defeat-a-boss/</link><pubDate>Mon, 12 Aug 2019 22:07:36 +0800</pubDate><guid>https://www.wkii.net/posts/office/how-to-defeat-a-boss/</guid><description>&lt;p>Q：为什么要搞定BOSS？&lt;/p>
+&lt;p>然后打电话给10010，如果发现右上角4G不会变为3G，就开通成功了。&lt;/p></description></item><item><title>如何搞定BOSS五大要素</title><link>https://www.wkii.net/posts/office/how-to-defeat-a-boss/</link><pubDate>Mon, 12 Aug 2019 22:07:36 +0800</pubDate><guid>https://www.wkii.net/posts/office/how-to-defeat-a-boss/</guid><description>&lt;p>Q：为什么要搞定BOSS？&lt;/p>
 &lt;p>A：为了获得【BOSS的认可】，获得更多机会。&lt;/p>
 &lt;p>那么如何搞定BOSS呢，从“波波羊”老师的公开课分享里，整理的如何搞定BOSS五大要素：&lt;/p>
 &lt;p>1、会做事&lt;/p>
