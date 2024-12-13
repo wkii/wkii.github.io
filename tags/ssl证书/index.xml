@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ssl证书 on Wkii Blog</title><link>https://www.wkii.net/tags/ssl%E8%AF%81%E4%B9%A6/</link><description>Recent content in Ssl证书 on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 05 Dec 2024 20:18:55 +0800</lastBuildDate><atom:link href="https://www.wkii.net/tags/ssl%E8%AF%81%E4%B9%A6/index.xml" rel="self" type="application/rss+xml"/><item><title>Acme.sh 自动保存证书文件到其它目录</title><link>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</link><pubDate>Thu, 05 Dec 2024 20:18:55 +0800</pubDate><guid>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</guid><description>&lt;h1 id="acme-sh-auto-save-cert-files">Acme Sh Auto Save Cert Files
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ssl证书 on Wkii Blog</title><link>https://www.wkii.net/tags/ssl%E8%AF%81%E4%B9%A6/</link><description>Recent content in Ssl证书 on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 13 Dec 2024 15:09:00 +0800</lastBuildDate><atom:link href="https://www.wkii.net/tags/ssl%E8%AF%81%E4%B9%A6/index.xml" rel="self" type="application/rss+xml"/><item><title>Acme.sh 自动保存证书文件到其它目录</title><link>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</link><pubDate>Thu, 05 Dec 2024 20:18:55 +0800</pubDate><guid>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</guid><description>&lt;h1 id="acme-sh-auto-save-cert-files">Acme Sh Auto Save Cert Files
 &lt;/h1>&lt;p>使用 acme.sh 申请的证书，默认是放在 &lt;code>/acme.sh/&lt;/code> 目录下，而这个目录下文件有点多，其实不适合与 nginx 共享。所以我们通常指定一个共享目录来把证书文件再存一下。 而 acme.sh 是可以自动完成这个证书申请后“另存”或者说“安装”的工作的。并且在证书续期之后，也会再次执行。命令如下：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -18,7 +18,8 @@
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>--reloadcmd &lt;span class="s2">&amp;#34;your_reload_command&amp;#34;&lt;/span> &lt;span class="c1"># 重启服务的指令，可以不写&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>上述指令是将 &lt;code>frp.youdomain.com&lt;/code> 这个域名证书放在 &lt;code>/acme.sh/certs&lt;/code> 目录下。 这个目录是挂载宿主机的一个共享目录，同时 nginx 也挂载这个目录，这样在配置证书的时候，就可以读取到这个目录下的证书了。&lt;/p>
+&lt;/div>&lt;p>如果报文件不存在，可能是因为申请的证书类型是ecc，观察/acme.sh 目录下，你的域名目录后面是否有&lt;code>ecc&lt;/code>，有的话需要在上述命令后面再增加&lt;code>--ecc&lt;/code>。&lt;/p>
+&lt;p>上述指令是将 &lt;code>frp.youdomain.com&lt;/code> 这个域名证书放在 &lt;code>/acme.sh/certs&lt;/code> 目录下。 这个目录是挂载宿主机的一个共享目录，同时 nginx 也挂载这个目录，这样在配置证书的时候，就可以读取到这个目录下的证书了。&lt;/p>
 &lt;p>一般来说，要保持 acme.sh 的单纯和其它镜像的单纯，那么就不会将各种镜像揉在一块儿。所以使用挂载共享目录的形式，和 nginx 共享证书文件，通过以上命令将证书文件放在指定的位置， &lt;code>ache.sh&lt;/code> 和 &lt;code>nginx&lt;/code> 都可以访问到。证书自动更新完，也会放在这里。然后，只需要在宿主机上，增加一个定时任务，reload 一下 nginx 就行了。&lt;/p>
 &lt;p>例如:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
