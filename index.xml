@@ -1,4 +1,100 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wkii Blog</title><link>https://www.wkii.net/</link><description>Recent content on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 13 Dec 2024 15:09:00 +0800</lastBuildDate><atom:link href="https://www.wkii.net/index.xml" rel="self" type="application/rss+xml"/><item><title>隐私协议</title><link>https://www.wkii.net/privacy-policy/</link><pubDate>Thu, 12 Dec 2024 17:55:00 +0800</pubDate><guid>https://www.wkii.net/privacy-policy/</guid><description>&lt;h1 id="隐私协议">隐私协议
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wkii Blog</title><link>https://www.wkii.net/</link><description>Recent content on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 16 Dec 2024 15:51:55 +0800</lastBuildDate><atom:link href="https://www.wkii.net/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo 如何关闭 tags 和 分类目录下生成的 index.xml 文件</title><link>https://www.wkii.net/tech/hugo-disable-tags-category-xml-file-generator/</link><pubDate>Mon, 16 Dec 2024 15:51:55 +0800</pubDate><guid>https://www.wkii.net/tech/hugo-disable-tags-category-xml-file-generator/</guid><description>&lt;p>我发现 Google 索引有一些未编入索引的URL，但这些URL其实只是把 html 变成了 xml。实在没必要进行重复索引。所以要禁止这些 xml 文件的生成。查了一下文档。有了以下解决办法。&lt;/p>
+&lt;p>首先，我们要了解一下 Hugo 中的 Term 的概念：&lt;/p>
+&lt;ol>
+&lt;li>基本定义&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Term 是 Hugo 中分类系统（Taxonomy）的具体项目&lt;/li>
+&lt;li>属于某个 Taxonomy（分类法）下的具体值&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>举例说明&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">taxonomies:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - category (分类法/taxonomy)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - tech (项目/term)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - life (项目/term)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - tag (分类法/taxonomy)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - golang (项目/term)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - hugo (项目/term)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>目录结构示例&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">content/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── posts/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── first-post.md # 文章前置参数包含 tags: [&amp;#34;hugo&amp;#34;, &amp;#34;tech&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── categories/ # taxonomy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── tech/ # term
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── life/ # term
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── tags/ # taxonomy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── hugo/ # term
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── golang/ # term
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="4">
+&lt;li>URL 结构&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>&lt;code>/categories/&lt;/code> - taxonomy 页面&lt;/li>
+&lt;li>&lt;code>/categories/tech/&lt;/code> - term 页面&lt;/li>
+&lt;li>&lt;code>/tags/&lt;/code> - taxonomy 页面&lt;/li>
+&lt;li>&lt;code>/tags/hugo/&lt;/code> - term 页面&lt;/li>
+&lt;/ul>
+&lt;p>我们可以看到在&lt;code>term&lt;/code>所影响的目录下，都生成了 &lt;code>index.html&lt;/code> 和 &lt;code>index.xml&lt;/code> 文件。我们要把 &lt;code>index.xml&lt;/code> 文件去掉，需要修改 Hugo 的配置文件，增加以下部分， outputs最左侧不用留空格，是最顶级属性：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">outputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> home:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - HTML
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - RSS
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> section:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - HTML
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> taxonomy:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - HTML
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> term:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - HTML
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>我们看到，这里主要是将 term 的输出，只保留了 &lt;code>HTML&lt;/code>，这样就不会生成很多 &lt;code>xml&lt;/code> 文件了。&lt;/p>
+&lt;p>删除 &lt;code>public&lt;/code> 目录，重新执行 &lt;code>hugo&lt;/code> 或 &lt;code>hugo server&lt;/code>，可以看到，之前的 tags 目录下的所有tag子目录下只有 index.html了。&lt;/p></description></item><item><title>隐私协议</title><link>https://www.wkii.net/page/privacy/privacy-policy/</link><pubDate>Thu, 12 Dec 2024 17:55:00 +0800</pubDate><guid>https://www.wkii.net/page/privacy/privacy-policy/</guid><description>&lt;h1 id="隐私协议">隐私协议
 &lt;/h1>&lt;h2 id="1-信息收集">1. 信息收集
 &lt;/h2>&lt;p>我们仅通过 Google Analytics 收集以下类型的信息：&lt;/p>
 &lt;ul>
@@ -22,7 +118,7 @@
 &lt;/h2>&lt;p>我们重视您的隐私和数据安全。我们采取合理的技术和组织措施来保护您的个人信息不被未经授权的访问、使用或披露。&lt;/p>
 &lt;h2 id="6-隐私协议的变更">6. 隐私协议的变更
 &lt;/h2>&lt;p>我们可能会不时更新本隐私协议。任何更改将在此页面上发布。我们建议您定期查看本页面以了解最新的隐私政策。&lt;/p>
-&lt;p>最后更新：2024-12-12&lt;/p></description></item><item><title>ROS 开启限速，并对指定设备限速</title><link>https://www.wkii.net/posts/tech/ros-queue-settings/</link><pubDate>Thu, 12 Dec 2024 17:06:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/ros-queue-settings/</guid><description>&lt;h2 id="背景">背景
+&lt;p>最后更新：2024-12-12&lt;/p></description></item><item><title>ROS 开启限速，并对指定设备限速</title><link>https://www.wkii.net/tech/ros-queue-settings/</link><pubDate>Thu, 12 Dec 2024 17:06:00 +0800</pubDate><guid>https://www.wkii.net/tech/ros-queue-settings/</guid><description>&lt;h2 id="背景">背景
 &lt;/h2>&lt;p>现在很多电视版的 APP 都会占用家庭带宽的上传，用家庭带宽当成p2p节点。 我的小水管儿经不住他们薅，所以决定给电视限制上传速度，一劳永逸&lt;/p>
 &lt;h2 id="操作步骤">操作步骤
 &lt;/h2>&lt;ol>
@@ -90,7 +186,7 @@
 &lt;/div>
 &lt;/div>&lt;p>关键的设置就是&lt;code>max-limit=1M&lt;/code>，给打了标记的这部分流量设置一个上限。&lt;/p>
 &lt;p>这里分为父队列和子队列。其实可以方便的配置多种策略。如果有多台设备，也可以通过策略组合来实现父队列限制多少，某一个或几个设备限制多少。&lt;/p>
-&lt;p>然后用测试网站测试成功以后，就可以把自己的电脑的子队列删除了。大功告成。&lt;/p></description></item><item><title>软路由使用 ROS 做为主路由，基本设置以及开启IPV6</title><link>https://www.wkii.net/posts/tech/ros-setup-setting-ipv6/</link><pubDate>Thu, 12 Dec 2024 16:56:55 +0800</pubDate><guid>https://www.wkii.net/posts/tech/ros-setup-setting-ipv6/</guid><description>&lt;h2 id="前言">前言
+&lt;p>然后用测试网站测试成功以后，就可以把自己的电脑的子队列删除了。大功告成。&lt;/p></description></item><item><title>软路由使用 ROS 做为主路由，基本设置以及开启IPV6</title><link>https://www.wkii.net/tech/ros-setup-setting-ipv6/</link><pubDate>Thu, 12 Dec 2024 16:56:55 +0800</pubDate><guid>https://www.wkii.net/tech/ros-setup-setting-ipv6/</guid><description>&lt;h2 id="前言">前言
 &lt;/h2>&lt;p>我的环境是：畅网的4网口路由器安装PVE：&lt;/p>
 &lt;ul>
 &lt;li>eth0 做为ROS 的wan，直通&lt;/li>
@@ -294,7 +390,7 @@ RouterOS DHCPv6 服务器只能委托 IPv6 前缀，而不是地址。 所以当
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /ipv6 dhcp-server add name=dhcpv6-server interface=bridge1 address-pool=dhcpv6-pool&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>腾讯云服务器上安装 docker 服务</title><link>https://www.wkii.net/posts/docker/install-docker-service-on-tencent-cloud-server/</link><pubDate>Wed, 11 Dec 2024 14:36:00 +0800</pubDate><guid>https://www.wkii.net/posts/docker/install-docker-service-on-tencent-cloud-server/</guid><description>&lt;h2 id="腾讯云debian安装docker">腾讯云debian安装docker
+&lt;/div></description></item><item><title>腾讯云服务器上安装 docker 服务</title><link>https://www.wkii.net/docker/install-docker-service-on-tencent-cloud-server/</link><pubDate>Wed, 11 Dec 2024 14:36:00 +0800</pubDate><guid>https://www.wkii.net/docker/install-docker-service-on-tencent-cloud-server/</guid><description>&lt;h2 id="腾讯云debian安装docker">腾讯云debian安装docker
 &lt;/h2>&lt;p>由于腾讯云服务器无法访问 docker.com ，所以需要将使用 dokcer.com 的地方转换成使用腾讯云的镜像服务。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -344,7 +440,7 @@ RouterOS DHCPv6 服务器只能委托 IPv6 前缀，而不是地址。 所以当
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>我这里使用的是 debian 系统。 真心不建议使用 centos 的同学还守旧了。 激进派可以用 ubuntu， 稳定派就 debian。&lt;/p></description></item><item><title>Acme.sh 自动保存证书文件到其它目录</title><link>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</link><pubDate>Thu, 05 Dec 2024 20:18:55 +0800</pubDate><guid>https://www.wkii.net/posts/docker/acme-sh-auto-save-cert-files-to-directory/</guid><description>&lt;h1 id="acme-sh-auto-save-cert-files">Acme Sh Auto Save Cert Files
+&lt;/div>&lt;p>我这里使用的是 debian 系统。 真心不建议使用 centos 的同学还守旧了。 激进派可以用 ubuntu， 稳定派就 debian。&lt;/p></description></item><item><title>Acme.sh 自动保存证书文件到其它目录</title><link>https://www.wkii.net/docker/acme-sh-auto-save-cert-files-to-directory/</link><pubDate>Thu, 05 Dec 2024 20:18:55 +0800</pubDate><guid>https://www.wkii.net/docker/acme-sh-auto-save-cert-files-to-directory/</guid><description>&lt;h1 id="acme-sh-auto-save-cert-files">Acme Sh Auto Save Cert Files
 &lt;/h1>&lt;p>使用 acme.sh 申请的证书，默认是放在 &lt;code>/acme.sh/&lt;/code> 目录下，而这个目录下文件有点多，其实不适合与 nginx 共享。所以我们通常指定一个共享目录来把证书文件再存一下。 而 acme.sh 是可以自动完成这个证书申请后“另存”或者说“安装”的工作的。并且在证书续期之后，也会再次执行。命令如下：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -376,7 +472,7 @@ RouterOS DHCPv6 服务器只能委托 IPv6 前缀，而不是地址。 所以当
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker &lt;span class="nb">exec&lt;/span> -it nginx nginx -s reload
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>zsh 隐藏命令提示符前面的用户名和主机名</title><link>https://www.wkii.net/posts/tech/zsh-hidden-username-and-hostname/</link><pubDate>Mon, 26 Oct 2020 18:14:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/zsh-hidden-username-and-hostname/</guid><description>&lt;p>要隐藏用户名和主机名，需要在&lt;code>~/.zshrc&lt;/code> 配置文件中，增加一行：&lt;/p>
+&lt;/div></description></item><item><title>zsh 隐藏命令提示符前面的用户名和主机名</title><link>https://www.wkii.net/tech/zsh-hidden-username-and-hostname/</link><pubDate>Mon, 26 Oct 2020 18:14:00 +0800</pubDate><guid>https://www.wkii.net/tech/zsh-hidden-username-and-hostname/</guid><description>&lt;p>要隐藏用户名和主机名，需要在&lt;code>~/.zshrc&lt;/code> 配置文件中，增加一行：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -428,7 +524,7 @@ RouterOS DHCPv6 服务器只能委托 IPv6 前缀，而不是地址。 所以当
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">source&lt;/span> ~/.zshrc
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>常见支付通道条码付和扫码付异步通知策略</title><link>https://www.wkii.net/posts/tradetech/jsapi-authcode-pay-notify-rule/</link><pubDate>Wed, 24 Jun 2020 20:21:01 +0800</pubDate><guid>https://www.wkii.net/posts/tradetech/jsapi-authcode-pay-notify-rule/</guid><description>&lt;h2 id="背景">背景
+&lt;/div></description></item><item><title>常见支付通道条码付和扫码付异步通知策略</title><link>https://www.wkii.net/tradetech/jsapi-authcode-pay-notify-rule/</link><pubDate>Wed, 24 Jun 2020 20:21:01 +0800</pubDate><guid>https://www.wkii.net/tradetech/jsapi-authcode-pay-notify-rule/</guid><description>&lt;h2 id="背景">背景
 &lt;/h2>&lt;p>今天在整理各个通道异步通知逻辑的时候，有一些记的不太清楚了，所以顺便再确认一轮儿，记录下来。&lt;/p>
 &lt;h2 id="什么是条码付和扫码付">什么是条码付和扫码付
 &lt;/h2>&lt;ul>
@@ -460,7 +556,7 @@ RouterOS DHCPv6 服务器只能委托 IPv6 前缀，而不是地址。 所以当
 >https://www.yuque.com/leshuazf/doc/zhifujiaoyi#93D6z&lt;/a>&lt;/p>
 &lt;h2 id="推荐操作">推荐操作
 &lt;/h2>&lt;p>建议不管是条码付还是扫码付，都应该增加主动轮询逻辑，以防止异步通知延迟而带来的不必要麻烦。&lt;/p>
-&lt;p>另外注意一点：&lt;strong>有时候异步通知甚至比同步返回还要先到达，需做好逻辑处理。&lt;/strong>&lt;/p></description></item><item><title>Vuepress 增加 PlantUML 支持</title><link>https://www.wkii.net/posts/tech/vuepress-add-plantuml-plugin/</link><pubDate>Wed, 24 Jun 2020 19:24:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/vuepress-add-plantuml-plugin/</guid><description>&lt;h2 id="plantuml">PlantUML
+&lt;p>另外注意一点：&lt;strong>有时候异步通知甚至比同步返回还要先到达，需做好逻辑处理。&lt;/strong>&lt;/p></description></item><item><title>Vuepress 增加 PlantUML 支持</title><link>https://www.wkii.net/tech/vuepress-add-plantuml-plugin/</link><pubDate>Wed, 24 Jun 2020 19:24:00 +0800</pubDate><guid>https://www.wkii.net/tech/vuepress-add-plantuml-plugin/</guid><description>&lt;h2 id="plantuml">PlantUML
 &lt;/h2>&lt;p>最近一直在使用 PlantUML 画时序图，简直是太方便了。并且语雀也已经支持 PlantUML。
 官方中文教程：https://plantuml.com/zh/sequence-diagram
 IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration" target="_blank" rel="noopener"
@@ -539,7 +635,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 认证中心 &amp;lt;- 缓存: key=token+ip 获取 token&lt;/p>
 &lt;p>其他服务 &amp;lt;- 认证中心: 存在且校验成功则跳转到用户请求的其他服务
 其他服务 -&amp;gt; 用户: 信息
-@enduml&lt;/p></description></item><item><title>使用 Microsoft azure 部署 Vuepress到Github Pages</title><link>https://www.wkii.net/posts/devops/publish_vuepress_github_pages_from_azure/</link><pubDate>Fri, 12 Jun 2020 00:15:12 +0800</pubDate><guid>https://www.wkii.net/posts/devops/publish_vuepress_github_pages_from_azure/</guid><description>&lt;h2 id="发布原理">发布原理
+@enduml&lt;/p></description></item><item><title>使用 Microsoft azure 部署 Vuepress到Github Pages</title><link>https://www.wkii.net/devops/publish_vuepress_github_pages_from_azure/</link><pubDate>Fri, 12 Jun 2020 00:15:12 +0800</pubDate><guid>https://www.wkii.net/devops/publish_vuepress_github_pages_from_azure/</guid><description>&lt;h2 id="发布原理">发布原理
 &lt;/h2>&lt;p>无论使用什么CI工具发布vuepress到Github Pages，一共就三步：&lt;/p>
 &lt;ul>
 &lt;li>yarn install&lt;/li>
@@ -861,7 +957,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;/h4>&lt;p>在Pipelines的Recent 标签页中，进入Runs列表，点击查看状态会有授权的提示，授权Pipelines访问你的 &lt;strong>Secure files&lt;/strong>。&lt;/p>
 &lt;h2 id="调试工具">调试工具
 &lt;/h2>&lt;p>参考azure-cli工具的 az &lt;a class="link" href="https://docs.microsoft.com/zh-cn/cli/azure/pipelines?view=azure-cli-latest" target="_blank" rel="noopener"
->pipelines&lt;/a> 先挖个坑，还没用明白，对于没有使用付费服务的来说，看样子用处不大。&lt;/p></description></item><item><title>使用 Github workflow 部署 Vuepress到Github Pages</title><link>https://www.wkii.net/posts/devops/use_github_workflow_deploy_vuepress/</link><pubDate>Tue, 09 Jun 2020 01:06:11 +0800</pubDate><guid>https://www.wkii.net/posts/devops/use_github_workflow_deploy_vuepress/</guid><description>&lt;h2 id="前言">前言
+>pipelines&lt;/a> 先挖个坑，还没用明白，对于没有使用付费服务的来说，看样子用处不大。&lt;/p></description></item><item><title>使用 Github workflow 部署 Vuepress到Github Pages</title><link>https://www.wkii.net/devops/use_github_workflow_deploy_vuepress/</link><pubDate>Tue, 09 Jun 2020 01:06:11 +0800</pubDate><guid>https://www.wkii.net/devops/use_github_workflow_deploy_vuepress/</guid><description>&lt;h2 id="前言">前言
 &lt;/h2>&lt;p>目前Github workflow（也叫Actions）还不够成熟。表现为yml配置文件手动创建和修改再推送到仓库无效，需要在线创建、在线编辑，没法像Travis-ci那样临时修改配置文件（不纳入版本控制）来调试。所以还是使用Travis-ci.com 或者是 Azure Pipelines吧。&lt;/p>
 &lt;h2 id="操作步骤">操作步骤
 &lt;/h2>&lt;p>不过对应的发布vuepress到 Github Pages 的工具已经有了，并且在GitHub 的Marketplace里发布了。下面记录一下使用步骤：&lt;/p>
@@ -941,7 +1037,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h2 id="删除方法">删除方法
-&lt;/h2>&lt;p>在线配置目前没法删除，可以通过pull下来之后，在本地仓库删除workflows下的文件，再推送回去即可删除 workflow。&lt;/p></description></item><item><title>使用vuepress发布博客，附踩坑记录</title><link>https://www.wkii.net/posts/tech/use-vuepress-push-blog/</link><pubDate>Sat, 16 May 2020 18:38:00 +0800</pubDate><guid>https://www.wkii.net/posts/tech/use-vuepress-push-blog/</guid><description>&lt;h2 id="初入门庭">初入门庭
+&lt;/h2>&lt;p>在线配置目前没法删除，可以通过pull下来之后，在本地仓库删除workflows下的文件，再推送回去即可删除 workflow。&lt;/p></description></item><item><title>使用vuepress发布博客，附踩坑记录</title><link>https://www.wkii.net/tech/use-vuepress-push-blog/</link><pubDate>Sat, 16 May 2020 18:38:00 +0800</pubDate><guid>https://www.wkii.net/tech/use-vuepress-push-blog/</guid><description>&lt;h2 id="初入门庭">初入门庭
 &lt;/h2>&lt;p>安装 &lt;code>vuepress&lt;/code>是非常简单的事儿。建议全局安装vuepress，然后再本地安装其它部分。官方文档就写的很清楚了，不再赘述。&lt;/p>
 &lt;p>但是安装完了之后，惊叹一下，这是什么鬼。整个官方文档都在写怎么安装，根本没写怎么写，对编写的markdown有什么要求？对于用过hexo的人来说，我知道应该差不多，但是就愣没人写该怎么玩儿，我也是醉了。&lt;/p>
 &lt;p>好吧，看了诸多资料以后，可以确定，如果要用vuepress来发布静态博客，需要安装对应的blog主题，比如官方的blog主题 &lt;a class="link" href="https://vuepress.vuejs.org/zh/theme/blog-theme.html" target="_blank" rel="noopener"
@@ -1235,7 +1331,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;/h2>&lt;ul>
 &lt;li>&lt;input checked="" disabled="" type="checkbox"> 使用Travis CI 持续集成部署&lt;/li>
 &lt;li>&lt;input checked="" disabled="" type="checkbox"> 把主题色系换成蓝色。我还是喜欢ant.design的蓝色系。&lt;/li>
-&lt;/ul></description></item><item><title>k8s系列之一 Macos安装kubernetes和docker</title><link>https://www.wkii.net/posts/kubernetes/k8s-series-macos-setup-kubernetes-and-docker/</link><pubDate>Fri, 08 May 2020 00:17:40 +0800</pubDate><guid>https://www.wkii.net/posts/kubernetes/k8s-series-macos-setup-kubernetes-and-docker/</guid><description>&lt;h2 id="前情提要">前情提要
+&lt;/ul></description></item><item><title>k8s系列之一 Macos安装kubernetes和docker</title><link>https://www.wkii.net/kubernetes/k8s-series-macos-setup-kubernetes-and-docker/</link><pubDate>Fri, 08 May 2020 00:17:40 +0800</pubDate><guid>https://www.wkii.net/kubernetes/k8s-series-macos-setup-kubernetes-and-docker/</guid><description>&lt;h2 id="前情提要">前情提要
 &lt;/h2>&lt;p>先说Docker，就下载&lt;a class="link" href="https://www.docker.com/products/docker-desktop" target="_blank" rel="noopener"
 >docker-desktop&lt;/a>安装就好了。&lt;/p>
 &lt;p>这里就有一个问题了，docker-desktop也自带了一个kubernetes。但是，建议玩家还是根据k8s的安装文档来安装一下kubernetes。为什么呢？因为docker-desktop自带的kubernetes因各种版本问题，配置运行起来非常麻烦，还不自带dashboard，还是minikube可玩儿性比较高。 根据k8s的官方文档搭建学习环境，就是&lt;a class="link" href="https://kubernetes.io/zh/docs/setup/learning-environment/minikube/" target="_blank" rel="noopener"
@@ -1370,7 +1466,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;/div>
 &lt;/div>&lt;p>更多内容参考 &lt;a class="link" href="https://kubernetes.io/zh/docs/tasks/tools/install-kubectl/" target="_blank" rel="noopener"
 >安装并设置 kubectl&lt;/a>。&lt;/p>
-&lt;p>后面再介绍一些配置相关的内容。今天先到这里啦。&lt;/p></description></item><item><title>springboot profiles 多环境配置打包和 IDEA 启动环境设定</title><link>https://www.wkii.net/posts/java/springboot-profiles-multiple-env-idea-setting/</link><pubDate>Wed, 12 Feb 2020 18:26:19 +0800</pubDate><guid>https://www.wkii.net/posts/java/springboot-profiles-multiple-env-idea-setting/</guid><description>&lt;h2 id="背景约定">背景约定
+&lt;p>后面再介绍一些配置相关的内容。今天先到这里啦。&lt;/p></description></item><item><title>springboot profiles 多环境配置打包和 IDEA 启动环境设定</title><link>https://www.wkii.net/java/springboot-profiles-multiple-env-idea-setting/</link><pubDate>Wed, 12 Feb 2020 18:26:19 +0800</pubDate><guid>https://www.wkii.net/java/springboot-profiles-multiple-env-idea-setting/</guid><description>&lt;h2 id="背景约定">背景约定
 &lt;/h2>&lt;p>我们的 spring boot 工程最常见的是有多个环境的配置设定。如开发环境&lt;code>dev&lt;/code>，测试环境&lt;code>test&lt;/code>，生产环境&lt;code>prod&lt;/code>。&lt;/p>
 &lt;p>我们使用&lt;code>yml&lt;/code>配置文件来配置Spring boot。为什么什么yaml呢？因为写起来规范，有利于阅读。&lt;/p>
 &lt;h2 id="需求">需求
@@ -1637,7 +1733,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>好了，开发、测试，打包，启动都可以一气呵成，即想要，又想要，还想要都可以得到满足。&lt;/p>
-&lt;p>Enjoy coding&amp;hellip;&lt;/p></description></item><item><title>iPhone 开通中国联通 4G VoLTE方法</title><link>https://www.wkii.net/posts/tech/china-unicom-volte-iphone/</link><pubDate>Mon, 23 Dec 2019 17:14:45 +0800</pubDate><guid>https://www.wkii.net/posts/tech/china-unicom-volte-iphone/</guid><description>&lt;p>2019年6月联通试商用4G VoLTE。直到IOS13.3更新后，也就是2019年12月，这项功能终于可正常使用了。&lt;/p>
+&lt;p>Enjoy coding&amp;hellip;&lt;/p></description></item><item><title>iPhone 开通中国联通 4G VoLTE方法</title><link>https://www.wkii.net/tech/china-unicom-volte-iphone/</link><pubDate>Mon, 23 Dec 2019 17:14:45 +0800</pubDate><guid>https://www.wkii.net/tech/china-unicom-volte-iphone/</guid><description>&lt;p>2019年6月联通试商用4G VoLTE。直到IOS13.3更新后，也就是2019年12月，这项功能终于可正常使用了。&lt;/p>
 &lt;p>只要是北京、天津、上海、郑州、武汉、长沙、广州、济南、杭州、南京、重庆这11个城市的联通用户，均可以按以下方法来开通&lt;/p>
 &lt;ol>
 &lt;li>先发短信给 10010 ，内容为：DGVOLTE&lt;/li>
@@ -1645,7 +1741,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;li>进入设置，通用，关于本机 会有提示运营商设置更新。 更新。&lt;/li>
 &lt;li>进入设置，蜂窝网络，蜂窝数据选项，语音与数据，选择 4G，打开VoLTE。&lt;/li>
 &lt;/ol>
-&lt;p>然后打电话给10010，如果发现右上角4G不会变为3G，就开通成功了。&lt;/p></description></item><item><title>如何搞定BOSS五大要素</title><link>https://www.wkii.net/posts/office/how-to-defeat-a-boss/</link><pubDate>Mon, 12 Aug 2019 22:07:36 +0800</pubDate><guid>https://www.wkii.net/posts/office/how-to-defeat-a-boss/</guid><description>&lt;p>Q：为什么要搞定BOSS？&lt;/p>
+&lt;p>然后打电话给10010，如果发现右上角4G不会变为3G，就开通成功了。&lt;/p></description></item><item><title>如何搞定BOSS五大要素</title><link>https://www.wkii.net/office/how-to-defeat-a-boss/</link><pubDate>Mon, 12 Aug 2019 22:07:36 +0800</pubDate><guid>https://www.wkii.net/office/how-to-defeat-a-boss/</guid><description>&lt;p>Q：为什么要搞定BOSS？&lt;/p>
 &lt;p>A：为了获得【BOSS的认可】，获得更多机会。&lt;/p>
 &lt;p>那么如何搞定BOSS呢，从“波波羊”老师的公开课分享里，整理的如何搞定BOSS五大要素：&lt;/p>
 &lt;p>1、会做事&lt;/p>
@@ -1674,7 +1770,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;li>懂尊重老板&lt;/li>
 &lt;li>不要怼老板&lt;/li>
 &lt;li>大场合，学会站队&lt;/li>
-&lt;/ul></description></item><item><title>技术分享注意事项</title><link>https://www.wkii.net/posts/office/technical-sharing-notes/</link><pubDate>Fri, 14 Dec 2018 11:51:04 +0800</pubDate><guid>https://www.wkii.net/posts/office/technical-sharing-notes/</guid><description>&lt;ol>
+&lt;/ul></description></item><item><title>技术分享注意事项</title><link>https://www.wkii.net/office/technical-sharing-notes/</link><pubDate>Fri, 14 Dec 2018 11:51:04 +0800</pubDate><guid>https://www.wkii.net/office/technical-sharing-notes/</guid><description>&lt;ol>
 &lt;li>做一个分享课题，你一定要深入了解它，不要仅仅去为了分享而去写分享。&lt;/li>
 &lt;li>开头可以通过一两句话把这次分享的起因、背景、目的说清楚，不要你开始了大家却晕着，因为你跟大家信息是不对等的。&lt;/li>
 &lt;li>重点、关键地方多讲，无关地方少讲，对于别人的疑问不要避重就轻。&lt;/li>
@@ -1684,7 +1780,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;li>不要有官方的就是最好的思想，因为他也是人写的。&lt;/li>
 &lt;li>技术分享讲座毕竟是要大家花时间来听的，必须让大家有所得，让大家感兴趣，能让大家互动起来。&lt;/li>
 &lt;li>掌控好时间 一小时为好。&lt;/li>
-&lt;/ol></description></item><item><title>Docker常用命令</title><link>https://www.wkii.net/posts/docker/docker-command/</link><pubDate>Mon, 03 Dec 2018 19:33:00 +0800</pubDate><guid>https://www.wkii.net/posts/docker/docker-command/</guid><description>&lt;h2 id="后台_background_运行">后台(&lt;em>background&lt;/em>)运行
+&lt;/ol></description></item><item><title>Docker常用命令</title><link>https://www.wkii.net/docker/docker-command/</link><pubDate>Mon, 03 Dec 2018 19:33:00 +0800</pubDate><guid>https://www.wkii.net/docker/docker-command/</guid><description>&lt;h2 id="后台_background_运行">后台(&lt;em>background&lt;/em>)运行
 &lt;/h2>&lt;p>更多的时候，需要让 Docker在后台运行而不是直接把执行命令的结果输出在当前宿主机下。此时，可以通过添加 -d 参数来实现。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1857,7 +1953,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker tag -f ubuntu:14.04 ubuntu:latest
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>NGINX多层转发或使用CDN之后如何获取用户真实IP</title><link>https://www.wkii.net/posts/nginx/nginx-cdn-get-user-real-ip/</link><pubDate>Thu, 02 Jun 2016 17:38:30 +0800</pubDate><guid>https://www.wkii.net/posts/nginx/nginx-cdn-get-user-real-ip/</guid><description>&lt;h2 id="1背景知识">1.背景知识
+&lt;/div></description></item><item><title>NGINX多层转发或使用CDN之后如何获取用户真实IP</title><link>https://www.wkii.net/nginx/nginx-cdn-get-user-real-ip/</link><pubDate>Thu, 02 Jun 2016 17:38:30 +0800</pubDate><guid>https://www.wkii.net/nginx/nginx-cdn-get-user-real-ip/</guid><description>&lt;h2 id="1背景知识">1.背景知识
 &lt;/h2>&lt;h3 id="11-前提知识点">1.1. 前提知识点：
 &lt;/h3>&lt;p>关键词：&lt;a class="link" href="http://nginx.org/en/docs/http/ngx_http_realip_module.html" target="_blank" rel="noopener"
 >ngx_http_realip_module&lt;/a>，&lt;code>HAProxy&lt;/code>，&lt;code>反向代理&lt;/code>，&lt;code>出口IP&lt;/code> 还有nginx中的几个变量：&lt;/p>
@@ -2128,9 +2224,9 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 >http://freeloda.blog.51cto.com/2033581/1288553&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="http://nginx.org/en/docs/http/ngx_http_log_module.html" target="_blank" rel="noopener"
 >http://nginx.org/en/docs/http/ngx_http_log_module.html&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>禁用chrome firefox 的 WebRTC功能防止真实IP泄漏</title><link>https://www.wkii.net/posts/tech/disabled-chrome-firefox-webrtc/</link><pubDate>Sun, 01 Feb 2015 16:06:04 +0800</pubDate><guid>https://www.wkii.net/posts/tech/disabled-chrome-firefox-webrtc/</guid><description>&lt;p>无论是使用VPN还是其它代理方式，很多时候我们不希望暴露自己的真实IP，且一直以来我们认为VPN是安全的，所有流量都会走VPN。 但最近暴露出一个WebRTC特性，会暴露我们的真实IP。适用浏览器：chrome,firefox. safari则没有问题。 只需要一段js代码就可以获取我们的真实IP。一旦被想时时监控别人的人知道并使用此方法钓鱼，便可直接获得原始IP。这简直太恐怖了。 看来以后如果重装系统，第一件事儿把cnnic证书删除后，第二件事儿就是禁用WebRTC. 有一个插件可以方便的禁用WebRTC, &lt;a class="link" href="https://chrome.google.com/webstore/detail/webrtc-block/nphkkbaidamjmhfanlpblblcadhfbkdm" target="_blank" rel="noopener"
+&lt;/ul></description></item><item><title>禁用chrome firefox 的 WebRTC功能防止真实IP泄漏</title><link>https://www.wkii.net/tech/disabled-chrome-firefox-webrtc/</link><pubDate>Sun, 01 Feb 2015 16:06:04 +0800</pubDate><guid>https://www.wkii.net/tech/disabled-chrome-firefox-webrtc/</guid><description>&lt;p>无论是使用VPN还是其它代理方式，很多时候我们不希望暴露自己的真实IP，且一直以来我们认为VPN是安全的，所有流量都会走VPN。 但最近暴露出一个WebRTC特性，会暴露我们的真实IP。适用浏览器：chrome,firefox. safari则没有问题。 只需要一段js代码就可以获取我们的真实IP。一旦被想时时监控别人的人知道并使用此方法钓鱼，便可直接获得原始IP。这简直太恐怖了。 看来以后如果重装系统，第一件事儿把cnnic证书删除后，第二件事儿就是禁用WebRTC. 有一个插件可以方便的禁用WebRTC, &lt;a class="link" href="https://chrome.google.com/webstore/detail/webrtc-block/nphkkbaidamjmhfanlpblblcadhfbkdm" target="_blank" rel="noopener"
 >插件下载&lt;/a> Firefox可在浏览器上输入：about:config。之后搜索：media.peerconnection.enabled。找到它后双击，将其改成 false 即可。 原理可以参考一下这里：&lt;a class="link" href="https://github.com/diafygi/webrtc-ips" target="_blank" rel="noopener"
->https://github.com/diafygi/webrtc-ips&lt;/a>&lt;/p></description></item><item><title>Php Aes加密类</title><link>https://www.wkii.net/posts/php/php-aes-encrypt-for-yii/</link><pubDate>Mon, 16 Sep 2013 23:11:52 +0800</pubDate><guid>https://www.wkii.net/posts/php/php-aes-encrypt-for-yii/</guid><description>&lt;p>今天写了一个php的AES加密类。适用于Yii的扩展。 如果不用在Yii框架中，把代码中&lt;/p>
+>https://github.com/diafygi/webrtc-ips&lt;/a>&lt;/p></description></item><item><title>Php Aes加密类</title><link>https://www.wkii.net/php/php-aes-encrypt-for-yii/</link><pubDate>Mon, 16 Sep 2013 23:11:52 +0800</pubDate><guid>https://www.wkii.net/php/php-aes-encrypt-for-yii/</guid><description>&lt;p>今天写了一个php的AES加密类。适用于Yii的扩展。 如果不用在Yii框架中，把代码中&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -2142,7 +2238,7 @@ IntelliJ 系列 IDE 都可以安装 &lt;a class="link" href="https://plugins.jet
 &lt;/div>&lt;p>换成你对应的默认key就可以了。
 代码见github: &lt;a class="link" href="https://github.com/wkii/utils/blob/master/Yii/extensions/PhpAes.php" title="Php Aes"
 target="_blank" rel="noopener"
->https://github.com/wkii/utils/blob/master/Yii/extensions/PhpAes.php&lt;/a>&lt;/p></description></item><item><title>php生成excel列名，超过26列大于Z的方法</title><link>https://www.wkii.net/posts/php/php-excel-create-column-name-by-php/</link><pubDate>Wed, 07 Aug 2013 16:47:08 +0800</pubDate><guid>https://www.wkii.net/posts/php/php-excel-create-column-name-by-php/</guid><description>&lt;p>这是phpExcel类中的方法。今天查到了，记录一下备忘。&lt;/p>
+>https://github.com/wkii/utils/blob/master/Yii/extensions/PhpAes.php&lt;/a>&lt;/p></description></item><item><title>php生成excel列名，超过26列大于Z的方法</title><link>https://www.wkii.net/php/php-excel-create-column-name-by-php/</link><pubDate>Wed, 07 Aug 2013 16:47:08 +0800</pubDate><guid>https://www.wkii.net/php/php-excel-create-column-name-by-php/</guid><description>&lt;p>这是phpExcel类中的方法。今天查到了，记录一下备忘。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -2211,7 +2307,7 @@ target="_blank" rel="noopener"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">PHPExcel_Cell::columnIndexFromString(&amp;#39;AA&amp;#39;);
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>Yii deleteByAttributs 用法，慎用Dao的delete</title><link>https://www.wkii.net/posts/php/yii-deletebyattributs-use-and-dao-delete/</link><pubDate>Thu, 30 May 2013 22:35:38 +0800</pubDate><guid>https://www.wkii.net/posts/php/yii-deletebyattributs-use-and-dao-delete/</guid><description>&lt;p>Yii框架一定要慎用Dao的delete，一不小心它生不成条件的话，就变成了整表删除。 可以用ActiveRecord的deleteByAttributes或deleteAll方法相对不容易写错。 deleteByAttributes用法如下：&lt;/p>
+&lt;/div></description></item><item><title>Yii deleteByAttributs 用法，慎用Dao的delete</title><link>https://www.wkii.net/php/yii-deletebyattributs-use-and-dao-delete/</link><pubDate>Thu, 30 May 2013 22:35:38 +0800</pubDate><guid>https://www.wkii.net/php/yii-deletebyattributs-use-and-dao-delete/</guid><description>&lt;p>Yii框架一定要慎用Dao的delete，一不小心它生不成条件的话，就变成了整表删除。 可以用ActiveRecord的deleteByAttributes或deleteAll方法相对不容易写错。 deleteByAttributes用法如下：&lt;/p>
 &lt;pre>&lt;code>MyClass::model()-&amp;gt;deleteAllByAttributes(array(
 'phone_number'=&amp;gt;$phoneNumber,
 ));
@@ -2237,7 +2333,7 @@ User::model()-&amp;gt;deleteAll($condition);
 &lt;pre>&lt;code>Yii::app()-&amp;gt;db-&amp;gt;createCommand()
 -&amp;gt;delete('mw_user', array('and', 'user_id=:user_id', array('in', 'position_id', array(1,2,3))),array(':user_id'=&amp;gt;121111));
 &lt;/code>&lt;/pre>
-&lt;p>但是请慎用DAO的delete，当你的条件写错一点，它将无法生成where条件，同时sql语句中也没有了where，但还不一定报错，结果就成了没有where的delete，结果会是整表被删除了。&lt;/p></description></item><item><title>php查询MongoDB遇到长整型的问题</title><link>https://www.wkii.net/posts/php/php-mongodb-long-int-mongoint64/</link><pubDate>Mon, 24 Sep 2012 22:12:29 +0800</pubDate><guid>https://www.wkii.net/posts/php/php-mongodb-long-int-mongoint64/</guid><description>&lt;p>困扰了我一天的问题。首先是Mongodb副本集。查php的Mongo扩展手册把副本集搞定。然后又是长整型时间的问题。 存进mongo的是java的长整型时间戳。而php是弱类型语言，且php的时间戳是11位。目前还是10位的阶段。转换成java的时间戳需要在后面补零。&lt;/p>
+&lt;p>但是请慎用DAO的delete，当你的条件写错一点，它将无法生成where条件，同时sql语句中也没有了where，但还不一定报错，结果就成了没有where的delete，结果会是整表被删除了。&lt;/p></description></item><item><title>php查询MongoDB遇到长整型的问题</title><link>https://www.wkii.net/php/php-mongodb-long-int-mongoint64/</link><pubDate>Mon, 24 Sep 2012 22:12:29 +0800</pubDate><guid>https://www.wkii.net/php/php-mongodb-long-int-mongoint64/</guid><description>&lt;p>困扰了我一天的问题。首先是Mongodb副本集。查php的Mongo扩展手册把副本集搞定。然后又是长整型时间的问题。 存进mongo的是java的长整型时间戳。而php是弱类型语言，且php的时间戳是11位。目前还是10位的阶段。转换成java的时间戳需要在后面补零。&lt;/p>
 &lt;p>// 生成java时间戳&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2263,7 +2359,7 @@ target="_blank" rel="noopener"
 &lt;/div>
 &lt;/div>&lt;p>Mongo扩展的类参考在这里：&lt;a class="link" href="http://www.php.net/manual/en/mongoint64.construct.php" title="mongoint64"
 target="_blank" rel="noopener"
->http://www.php.net/manual/en/mongoint64.construct.php&lt;/a>&lt;/p></description></item><item><title>nginx access_log 设置</title><link>https://www.wkii.net/posts/nginx/nginx-access-log-develop-settings/</link><pubDate>Wed, 06 Jun 2012 11:37:59 +0800</pubDate><guid>https://www.wkii.net/posts/nginx/nginx-access-log-develop-settings/</guid><description>&lt;p>最近在配置本地nginx开发环境时，发现一个问题，当server段不指定access_log时，并且http段中也未指定任何access_log参数时，它会默认写到logs/access.log这个文件，也就是access_log默认值就是&amp;quot;logs/access.log&amp;quot;，而且是所有server的访问日志。&lt;/p>
+>http://www.php.net/manual/en/mongoint64.construct.php&lt;/a>&lt;/p></description></item><item><title>nginx access_log 设置</title><link>https://www.wkii.net/nginx/nginx-access-log-develop-settings/</link><pubDate>Wed, 06 Jun 2012 11:37:59 +0800</pubDate><guid>https://www.wkii.net/nginx/nginx-access-log-develop-settings/</guid><description>&lt;p>最近在配置本地nginx开发环境时，发现一个问题，当server段不指定access_log时，并且http段中也未指定任何access_log参数时，它会默认写到logs/access.log这个文件，也就是access_log默认值就是&amp;quot;logs/access.log&amp;quot;，而且是所有server的访问日志。&lt;/p>
 &lt;p>但nginx网站上我并未找到此配置的默认值。 如果我们不需要，在http段中加一行access_log off;然后在特定的server中配置自己想写入的日志。&lt;/p>
 &lt;p>开发环境我默认不写日志，即不配置任何access_log，需要时才打开。 nginx的http段中，设置access log：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -2300,7 +2396,7 @@ target="_blank" rel="noopener"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">access_log&lt;/span> &lt;span class="n">off&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>php的error_log设置</title><link>https://www.wkii.net/posts/php/php-error-log/</link><pubDate>Wed, 06 Jun 2012 11:25:51 +0800</pubDate><guid>https://www.wkii.net/posts/php/php-error-log/</guid><description>&lt;p>php的error_log可以设置输出到一个文件或输出到系统日志。 备忘一下输出文件，必须使用绝对地址。并且该目录php有写入权限。&lt;/p></description></item><item><title>git删除本地和远程tags</title><link>https://www.wkii.net/posts/git/git-delete-local-and-remote-tags/</link><pubDate>Tue, 15 May 2012 10:41:46 +0800</pubDate><guid>https://www.wkii.net/posts/git/git-delete-local-and-remote-tags/</guid><description>&lt;p>又用到了删除git仓库的tags， 删除本地tag:&lt;/p>
+&lt;/div></description></item><item><title>php的error_log设置</title><link>https://www.wkii.net/php/php-error-log/</link><pubDate>Wed, 06 Jun 2012 11:25:51 +0800</pubDate><guid>https://www.wkii.net/php/php-error-log/</guid><description>&lt;p>php的error_log可以设置输出到一个文件或输出到系统日志。 备忘一下输出文件，必须使用绝对地址。并且该目录php有写入权限。&lt;/p></description></item><item><title>git删除本地和远程tags</title><link>https://www.wkii.net/git/git-delete-local-and-remote-tags/</link><pubDate>Tue, 15 May 2012 10:41:46 +0800</pubDate><guid>https://www.wkii.net/git/git-delete-local-and-remote-tags/</guid><description>&lt;p>又用到了删除git仓库的tags， 删除本地tag:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -2318,7 +2414,7 @@ target="_blank" rel="noopener"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">git push origin :refs/tags/v0.1
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>关于存储用户密码的思考，bcrypt 和 PBKDF2算法</title><link>https://www.wkii.net/posts/tech/save-user-password-use-bcrypt-or-pbkdf2/</link><pubDate>Tue, 10 Apr 2012 18:38:37 +0800</pubDate><guid>https://www.wkii.net/posts/tech/save-user-password-use-bcrypt-or-pbkdf2/</guid><description>&lt;p>首先，像国内一些网站，比如sina这样的网站，zf要求要掌握用户密码，虽然也是加密的，但是是可逆加密。只要有需要，反解你的密码只是点一下鼠标的事儿。所以建议你的密码分级，对sina这种网站，不要使用高等级的密码。 但如果我们为了对用户负责，用户密码采用不可逆算法的时候，我们就要考虑一下如何对用户密码进行加密。那么仅仅是使用不可逆算法就行了吗？还不是，在硬件飞速发展的今天，尤其是GPU运算能力超CPU 10-20倍甚至更多，使得暴力破解的时间大大缩短。那么为了使得暴力破解变得几乎不可能，我们就要使用一些不支持GPU加速破解的算法。这里所说的算法，实际上也是各种加密的hash方式。 目前常见的&lt;strong>不可逆加密算法&lt;/strong>有以下几种：&lt;/p>
+&lt;/div></description></item><item><title>关于存储用户密码的思考，bcrypt 和 PBKDF2算法</title><link>https://www.wkii.net/tech/save-user-password-use-bcrypt-or-pbkdf2/</link><pubDate>Tue, 10 Apr 2012 18:38:37 +0800</pubDate><guid>https://www.wkii.net/tech/save-user-password-use-bcrypt-or-pbkdf2/</guid><description>&lt;p>首先，像国内一些网站，比如sina这样的网站，zf要求要掌握用户密码，虽然也是加密的，但是是可逆加密。只要有需要，反解你的密码只是点一下鼠标的事儿。所以建议你的密码分级，对sina这种网站，不要使用高等级的密码。 但如果我们为了对用户负责，用户密码采用不可逆算法的时候，我们就要考虑一下如何对用户密码进行加密。那么仅仅是使用不可逆算法就行了吗？还不是，在硬件飞速发展的今天，尤其是GPU运算能力超CPU 10-20倍甚至更多，使得暴力破解的时间大大缩短。那么为了使得暴力破解变得几乎不可能，我们就要使用一些不支持GPU加速破解的算法。这里所说的算法，实际上也是各种加密的hash方式。 目前常见的&lt;strong>不可逆加密算法&lt;/strong>有以下几种：&lt;/p>
 &lt;ul>
 &lt;li>一次MD5（使用率很高）&lt;/li>
 &lt;li>将密码与一个随机串进行一次MD5&lt;/li>
@@ -2339,7 +2435,7 @@ target="_blank" rel="noopener"
 >rfc2898&lt;/a> 。
 所以这里就不多介绍bcrypt了。字符串的长度，影响它生成hash值的时间。当然，这似乎在任何一种hash算法上都是成正比的。 实际上，无论是bcrypt还是PBKDF2都有各自的忠实拥护者。另外bcrypt不支持超过55个字符的密码短语。到底那一个好，没有标准答案，取决于你问那一方的粉丝。我个人偏向于使用PBKDF2，下面的参考资料中，或许也会给你答案。 其它参考资料： &lt;a class="link" href="http://stackoverflow.com/questions/4433216/password-encryption-pbkdf2-using-sha512-x-1000-vs-bcrypt" target="_blank" rel="noopener"
 >password-encryption-pbkdf2-using-sha512-x-1000-vs-bcrypt&lt;/a> &lt;a class="link" href="http://stackoverflow.com/questions/1561174/sha512-vs-blowfish-and-bcrypt" target="_blank" rel="noopener"
->sha512-vs-blowfish-and-bcrypt&lt;/a>&lt;/p></description></item><item><title>git简明操作教程</title><link>https://www.wkii.net/posts/git/git-concise-operating-tutorial/</link><pubDate>Thu, 22 Mar 2012 12:38:42 +0800</pubDate><guid>https://www.wkii.net/posts/git/git-concise-operating-tutorial/</guid><description>&lt;p>我发现很多人依然对git无所适从。那我就写个简明操作教程来供还在学习路上的同学参考。&lt;/p>
+>sha512-vs-blowfish-and-bcrypt&lt;/a>&lt;/p></description></item><item><title>git简明操作教程</title><link>https://www.wkii.net/git/git-concise-operating-tutorial/</link><pubDate>Thu, 22 Mar 2012 12:38:42 +0800</pubDate><guid>https://www.wkii.net/git/git-concise-operating-tutorial/</guid><description>&lt;p>我发现很多人依然对git无所适从。那我就写个简明操作教程来供还在学习路上的同学参考。&lt;/p>
 &lt;h2 id="git工作原理">git工作原理:
 &lt;/h2>&lt;ol>
 &lt;li>分布式,每个克隆或更新远程仓库的用户都拥有⼀一份最新的完整的仓库。&lt;/li>
@@ -2501,4 +2597,4 @@ target="_blank" rel="noopener"
 &lt;li>对于开发人员，不要在develop分支上直接开发，创建feature分支并publish协同开发。&lt;/li>
 &lt;li>对于开发人员，要经常合并常规开发分支develop到你的feature分支上，以降低冲突的积累。&lt;/li>
 &lt;li>第7、8条参照git-flow分支模型来规划。&lt;/li>
-&lt;/ol></description></item><item><title>Archives</title><link>https://www.wkii.net/archives/</link><pubDate>Thu, 22 Mar 2012 00:00:00 +0800</pubDate><guid>https://www.wkii.net/archives/</guid><description/></item><item><title>Search</title><link>https://www.wkii.net/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.wkii.net/search/</guid><description/></item></channel></rss>
+&lt;/ol></description></item><item><title>Archives</title><link>https://www.wkii.net/page/archives/archives/</link><pubDate>Thu, 22 Mar 2012 00:00:00 +0800</pubDate><guid>https://www.wkii.net/page/archives/archives/</guid><description/></item><item><title>Search</title><link>https://www.wkii.net/page/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.wkii.net/page/search/</guid><description/></item></channel></rss>
