@@ -1,4 +1,376 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wkii Blog</title><link>https://www.wkii.net/</link><description>Recent content on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 16 Dec 2024 15:51:55 +0800</lastBuildDate><atom:link href="https://www.wkii.net/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo 如何关闭 tags 和 分类目录下生成的 index.xml 文件</title><link>https://www.wkii.net/tech/hugo-disable-tags-category-xml-file-generator/</link><pubDate>Mon, 16 Dec 2024 15:51:55 +0800</pubDate><guid>https://www.wkii.net/tech/hugo-disable-tags-category-xml-file-generator/</guid><description>&lt;img src="https://www.wkii.net/images/2024/images/hugo-logo-wide.svg" alt="Featured image of post Hugo 如何关闭 tags 和 分类目录下生成的 index.xml 文件" />&lt;p>我发现 Google 索引有一些未编入索引的URL，但这些URL其实只是把 html 变成了 xml。实在没必要进行重复索引。所以要禁止这些 xml 文件的生成。查了一下文档。有了以下解决办法。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wkii Blog</title><link>https://www.wkii.net/</link><description>Recent content on Wkii Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 27 Dec 2024 15:25:55 +0800</lastBuildDate><atom:link href="https://www.wkii.net/index.xml" rel="self" type="application/rss+xml"/><item><title>Nuxt3 PrimeVue TailwindCss 最小化项目初始化</title><link>https://www.wkii.net/dev/nuxt3-primevue-tailwindcss-mini-starter/</link><pubDate>Fri, 27 Dec 2024 15:25:55 +0800</pubDate><guid>https://www.wkii.net/dev/nuxt3-primevue-tailwindcss-mini-starter/</guid><description>&lt;img src="https://www.wkii.net/images/2024/images/next-primevue-module.jpeg" alt="Featured image of post Nuxt3 PrimeVue TailwindCss 最小化项目初始化" />&lt;h2 id="前言">前言
+&lt;/h2>&lt;p>Nuxt 已经成为 VUE 阵营一股强大的力量。 本为以 Nuxt 3.15 结合 PrimeVue 这个超好看的组件库，以及 TailwindCss，快速搭建一个 start 项目出来。&lt;/p>
+&lt;p>这里提一下关于UI库的选择，目前常用的 UI 库也就是 Element Plus、antd vue 以及本文的 PrimeVue。如果大项目，尤其是后台，无脑用 Element Plus 可能是一个更好的选择。 前台项目，我选择了 PrimeVue。组件90多个，不比 Element Plus 少。关键是个人觉得它比较好看。 至于 VUE 自己维护的 vuetify v3，完全不对我的胃口。 至于 Nuxt ui， 免费版的组件非常少，pro 版就收费了，直接 pass 掉。&lt;/p>
+&lt;p>PS：因为喜欢刨根儿问底，加上是前端新手，所以细枝末节也有很多描写，行文可能会比较罗嗦，见谅。&lt;/p>
+&lt;h2 id="nuxt-项目初始化">Nuxt 项目初始化
+&lt;/h2>&lt;p>个人习惯使用 npm，所以本文皆以 npm 指令为样本。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">npx nuxi init my-site
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>会提示你要使用 npm、pnpm 还是 yarn等，选择一个回车就好。是否初始化 git 仓库，根据自己习惯来选。
+然后可以将默认项目运行起来了。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> my-site
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">npm run dev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>就可以在本地查看了。默认地址是 &lt;code>http://localhost:3000/&lt;/code>。&lt;/p>
+&lt;h2 id="安装-nuxt-模块">安装 nuxt 模块
+&lt;/h2>&lt;h3 id="一模块选择">一、模块选择
+&lt;/h3>&lt;p>做为一个 mini start 项目，主打一个清爽不复杂。主要考虑以下主要组件：&lt;/p>
+&lt;ul>
+&lt;li>PrimeVue &amp;ndash; UI 库&lt;/li>
+&lt;li>TailwindCss &amp;ndash; 流行的css库&lt;/li>
+&lt;/ul>
+&lt;h3 id="二模块安装方式">二、模块安装方式
+&lt;/h3>&lt;p>Nuxt 模块的安装一般有以下三种方式，当然实际底层逻辑是一样的。&lt;/p>
+&lt;h4 id="1-使用-nuxt-devtools-面板安装">1. 使用 Nuxt devTools 面板安装
+&lt;/h4>&lt;p>在浏览器中，也就是刚才运行的页面底部，点击 Nuxt DevTools 图标，唤起面板，在面板中选择 Module -&amp;gt; Install new Module，搜索要安装的模块，点击模块名称，会弹出安装按钮。首次运行会需要一个 Token，观察你的终端，会输出一个 token，在 DevTools 中填入即可。然后在面板中搜索要安装的模块，根据提示，点击 install 按钮。 在安装前，会显示安装该模块针对 &lt;code>nuxt.config.ts&lt;/code> 会有哪些修改。安装完成后，再次搜索该模块的时候，在搜索结果列表中，会显示 &lt;code>installed&lt;/code>，旁边还有个小按钮，可以用于卸载。在确认前，也会显示针对 &lt;code>nuxt.config.ts&lt;/code> 的修改预览。这个工具还是非常好玩儿的。&lt;/p>
+&lt;p>tips： 此种方式最省事儿。甚至会显示要修改 &lt;code>nuxt.config.ts&lt;/code> 的预览。让你知道它都做了哪些工作。&lt;/p>
+&lt;h4 id="2-参考-nuxt-的模块网站-使用-nuxi-指令安装">2. 参考 Nuxt 的模块网站 使用 nuxi 指令安装
+&lt;/h4>&lt;p>Nuxt 为每个支持的模块都建立了二级域名的网站，通过其文档安装，例如：&lt;code>npx nuxi@latest module add primevue&lt;/code>，然后配置 &lt;code>nuxt.config.{ts|js}&lt;/code>&lt;/p>
+&lt;p>tips: 此种安装方式可以查看文档，了解更多的内容。&lt;/p>
+&lt;h4 id="3-通过模块自己的文档来安装">3. 通过模块自己的文档来安装
+&lt;/h4>&lt;p>比如 primevue，文档地址是 &lt;a class="link" href="https://primevue.org/nuxt/" target="_blank" rel="noopener"
+>https://primevue.org/nuxt/&lt;/a>，可以选择使用 npm、pnpm 或 yarn 安装，然后，配置 &lt;code>nuxt.config.{ts|js}&lt;/code>。&lt;/p>
+&lt;p>tips: 此种安装方式算是模块方的权威文档。&lt;/p>
+&lt;p>以上三种方式大部分时候，尤其是针对一些小模块的时候，直接 DevTools 安装就好了。 但涉及一些复杂的模块，还是要参考一下模块儿的官方文档。&lt;/p>
+&lt;h3 id="三安装模块">三、安装模块
+&lt;/h3>&lt;h4 id="primevue-安装">PrimeVue 安装
+&lt;/h4>&lt;p>使用 DevTools 安装 PrimeVue。
+&lt;img src="https://www.wkii.net/images/2024/images/devtools-install-primevue.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>然后我们可以参考 PrimeVue 的 &lt;a class="link" href="https://primevue.org/nuxt/" target="_blank" rel="noopener"
+>Installation 文档&lt;/a> 来简单配置一下。&lt;/p>
+&lt;p>DevTools 只是安装了 &lt;code>@primevue/nuxt-module&lt;/code>。它是一个 Nuxt 模块，作用是用于在 Nuxt 项目中集成 PrimeVue，简化PrimeVue 的配置，它的作用更像是一个粘合剂。要完整的使用 PrimeVue 还需要更多的配置。我们可以看到 PrimeVue 的文档中，Download 部分是这样写的：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Using npm&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">npm install primevue @primevue/themes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">npm install --save-dev @primevue/nuxt-module
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>实际上，安装完 &lt;code>@primevue/nuxt-module&lt;/code> 以后， 通过 &lt;code>npm --list --depth&lt;/code> 可以观察到， &lt;code>@primevue/next-module&lt;/code> 已经依赖了 &lt;code>primevue&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">├─┬ @primevue/nuxt-module@4.2.5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── @nuxt/kit@3.15.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── @primeuix/styled@0.3.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── @primeuix/utils@0.3.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── @primevue/auto-import-resolver@4.2.5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── @primevue/metadata@4.2.5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── pathe@1.1.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── primevue@4.2.5 &amp;lt;-- 这里
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── unplugin-vue-components@0.27.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>PrimeVue 的文档上，是显式的安装了 primevue 和 @primevue/themes。使用 PrimeVue 的文档中的安装方法，实际上简单、省事儿。 DevTools 的安装方式呢，实际上是好玩儿。&lt;/p>
+&lt;p>说明：&lt;/p>
+&lt;blockquote>
+&lt;p>@primevue/themes 提供了多种预定义的主题，比如 Aura、Material、Lara、Nora，可以用于自定义 PrimeVue 组件的外观，比如图标大小，主题色系、边距等一系列定义。 你也可以点击 &lt;a class="link" href="https://primevue.org/nuxt/" target="_blank" rel="noopener"
+>https://primevue.org/nuxt/&lt;/a> 右上角的齿轮图标，打开 Theme Designer，定义自己的主题。&lt;/p>
+&lt;/blockquote>
+&lt;p>然后我们修改一下 Nuxt 的配置 &lt;code>nuxt.config.ts&lt;/code>：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-ts" data-lang="ts">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// https://nuxt.com/docs/api/configuration/nuxt-config
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="nx">Aura&lt;/span> &lt;span class="kr">from&lt;/span> &lt;span class="s2">&amp;#34;@primevue/themes/aura&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="nx">defineNuxtConfig&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">compatibilityDate&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;2024-11-01&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">devtools&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">enabled&lt;/span>: &lt;span class="kt">true&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">modules&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;@primevue/nuxt-module&amp;#34;&lt;/span>&lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">primevue&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">autoImport&lt;/span>: &lt;span class="kt">true&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// 自动导入 PrimeVue 组件
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">options&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ripple&lt;/span>: &lt;span class="kt">true&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// 是否启用涟漪效果
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">inputVariant&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;filled&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">//输入框的样式变体。filled 和 outlined。
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">theme&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">preset&lt;/span>: &lt;span class="kt">Aura&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// 预设的主题
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">options&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">prefix&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;p&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// 设置组件类名前缀。用于避免样式冲突。
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">darkModeSelector&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;system&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// 设置暗黑模式的选择器。可以是 system（跟随系统设置）或自定义选择器。
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">cssLayer&lt;/span>: &lt;span class="kt">false&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// 启用或禁用 CSS 层。用于控制样式的层级。
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后我们验证一下是否可用。在 &lt;code>app.vue&lt;/code> 增加个按钮&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">Button&lt;/span> &lt;span class="na">label&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;Verify&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span> &lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">增加这一行&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">NuxtRouteAnnouncer&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">NuxtWelcome&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后刷新页面可以看到按钮的样子了。默认是绿色的。甚至暗黑模式跟随系统也是生效的。调整你系统的主题颜色，可以看到已经发生变化了。&lt;/p>
+&lt;p>这里关键的一点是 &lt;code>preset: Aura&lt;/code>，当使用主题时，可以看到按钮的样式，并且能做到跟随系统自动切换暗黑模式。 可以注释掉这行观察一下效果，就变成了无样式模式。&lt;/p>
+&lt;p>下一步，让我们做个 Header 头出来，不过为了方便以后使用 TailwindCss, 我们需要先安装一下 TailwindCss。&lt;/p>
+&lt;h4 id="tailwindcss-安装">TailwindCss 安装
+&lt;/h4>&lt;p>参考 &lt;a class="link" href="https://tailwindcss.com/docs/guides/nuxtjs#modules" target="_blank" rel="noopener"
+>TailwindCss 文档&lt;/a>，有两种安装方式，一种是标准安装 &lt;code>Standard installation&lt;/code> 另一种是 &lt;code>Using Nuxt Modules&lt;/code>。&lt;/p>
+&lt;p>然后 PrimeVue 文档 &lt;a class="link" href="https://tailwind.primevue.org/nuxt/" target="_blank" rel="noopener"
+>https://tailwind.primevue.org/nuxt/&lt;/a> 也提到可以选择安装 &lt;a class="link" href="https://github.com/nuxt-modules/tailwindcss" target="_blank" rel="noopener"
+>@nuxtjs/tailwindcss module&lt;/a> 或者&lt;a class="link" href="https://tailwindcss.com/docs/guides/nuxtjs" target="_blank" rel="noopener"
+>手动安装 Tailwind CSS&lt;/a>;&lt;/p>
+&lt;p>先安装 tailwindcss 模块&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">npx nuxi@latest module add tailwindcss
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 不加 --ts 生成的是js类型的的配置文件，加上 --ts 会生成 wailwind.config.ts&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">npx tailwindcss init --ts
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>会发现终端 &lt;code>npm run dev&lt;/code> 会报一个错：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ERROR&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">node&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">42178&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">ExperimentalWarning&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">CommonJS&lt;/span> &lt;span class="n">module&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">site目录&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">nuxt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">tailwind&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">config&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cjs&lt;/span> &lt;span class="n">is&lt;/span> &lt;span class="n">loading&lt;/span> &lt;span class="n">ES&lt;/span> &lt;span class="n">Module&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">site目录&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">node_modules&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">nuxtjs&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">tailwindcss&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">dist&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">runtime&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">merger&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">js&lt;/span> &lt;span class="n">using&lt;/span> &lt;span class="n">require&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Support&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">loading&lt;/span> &lt;span class="n">ES&lt;/span> &lt;span class="n">Module&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">require&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="n">is&lt;/span> &lt;span class="n">an&lt;/span> &lt;span class="n">experimental&lt;/span> &lt;span class="n">feature&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">might&lt;/span> &lt;span class="n">change&lt;/span> &lt;span class="n">at&lt;/span> &lt;span class="n">any&lt;/span> &lt;span class="n">time&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这是加载错误，看了一圈 github 上的反馈，可以先使用 &lt;code>nightly&lt;/code> 版本解决此报错。&lt;/p>
+&lt;p>package.json 中修改版本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;#34;@nuxtjs/tailwindcss&amp;#34;: &amp;#34;npm:@nuxtjs/tailwindcss@nightly&amp;#34;,
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后执行 &lt;code>npm update&lt;/code> 来更新版本，目前看此问题已经暂时解决，等后续稳定版本。我记得我曾经按 tailwindCss 网站上的手动安装方式安装过，也没有此报错。所以在此特别记录一下。因为看到这种错误，实在是很不爽。不过话说回来，开发团队在圣诞节假期也在处理和解决问题，这是非常值得用户高兴的。等过几天发布稳定版本以后，就不会报这个错了。&lt;/p>
+&lt;p>其实也可以选择显式的安装一下 &lt;code>tailwindcss&lt;/code>, 但实际上 &lt;code>@nuxtjs/tailwindcss&lt;/code> 已经依赖了 &lt;code>tailwindcss&lt;/code>，所以不装也可以。如果css中的 &lt;code>@tailwind base;&lt;/code> 有下划线提示，重启一下 vscode 就可以了。&lt;/p>
+&lt;p>app.vue 中 &lt;code>&amp;lt;div&amp;gt;&lt;/code> 里增加一行内容测试一下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">h1&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;text-3xl font-bold underline&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Hello world!&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">h1&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>现在重新启动本地服务&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">npm run dev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>启时动，可以看到控制台提示：&lt;code>Using default Tailwind CSS file&lt;/code>。 不过是因为现在用的是 &lt;code>nightly&lt;/code> 版本。正式版的提示还不是这样。正式版还会在控制台提示一个本地的地址，是一个 taildwind css 的样式展示页面。方便我们预览不同样式是什么效果。然后刷新前端页面，如果看到粗体、有下划线的 Hello World! 就说明成功了。（等正式版不报错了，我换成正式版再看看要不要修改这段描述）。&lt;/p>
+&lt;h2 id="制作一个头部导航">制作一个头部导航
+&lt;/h2>&lt;p>为了演示效果，我们制作一个头部导航菜单，包含logo、菜单和登录注册按钮。&lt;/p>
+&lt;p>先生成一个header组件，文件:&lt;code>components/AppHeader.vue&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">header&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;fixed top-0 left-0 w-full bg-white/75 backdrop-blur-md border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 z-50&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[60px]&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">左侧&lt;/span> &lt;span class="nx">Logo&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;lg:flex-1 flex items-center gap-1.5 min-w-0&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">NuxtLink&lt;/span> &lt;span class="na">to&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/&amp;#34;&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;flex items-center gap-2&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;w-6 h-6 flex-shrink-0&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">先用&lt;/span> &lt;span class="nx">favicon&lt;/span> &lt;span class="nx">代替logo图片&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">img&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/favicon.ico&amp;#34;&lt;/span> &lt;span class="na">alt&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;Logo&amp;#34;&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;w-full h-full object-contain&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">span&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;text-base font-medium&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nx">Site&lt;/span> &lt;span class="nx">Name&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">span&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">NuxtLink&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">中间导航&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">nav&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;items-center gap-x-8 hidden lg:flex&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">NuxtLink&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">v-for&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;item in navItems&amp;#34;&lt;/span>&lt;span class="p"> &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">:key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;item.path&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">:to&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;item.path&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;text-sm font-medium hover:text-primary-500&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{{&lt;/span> &lt;span class="nx">item&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">name&lt;/span> &lt;span class="p">}}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">NuxtLink&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">nav&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">右侧功能区&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;flex items-center justify-end lg:flex-1 gap-1.5&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">Button&lt;/span> &lt;span class="na">label&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;登录&amp;#34;&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;mx-2&amp;#34;&lt;/span> &lt;span class="na">link&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">Button&lt;/span> &lt;span class="na">label&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;注册&amp;#34;&lt;/span> &lt;span class="na">severity&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">setup&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;ts&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">ref&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vue&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">navItems&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">ref&lt;/span>&lt;span class="p">([&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;首页&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">path&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/&amp;#39;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;产品&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">path&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/products&amp;#39;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;关于&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">path&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/about&amp;#39;&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>组件目前是 &lt;code>components&lt;/code> 目录，默认的组件都放这里，然后使用组件文件名加上尖括号就可以引入了。关于 Nuxt 的目录结构可以参考&lt;a class="link" href="https://nuxt.com/docs/guide/directory-structure/app" target="_blank" rel="noopener"
+>这里&lt;/a>。&lt;/p>
+&lt;p>然后在app.vue 引入这个组件。&lt;code>app.vue&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">AppHeader&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">main&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;pt-[60px] min-h-[calc(100vh-60px)]&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">NuxtRouteAnnouncer&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">NuxtWelcome&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">main&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>效果出来了。
+&lt;img src="https://www.wkii.net/images/2024/images/write-primevue-header.png"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="项目代码">项目代码
+&lt;/h2>&lt;p>好，这篇文章描述了如何从零开始搭建一个 Nuxt + primeVue + taildwind css 的应用。代码放在了：&lt;a class="link" href="https://github.com/wkii/nuxt-primevue-tailwindcss-starter" target="_blank" rel="noopener"
+>https://github.com/wkii/nuxt-primevue-tailwindcss-starter&lt;/a>，有需要自取。&lt;/p>
+&lt;h2 id="后记">后记
+&lt;/h2>&lt;p>这只是最小化搭建，其实还有很多没有配置，比如 eslint 等等。但即然是最小化，主要目的是学习如何从零开始，为什么要安装某个组件，如何安装，怎么确定安装好了。所谓万事开头难，第一步迈出去了，后面就知道怎么走了。&lt;/p>
+&lt;p>优秀的项目就像是艺术品（永远不会有绝对的完美，这不，我就碰上bug了），欣赏它，观察它的细节，就是仔细的欣赏艺术品。基于它们设计我们自己的产品，也是在制作属于我们自己的艺术品。&lt;/p>
+&lt;p>一直有期待，永远有期待。&lt;/p></description></item><item><title>Hugo 如何关闭 tags 和 分类目录下生成的 index.xml 文件</title><link>https://www.wkii.net/tech/hugo-disable-tags-category-xml-file-generator/</link><pubDate>Mon, 16 Dec 2024 15:51:55 +0800</pubDate><guid>https://www.wkii.net/tech/hugo-disable-tags-category-xml-file-generator/</guid><description>&lt;img src="https://www.wkii.net/images/2024/images/hugo-logo-wide.svg" alt="Featured image of post Hugo 如何关闭 tags 和 分类目录下生成的 index.xml 文件" />&lt;p>我发现 Google 索引有一些未编入索引的URL，但这些URL其实只是把 html 变成了 xml。实在没必要进行重复索引。所以要禁止这些 xml 文件的生成。查了一下文档。有了以下解决办法。&lt;/p>
 &lt;p>首先，我们要了解一下 Hugo 中的 Term 的概念：&lt;/p>
 &lt;ol>
 &lt;li>基本定义&lt;/li>
