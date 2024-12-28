@@ -239,6 +239,12 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>就可以了。点击暗黑切换按钮试试吧。&lt;/p>
+&lt;p>&lt;img src="https://www.wkii.net/images/2024/images/color_mode_light.png"
+loading="lazy"
+>
+&lt;img src="https://www.wkii.net/images/2024/images/color_mode_dark.png"
+loading="lazy"
+>&lt;/p>
 &lt;p>代码还是在这里：&lt;a class="link" href="https://github.com/wkii/nuxt-primevue-tailwindcss-starter" target="_blank" rel="noopener"
 >https://github.com/wkii/nuxt-primevue-tailwindcss-starter&lt;/a>&lt;/p></description></item><item><title>Nuxt3 PrimeVue TailwindCss 最小化项目初始化</title><link>https://www.wkii.net/dev/nuxt3-primevue-tailwindcss-mini-starter/</link><pubDate>Fri, 27 Dec 2024 15:25:55 +0800</pubDate><guid>https://www.wkii.net/dev/nuxt3-primevue-tailwindcss-mini-starter/</guid><description>&lt;img src="https://www.wkii.net/images/2024/images/next-primevue-module.jpeg" alt="Featured image of post Nuxt3 PrimeVue TailwindCss 最小化项目初始化" />&lt;h2 id="前言">前言
 &lt;/h2>&lt;p>Nuxt 已经成为 VUE 阵营一股强大的力量。 本为以 Nuxt 3.15 结合 PrimeVue 这个超好看的组件库，以及 TailwindCss，快速搭建一个 start 项目出来。&lt;/p>
